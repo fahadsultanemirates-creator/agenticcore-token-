@@ -2,8 +2,13 @@ import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { bsc, bscTestnet } from "wagmi/chains";
 
 // WalletConnect Cloud project ID — set as NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
-// in Netlify's env vars. Falls back to a placeholder so local dev still
-// boots without WalletConnect's mobile-QR flow.
+// in Netlify's env vars. Back on the original project (2026-09-20) with
+// agenticcore-token.netlify.app now added to its Domain allowlist -- that
+// allowlist was empty, which blocks every domain by default, not the
+// reverse; the two freshly-created replacement projects hit the same wall
+// since a brand-new project's allowlist starts empty too. Falls back to a
+// placeholder so local dev still boots without WalletConnect's mobile-QR
+// flow.
 const walletConnectProjectId =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "00000000000000000000000000000000";
 
