@@ -12,6 +12,7 @@ import VIPPoolCard from "@/components/dashboard/VIPPoolCard";
 import ReferralTreeView from "@/components/dashboard/ReferralTreeView";
 import RewardStructureTable from "@/components/dashboard/RewardStructureTable";
 import BuyWidget from "@/components/dashboard/BuyWidget";
+import FamilyNetwork from "@/components/dashboard/FamilyNetwork";
 import ForgeChat from "@/components/dashboard/ForgeChat";
 import {
   generateMockReferralTree,
@@ -77,6 +78,8 @@ export default function DashboardPage() {
         </div>
 
         <RewardStructureTable levelSummary={levelSummary} />
+
+        <FamilyNetwork />
 
         <ForgeChat address={address} />
       </main>

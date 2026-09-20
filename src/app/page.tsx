@@ -1,5 +1,6 @@
 import Navbar from "@/components/marketing/Navbar";
 import Hero from "@/components/marketing/Hero";
+import WhyAC from "@/components/marketing/WhyAC";
 import Tokenomics from "@/components/marketing/Tokenomics";
 import HowToBuy from "@/components/marketing/HowToBuy";
 import ReferralTeaser from "@/components/marketing/ReferralTeaser";
@@ -13,6 +14,7 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
+        <WhyAC />
         <Tokenomics />
         <HowToBuy />
         <ReferralTeaser />
