@@ -16,8 +16,8 @@ const COLUMNS = [
   {
     title: "Community",
     links: [
-      { label: "Referral Program", href: "#referral" },
-      { label: "VIP Pool", href: "#faq" },
+      { label: "Referral Program", href: "/referral-program" },
+      { label: "VIP Pool", href: "/referral-program" },
       { label: "Dashboard", href: "/dashboard" },
       { label: "FAQ", href: "#faq" },
     ],

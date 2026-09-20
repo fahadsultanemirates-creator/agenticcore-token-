@@ -7,6 +7,8 @@ import ConnectGate from "@/components/dashboard/ConnectGate";
 import ReferralLinkCard from "@/components/dashboard/ReferralLinkCard";
 import DemoModeBanner from "@/components/dashboard/DemoModeBanner";
 import StatsOverview from "@/components/dashboard/StatsOverview";
+import ReferralLevelChart from "@/components/dashboard/ReferralLevelChart";
+import VIPPoolCard from "@/components/dashboard/VIPPoolCard";
 import ReferralTreeView from "@/components/dashboard/ReferralTreeView";
 import RewardStructureTable from "@/components/dashboard/RewardStructureTable";
 import BuyWidget from "@/components/dashboard/BuyWidget";
@@ -15,6 +17,7 @@ import {
   summarizeTreeByLevel,
   totalReferrals,
 } from "@/lib/mockReferralData";
+import { getMockVipPoolStatus } from "@/lib/mockVipPool";
 
 export default function DashboardPage() {
   const { address, isConnected } = useAccount();
@@ -25,6 +28,10 @@ export default function DashboardPage() {
   );
   const levelSummary = useMemo(() => summarizeTreeByLevel(tree), [tree]);
   const total = useMemo(() => totalReferrals(tree), [tree]);
+  const vipStatus = useMemo(
+    () => (address ? getMockVipPoolStatus(address) : null),
+    [address]
+  );
 
   if (!isConnected || !address) {
     return (
@@ -51,6 +58,13 @@ export default function DashboardPage() {
         <ReferralLinkCard address={address} />
         <DemoModeBanner />
         <StatsOverview totalReferrals={total} levelSummary={levelSummary} />
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <ReferralLevelChart levelSummary={levelSummary} />
+          </div>
+          <div>{vipStatus && <VIPPoolCard status={vipStatus} />}</div>
+        </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
