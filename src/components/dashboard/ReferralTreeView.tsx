@@ -4,6 +4,7 @@ import { useState } from "react";
 import { GitBranch } from "lucide-react";
 import type { ReferralNode } from "@/lib/mockReferralData";
 import ReferralTreeNode from "@/components/dashboard/ReferralTreeNode";
+import { REFERRAL_LEVELS } from "@/lib/referral";
 
 export default function ReferralTreeView({ tree }: { tree: ReferralNode[] }) {
   const [expandAll, setExpandAll] = useState(false);
@@ -23,7 +24,8 @@ export default function ReferralTreeView({ tree }: { tree: ReferralNode[] }) {
         </button>
       </div>
       <p className="mt-1 text-sm text-ac-muted">
-        Every wallet in your downline, organized by level — down to level 7.
+        Every wallet in your downline, organized by level — down to level{" "}
+        {REFERRAL_LEVELS}.
       </p>
 
       <div className="mt-5">

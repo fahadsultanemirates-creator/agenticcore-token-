@@ -1,4 +1,4 @@
-import { formatPct } from "@/lib/referral";
+import { formatPct, getTotalReferralPct, REFERRAL_LEVELS } from "@/lib/referral";
 import type { ReferralLevelSummary } from "@/lib/mockReferralData";
 
 export default function RewardStructureTable({
@@ -10,8 +10,10 @@ export default function RewardStructureTable({
     <div className="card-surface rounded-2xl p-6">
       <h2 className="text-lg font-bold text-foreground">Referral reward structure</h2>
       <p className="mt-1 text-sm text-ac-muted">
-        Direct referrals earn 20% of the purchase. Each level below decays to
-        70% of the level above, through level 7.
+        Direct referrals earn 20% of the purchase, paid in USDT. Levels 2
+        through {REFERRAL_LEVELS} split the rest, for up to{" "}
+        {formatPct(getTotalReferralPct())} of a referred purchase across the
+        whole tree.
       </p>
 
       <div className="mt-6 overflow-x-auto">
@@ -47,7 +49,7 @@ export default function RewardStructureTable({
                   ${row.volumeUsd.toLocaleString(undefined, { maximumFractionDigits: 2 })}
                 </td>
                 <td className="py-3.5 font-medium text-foreground">
-                  {row.rewardAc.toLocaleString(undefined, { maximumFractionDigits: 0 })} AC
+                  ${row.rewardUsdt.toLocaleString(undefined, { maximumFractionDigits: 2 })} USDT
                 </td>
               </tr>
             ))}

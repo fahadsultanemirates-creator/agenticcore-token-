@@ -1,7 +1,7 @@
 "use client";
 
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { TOKEN, TOKENOMICS, formatSupply } from "@/lib/tokenConfig";
+import { TOKEN, TOKENOMICS, formatSupply, formatStartingPrice } from "@/lib/tokenConfig";
 
 export default function Tokenomics() {
   return (
@@ -18,7 +18,7 @@ export default function Tokenomics() {
       <SectionHeading
         eyebrow="Tokenomics"
         title="A fixed, transparent supply."
-        subtitle={`${formatSupply(TOKEN.totalSupply)} ${TOKEN.ticker} minted at genesis. No inflation, no hidden mint function.`}
+        subtitle={`${formatSupply(TOKEN.totalSupply)} ${TOKEN.ticker} minted at genesis. No inflation, no hidden mint function. Starting price: ${formatStartingPrice()}.`}
       />
 
       <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:items-center">

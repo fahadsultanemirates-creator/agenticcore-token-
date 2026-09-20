@@ -1,5 +1,5 @@
 import { Wallet, ArrowLeftRight, ShoppingCart, ShieldCheck, TrendingUp, Users } from "lucide-react";
-import { TOKEN } from "@/lib/tokenConfig";
+import { TOKEN, REFERRED_BUY_BONUS_PCT } from "@/lib/tokenConfig";
 import { SectionHeading } from "@/components/marketing/Tokenomics";
 
 const STEPS = [
@@ -15,8 +15,8 @@ const STEPS = [
   },
   {
     icon: ShoppingCart,
-    title: "Buy up to $100 in AC",
-    body: `Swap BNB for ${TOKEN.ticker}. The buy flow automatically enforces the $${TOKEN.maxBuyUsd} per-wallet cap — no manual math needed.`,
+    title: `Buy $${TOKEN.minBuyUsd}–$${TOKEN.maxBuyUsd} in AC`,
+    body: `Swap BNB for ${TOKEN.ticker}. The buy flow automatically enforces the $${TOKEN.minBuyUsd} minimum and $${TOKEN.maxBuyUsd} per-wallet cap — no manual math needed. Buying through a referral link mints ${REFERRED_BUY_BONUS_PCT}% more ${TOKEN.ticker} than a direct, no-referral buy.`,
   },
 ];
 
@@ -48,7 +48,8 @@ export default function HowToBuy() {
         <div className="card-surface flex flex-col items-center gap-3 rounded-2xl px-8 py-6 text-center">
           <p className="text-sm text-foreground/70">
             The {TOKEN.ticker} contract is not deployed yet — the buy button
-            below will activate automatically once it goes live.
+            below will activate automatically once it goes live. Buys will
+            run ${TOKEN.minBuyUsd}&ndash;${TOKEN.maxBuyUsd} per wallet.
           </p>
           <button
             disabled
@@ -79,7 +80,7 @@ function CapExplainer() {
               Not a limitation — a safeguard
             </p>
             <h3 className="mt-1 text-2xl font-black text-foreground">
-              Why is there a ${TOKEN.maxBuyUsd} cap?
+              Why a ${TOKEN.minBuyUsd}&ndash;${TOKEN.maxBuyUsd} buy range?
             </h3>
           </div>
         </div>
@@ -92,11 +93,14 @@ function CapExplainer() {
             first volatile hours of trading.
           </p>
           <p>
-            A <strong className="text-ac-lime">${TOKEN.maxBuyUsd}</strong> maximum purchase per wallet is enforced directly
-            in the buy contract logic. It exists to prevent any single wallet
-            from destabilizing the price while liquidity is still thin and the
-            market hasn&apos;t found its footing — the exact window where
-            whale buys and bots do the most damage to a fair launch.
+            A <strong className="text-ac-lime">${TOKEN.minBuyUsd} minimum</strong> keeps the
+            launch a genuine community event rather than dust transactions,
+            and a <strong className="text-ac-lime">${TOKEN.maxBuyUsd} maximum</strong> per
+            wallet is enforced directly in the buy contract logic. The cap
+            exists to prevent any single wallet from destabilizing the price
+            while liquidity is still thin and the market hasn&apos;t found
+            its footing — the exact window where whale buys and bots do the
+            most damage to a fair launch.
           </p>
           <div className="grid gap-3 pt-2 sm:grid-cols-2">
             <div className="flex items-start gap-2.5 rounded-xl border border-ac-border/80 bg-ac-bg/60 p-4">
@@ -117,8 +121,9 @@ function CapExplainer() {
             </div>
           </div>
           <p className="text-xs text-foreground/50">
-            The cap applies per wallet at launch and is enforced on-chain in
-            the buy contract — it is not a manual or discretionary limit.
+            The ${TOKEN.minBuyUsd}&ndash;${TOKEN.maxBuyUsd} range applies per
+            wallet at launch and is enforced on-chain in the buy contract —
+            it is not a manual or discretionary limit.
           </p>
         </div>
       </div>

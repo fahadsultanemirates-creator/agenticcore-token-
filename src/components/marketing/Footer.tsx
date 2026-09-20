@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { TOKEN } from "@/lib/tokenConfig";
+import { REFERRAL_LEVELS } from "@/lib/referral";
 
 const COLUMNS = [
   {
@@ -16,6 +17,7 @@ const COLUMNS = [
     title: "Community",
     links: [
       { label: "Referral Program", href: "#referral" },
+      { label: "VIP Pool", href: "#faq" },
       { label: "Dashboard", href: "/dashboard" },
       { label: "FAQ", href: "#faq" },
     ],
@@ -41,8 +43,9 @@ export default function Footer() {
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground/70">
               A high-community BEP-20 token on BNB Smart Chain. Fair launch,
-              7-level referral rewards, and a $100 max-buy cap designed to
-              protect early-phase price stability.
+              {" "}{REFERRAL_LEVELS}-level USDT referral rewards, a weekly VIP
+              Pool, and a ${TOKEN.minBuyUsd}&ndash;${TOKEN.maxBuyUsd} buy
+              range designed to protect early-phase price stability.
             </p>
           </div>
 

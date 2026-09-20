@@ -7,19 +7,19 @@ const MILESTONES = [
     icon: Lock,
     title: "Contract audit & deployment",
     status: "In progress",
-    body: "The AC BEP-20 contract, including the on-chain $100 max-buy enforcement, is in development and will be audited before launch.",
+    body: `The AC BEP-20 contract, including the on-chain $${TOKEN.minBuyUsd}–$${TOKEN.maxBuyUsd} buy range and referral/VIP Pool payout logic, is in development and will be audited before launch.`,
   },
   {
     icon: Rocket,
     title: "Fair launch on PancakeSwap",
     status: "Upcoming",
-    body: "Initial liquidity goes live with the per-wallet cap active from block one — there is no pre-cap window for insiders.",
+    body: "Initial liquidity goes live with the per-wallet range active from block one — there is no pre-cap window for insiders.",
   },
   {
     icon: Clock3,
-    title: "Cap lifts as liquidity matures",
+    title: "Range widens as liquidity matures",
     status: "Planned",
-    body: "Once price stability and liquidity depth are established, the community will be notified ahead of any cap adjustment.",
+    body: "Once price stability and liquidity depth are established, the community will be notified ahead of any buy-range adjustment.",
   },
 ];
 

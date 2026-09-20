@@ -6,8 +6,6 @@ import { ShieldCheck, AlertCircle, Lock } from "lucide-react";
 import { TOKEN } from "@/lib/tokenConfig";
 import { getMockPurchasedUsd } from "@/lib/mockWalletActivity";
 
-const REFERENCE_PRICE_USD = 0.0000025;
-
 export default function BuyWidget() {
   const { address } = useAccount();
   const purchasedUsd = useMemo(
@@ -19,8 +17,9 @@ export default function BuyWidget() {
 
   const [amount, setAmount] = useState("");
   const amountNum = Number(amount) || 0;
+  const belowMin = amountNum > 0 && amountNum < TOKEN.minBuyUsd;
   const exceedsCap = amountNum > remainingUsd;
-  const estimatedAc = amountNum > 0 ? amountNum / REFERENCE_PRICE_USD : 0;
+  const estimatedAc = amountNum > 0 ? amountNum / TOKEN.startingPriceUsd : 0;
 
   return (
     <div className="card-surface rounded-2xl p-6">
@@ -29,8 +28,8 @@ export default function BuyWidget() {
         <h2 className="text-lg font-bold text-foreground">Buy AC</h2>
       </div>
       <p className="mt-1 text-sm text-ac-muted">
-        Purchases are capped at ${TOKEN.maxBuyUsd} per wallet during launch —
-        enforced on-chain to protect early price stability.
+        Purchases run ${TOKEN.minBuyUsd}&ndash;${TOKEN.maxBuyUsd} per wallet
+        during launch — enforced on-chain to protect early price stability.
       </p>
 
       <div className="mt-5">
@@ -60,7 +59,7 @@ export default function BuyWidget() {
           <input
             id="buy-amount"
             type="number"
-            min={0}
+            min={TOKEN.minBuyUsd}
             max={TOKEN.maxBuyUsd}
             step="0.01"
             inputMode="decimal"
@@ -78,6 +77,13 @@ export default function BuyWidget() {
           </button>
         </div>
 
+        {belowMin && (
+          <p className="mt-2 flex items-center gap-1.5 text-xs text-red-400">
+            <AlertCircle className="h-3.5 w-3.5" />
+            Below the ${TOKEN.minBuyUsd} minimum buy.
+          </p>
+        )}
+
         {exceedsCap && (
           <p className="mt-2 flex items-center gap-1.5 text-xs text-red-400">
             <AlertCircle className="h-3.5 w-3.5" />
@@ -86,10 +92,10 @@ export default function BuyWidget() {
           </p>
         )}
 
-        {amountNum > 0 && !exceedsCap && (
+        {amountNum > 0 && !exceedsCap && !belowMin && (
           <p className="mt-2 text-xs text-ac-muted">
             ≈ {estimatedAc.toLocaleString(undefined, { maximumFractionDigits: 0 })} AC at
-            reference price
+            starting price
           </p>
         )}
       </div>
@@ -102,8 +108,10 @@ export default function BuyWidget() {
         Contract not deployed yet
       </button>
       <p className="mt-3 text-center text-xs text-ac-muted/70">
-        This widget previews the buy flow. The $100 cap will be enforced by
-        the smart contract itself once {TOKEN.ticker} is live.
+        This widget previews the buy flow. The ${TOKEN.minBuyUsd}&ndash;$
+        {TOKEN.maxBuyUsd} range will be enforced by the smart contract itself
+        once {TOKEN.ticker} is live. Buying via a referral link mints extra
+        AC automatically.
       </p>
     </div>
   );
