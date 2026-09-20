@@ -52,8 +52,8 @@ async function deploySystem(usdtDecimals = 18) {
     marketingSpendWallet.address,
   ]);
 
-  // Fund the sale contract with the Presale allocation (20% of supply).
-  const presaleAmount = (TOTAL_SUPPLY * 20n) / 100n;
+  // Fund the sale contract with the Presale allocation (35% of supply).
+  const presaleAmount = (TOTAL_SUPPLY * 35n) / 100n;
   await token.connect(deployer).transfer(await sale.getAddress(), presaleAmount);
 
   async function fundAndApprove(signer: (typeof rest)[number], wholeUsdt: bigint) {
@@ -86,16 +86,16 @@ describe("AgenticCoreToken", function () {
       await deploySystem();
 
     expect(await token.totalSupply()).to.equal(TOTAL_SUPPLY);
-    expect(await token.balanceOf(liquidityWallet.address)).to.equal((TOTAL_SUPPLY * 25n) / 100n);
+    expect(await token.balanceOf(liquidityWallet.address)).to.equal((TOTAL_SUPPLY * 35n) / 100n);
     expect(await token.balanceOf(ecosystemWallet.address)).to.equal((TOTAL_SUPPLY * 10n) / 100n);
 
     // Team/Marketing allocations sit in their VestingWallet contracts, not
     // the beneficiaries directly, until vesting releases them over time.
-    expect(await token.balanceOf(await teamVesting.getAddress())).to.equal((TOTAL_SUPPLY * 15n) / 100n);
-    expect(await token.balanceOf(await marketingVesting.getAddress())).to.equal((TOTAL_SUPPLY * 30n) / 100n);
+    expect(await token.balanceOf(await teamVesting.getAddress())).to.equal((TOTAL_SUPPLY * 10n) / 100n);
+    expect(await token.balanceOf(await marketingVesting.getAddress())).to.equal((TOTAL_SUPPLY * 10n) / 100n);
 
-    // Presale allocation (20%) started at the deployer, then got forwarded to the Sale contract in deploySystem().
-    expect(await token.balanceOf(await sale.getAddress())).to.equal((TOTAL_SUPPLY * 20n) / 100n);
+    // Presale allocation (35%) started at the deployer, then got forwarded to the Sale contract in deploySystem().
+    expect(await token.balanceOf(await sale.getAddress())).to.equal((TOTAL_SUPPLY * 35n) / 100n);
     expect(await token.balanceOf(deployer.address)).to.equal(0n);
   });
 
