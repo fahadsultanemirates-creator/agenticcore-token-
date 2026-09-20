@@ -25,6 +25,7 @@ async function deploySystem(usdtDecimals = 18) {
     teamBeneficiary,
     marketingBeneficiary,
     treasury,
+    marketingSpendWallet,
     ...rest
   ] = signers;
 
@@ -48,6 +49,7 @@ async function deploySystem(usdtDecimals = 18) {
     await token.getAddress(),
     await usdt.getAddress(),
     treasury.address,
+    marketingSpendWallet.address,
   ]);
 
   // Fund the sale contract with the Presale allocation (20% of supply).
@@ -68,6 +70,7 @@ async function deploySystem(usdtDecimals = 18) {
     teamVesting,
     marketingVesting,
     treasury,
+    marketingSpendWallet,
     buyers: rest,
     usdt,
     usdtScale,
@@ -147,8 +150,8 @@ describe("AgenticCoreSale - direct buys", function () {
 });
 
 describe("AgenticCoreSale - referred buys", function () {
-  it("mints a 10% AC bonus and pays a two-level chain correctly, overflowing the rest to treasury", async function () {
-    const { sale, usdt, token, treasury, buyers, fundAndApprove } = await deploySystem();
+  it("mints a 10% AC bonus and pays a two-level chain correctly, overflowing the rest to marketing", async function () {
+    const { sale, usdt, token, treasury, marketingSpendWallet, buyers, fundAndApprove } = await deploySystem();
     const [buyer, ref1, ref2] = buyers;
 
     // Chain: buyer -> ref1 -> ref2 -> (no further upline)
@@ -159,6 +162,7 @@ describe("AgenticCoreSale - referred buys", function () {
 
     await fundAndApprove(buyer, 100n);
     const treasuryBefore = await usdt.balanceOf(treasury.address);
+    const marketingBefore = await usdt.balanceOf(marketingSpendWallet.address);
     const ref1Before = await usdt.balanceOf(ref1.address);
     const ref2Before = await usdt.balanceOf(ref2.address);
     // The seeding purchase above (ref1 referred by ref2) was itself a
@@ -183,16 +187,20 @@ describe("AgenticCoreSale - referred buys", function () {
     expect((await sale.vipPoolBalance()) - vipPoolBefore).to.equal(vipCut);
 
     // Levels 3-10 have no real upline beyond ref2, so their payouts fall to
-    // treasury -- and referral levels (55%) + VIP cut (10%) only account
+    // marketing -- and referral levels (55%) + VIP cut (10%) only account
     // for 65% of any referred purchase to begin with, so the remaining 35%
-    // structural remainder lands there too.
+    // structural remainder lands there too. Treasury is untouched by a
+    // referred purchase entirely.
     const overflowLevels = LEVEL_RATES_BPS.slice(2).reduce((sum, bps) => sum + (usdtAmount * bps) / BPS, 0n);
     const structuralRemainder = (usdtAmount * 3500n) / BPS;
-    expect(await usdt.balanceOf(treasury.address)).to.equal(treasuryBefore + overflowLevels + structuralRemainder);
+    expect(await usdt.balanceOf(treasury.address)).to.equal(treasuryBefore);
+    expect(await usdt.balanceOf(marketingSpendWallet.address)).to.equal(
+      marketingBefore + overflowLevels + structuralRemainder,
+    );
   });
 
-  it("pays out a full 10-level chain with no overflow to treasury", async function () {
-    const { sale, usdt, treasury, buyers, fundAndApprove } = await deploySystem();
+  it("pays out a full 10-level chain, with the structural 35% remainder still going to marketing", async function () {
+    const { sale, usdt, treasury, marketingSpendWallet, buyers, fundAndApprove } = await deploySystem();
     // buyers[0] is the ultimate buyer; buyers[1..10] are 10 uplines, deepest first.
     const chain = buyers.slice(0, 11); // [buyer, U1, U2, ..., U10]
 
@@ -214,6 +222,7 @@ describe("AgenticCoreSale - referred buys", function () {
     // correctly isolates this one purchase's payout per level.
     const balancesBefore = await Promise.all(chain.slice(1).map((account) => usdt.balanceOf(account.address)));
     const treasuryBefore = await usdt.balanceOf(treasury.address);
+    const marketingBefore = await usdt.balanceOf(marketingSpendWallet.address);
 
     await sale.connect(buyer).buy(100n, directRef.address);
 
@@ -225,12 +234,13 @@ describe("AgenticCoreSale - referred buys", function () {
     }
 
     // Referral levels (55%) + VIP cut (10%) only account for 65% of a
-    // referred purchase -- the remaining 35% has nowhere else specified to
-    // go, so it correctly falls to treasury the same way an unfilled level
-    // would. A full 10-level chain removes the "unfilled level" case, but
-    // not this structural remainder.
-    const remainderToTreasury = (usdtAmount * 3500n) / BPS;
-    expect(await usdt.balanceOf(treasury.address)).to.equal(treasuryBefore + remainderToTreasury);
+    // referred purchase -- the remaining 35% is referral-program money, not
+    // company revenue, so it goes to marketing. A full 10-level chain
+    // removes the "unfilled level" case, but not this structural remainder,
+    // and treasury is untouched by a referred purchase entirely.
+    const remainderToMarketing = (usdtAmount * 3500n) / BPS;
+    expect(await usdt.balanceOf(treasury.address)).to.equal(treasuryBefore);
+    expect(await usdt.balanceOf(marketingSpendWallet.address)).to.equal(marketingBefore + remainderToMarketing);
 
     const vipCut = (usdtAmount * 1000n) / BPS;
     expect(await usdt.balanceOf(await sale.getAddress())).to.equal(await sale.vipPoolBalance());

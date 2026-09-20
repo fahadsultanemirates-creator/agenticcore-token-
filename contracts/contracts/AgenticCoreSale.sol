@@ -16,8 +16,9 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 /// Core economics (buy range, referral rates, VIP pool cut, referred-buy AC
 /// bonus) are immutable constants, not owner-adjustable, on purpose -- an
 /// owner who can change the payout math after launch is exactly what a
-/// legitimacy review flags. The only owner-only action is redirecting the
-/// treasury address, in case that wallet ever needs rotating.
+/// legitimacy review flags. The only owner-only actions are redirecting the
+/// treasury and marketing wallet addresses, in case either ever needs
+/// rotating.
 contract AgenticCoreSale is ReentrancyGuard, Ownable {
     using SafeERC20 for IERC20;
 
@@ -26,6 +27,15 @@ contract AgenticCoreSale is ReentrancyGuard, Ownable {
     uint256 private immutable usdtScale; // 10 ** usdt.decimals()
 
     address public treasury;
+
+    // Receives referred-purchase USDT that isn't an explicit referral
+    // payout or VIP Pool cut -- an unfilled level (chain shorter than 10)
+    // or the structural 35% gap left over once 55% (referral) + 10% (VIP)
+    // is accounted for. This money is referral-program spend, not company
+    // revenue, so it funds marketing rather than treasury. A direct
+    // (non-referred) purchase is unaffected -- that still goes 100% to
+    // treasury.
+    address public marketingWallet;
 
     // $5-$1000 per wallet, lifetime cumulative, expressed in whole USDT and
     // scaled by usdtScale at use.
@@ -85,20 +95,24 @@ contract AgenticCoreSale is ReentrancyGuard, Ownable {
     event VipWeekClosed(uint256 indexed weekId, uint256 poolTotal, uint256 qualifiedCount, uint256 closeTimestamp);
     event VipShareClaimed(address indexed account, uint256 indexed weekId, uint256 usdtAmount);
     event TreasuryUpdated(address indexed previousTreasury, address indexed newTreasury);
+    event MarketingWalletUpdated(address indexed previousMarketingWallet, address indexed newMarketingWallet);
 
     constructor(
         address initialOwner,
         address acTokenAddress,
         address usdtAddress,
-        address treasuryAddress
+        address treasuryAddress,
+        address marketingWalletAddress
     ) Ownable(initialOwner) {
         require(acTokenAddress != address(0), "acToken is zero");
         require(usdtAddress != address(0), "usdt is zero");
         require(treasuryAddress != address(0), "treasury is zero");
+        require(marketingWalletAddress != address(0), "marketingWallet is zero");
 
         acToken = IERC20(acTokenAddress);
         usdt = IERC20(usdtAddress);
         treasury = treasuryAddress;
+        marketingWallet = marketingWalletAddress;
         usdtScale = 10 ** IERC20Metadata(usdtAddress).decimals();
 
         nextPayoutTimestamp = _nextSunday5pmUtcAfter(block.timestamp);
@@ -108,6 +122,12 @@ contract AgenticCoreSale is ReentrancyGuard, Ownable {
         require(newTreasury != address(0), "treasury is zero");
         emit TreasuryUpdated(treasury, newTreasury);
         treasury = newTreasury;
+    }
+
+    function setMarketingWallet(address newMarketingWallet) external onlyOwner {
+        require(newMarketingWallet != address(0), "marketingWallet is zero");
+        emit MarketingWalletUpdated(marketingWallet, newMarketingWallet);
+        marketingWallet = newMarketingWallet;
     }
 
     /// @param usdtAmountWhole Purchase amount in whole USDT (e.g. 25 for $25) -- not scaled by decimals, to keep the caller-facing units simple.
@@ -155,9 +175,10 @@ contract AgenticCoreSale is ReentrancyGuard, Ownable {
         for (uint8 level = 0; level < REFERRAL_LEVELS; level++) {
             uint256 levelPayout = (usdtAmount * levelRatesBps[level]) / BPS_DENOMINATOR;
             if (upline == address(0)) {
-                // Chain doesn't reach this deep -- route the unclaimed level
-                // payout to treasury rather than leaving it stranded.
-                usdt.safeTransfer(treasury, levelPayout);
+                // Chain doesn't reach this deep -- this was referral-program
+                // money to begin with, so route it to marketing rather than
+                // leaving it stranded or handing it to treasury.
+                usdt.safeTransfer(marketingWallet, levelPayout);
             } else {
                 usdt.safeTransfer(upline, levelPayout);
                 emit ReferralPaid(msg.sender, upline, level, levelPayout);
@@ -170,10 +191,12 @@ contract AgenticCoreSale is ReentrancyGuard, Ownable {
             distributed += levelPayout;
         }
 
-        // Integer division dust from the bps splits above -- send it to
-        // treasury rather than leaving it stuck in the contract forever.
+        // Referral levels (55%) + VIP cut (10%) only account for 65% of a
+        // referred purchase to begin with -- the remaining 35% (plus any
+        // integer-division dust from the bps splits above) is referral
+        // program money, not company revenue, so it goes to marketing too.
         if (distributed < usdtAmount) {
-            usdt.safeTransfer(treasury, usdtAmount - distributed);
+            usdt.safeTransfer(marketingWallet, usdtAmount - distributed);
         }
     }
 
