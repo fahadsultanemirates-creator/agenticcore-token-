@@ -26,7 +26,7 @@ export const TOKEN = {
   presaleContractAddress: "0x00000000000000000000000000000000000000" as `0x${string}`,
   bscScanBase: "https://bscscan.com",
   pancakeSwapUrl: "https://pancakeswap.finance",
-  telegramBotUrl: "https://t.me/AgenticCoreAI_bot",
+  telegramBotUrl: "https://t.me/AgenticcoreACbot",
 };
 
 // Community & Referral Rewards (formerly a standalone 35% allocation) was
