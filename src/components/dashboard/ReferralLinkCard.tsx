@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Copy, Check, Share2 } from "lucide-react";
 import { SITE_URL } from "@/lib/tokenConfig";
+import { REFERRAL_LEVELS } from "@/lib/referral";
 
 export default function ReferralLinkCard({ address }: { address: string }) {
   const [copied, setCopied] = useState(false);
@@ -53,7 +54,8 @@ export default function ReferralLinkCard({ address }: { address: string }) {
         </div>
         <p className="text-xs text-ac-muted">
           Share this link — every purchase made through it, and through your
-          referrals&apos; links down to level 7, earns you AC.
+          referrals&apos; links down to level {REFERRAL_LEVELS}, pays you in
+          USDT, and mints the buyer bonus AC too.
         </p>
       </div>
     </div>

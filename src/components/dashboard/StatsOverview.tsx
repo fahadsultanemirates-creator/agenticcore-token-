@@ -1,5 +1,6 @@
 import { Users, Coins, TrendingUp, Layers } from "lucide-react";
 import type { ReferralLevelSummary } from "@/lib/mockReferralData";
+import { REFERRAL_LEVELS } from "@/lib/referral";
 
 export default function StatsOverview({
   totalReferrals,
@@ -9,7 +10,7 @@ export default function StatsOverview({
   levelSummary: ReferralLevelSummary[];
 }) {
   const totalVolume = levelSummary.reduce((sum, l) => sum + l.volumeUsd, 0);
-  const totalRewardAc = levelSummary.reduce((sum, l) => sum + l.rewardAc, 0);
+  const totalRewardUsdt = levelSummary.reduce((sum, l) => sum + l.rewardUsdt, 0);
   const activeLevels = levelSummary.filter((l) => l.referralCount > 0).length;
 
   const stats = [
@@ -17,14 +18,14 @@ export default function StatsOverview({
     {
       icon: Coins,
       label: "Est. Rewards Earned",
-      value: `${totalRewardAc.toLocaleString(undefined, { maximumFractionDigits: 0 })} AC`,
+      value: `$${totalRewardUsdt.toLocaleString(undefined, { maximumFractionDigits: 2 })} USDT`,
     },
     {
       icon: TrendingUp,
       label: "Downline Volume",
       value: `$${totalVolume.toLocaleString(undefined, { maximumFractionDigits: 2 })}`,
     },
-    { icon: Layers, label: "Active Levels", value: `${activeLevels} / 7` },
+    { icon: Layers, label: "Active Levels", value: `${activeLevels} / ${REFERRAL_LEVELS}` },
   ];
 
   return (

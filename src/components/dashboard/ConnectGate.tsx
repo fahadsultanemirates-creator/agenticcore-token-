@@ -2,6 +2,7 @@
 
 import { Wallet, ShieldCheck, Network, Link2 } from "lucide-react";
 import ConnectWalletButton from "@/components/ui/ConnectWalletButton";
+import { REFERRAL_LEVELS } from "@/lib/referral";
 
 const POINTS = [
   {
@@ -16,8 +17,8 @@ const POINTS = [
   },
   {
     icon: Network,
-    title: "Full 7-level tree",
-    body: "See every referral in your downline and the rewards they generate.",
+    title: `Full ${REFERRAL_LEVELS}-level tree`,
+    body: "See every referral in your downline, your VIP Pool progress, and the USDT rewards they generate.",
   },
 ];
 

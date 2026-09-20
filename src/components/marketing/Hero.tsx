@@ -1,6 +1,7 @@
 import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { TOKEN, formatSupply } from "@/lib/tokenConfig";
+import { REFERRAL_LEVELS } from "@/lib/referral";
 
 export default function Hero() {
   return (
@@ -20,12 +21,12 @@ export default function Hero() {
             The community-owned token built to launch stable.
           </h1>
 
-          <p className="mt-6 max-w-xl text-balance text-base text-ac-muted sm:text-lg">
+          <p className="mt-6 max-w-xl text-balance text-base text-foreground/75 sm:text-lg">
             AgenticCore ({TOKEN.ticker}) is a {TOKEN.standard} token on{" "}
             {TOKEN.chain} with a {formatSupply(TOKEN.totalSupply)} fixed
-            supply, a 7-level referral program, and a $
-            {TOKEN.maxBuyUsd} per-wallet buy cap engineered to protect the
-            launch from volatility.
+            supply, a {REFERRAL_LEVELS}-level referral program, and a $
+            {TOKEN.minBuyUsd}&ndash;${TOKEN.maxBuyUsd} per-wallet buy range
+            engineered to protect the launch from volatility.
           </p>
 
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
@@ -59,9 +60,9 @@ export default function Hero() {
 function HeroStats() {
   const stats = [
     { label: "Total Supply", value: `${formatSupply(TOKEN.totalSupply)} AC` },
-    { label: "Max Buy / Wallet", value: `$${TOKEN.maxBuyUsd}` },
+    { label: "Buy Range / Wallet", value: `$${TOKEN.minBuyUsd}–$${TOKEN.maxBuyUsd}` },
     { label: "Network", value: "BNB Smart Chain" },
-    { label: "Referral Depth", value: "7 Levels" },
+    { label: "Referral Depth", value: `${REFERRAL_LEVELS} Levels` },
   ];
 
   return (

@@ -20,7 +20,7 @@ export interface ReferralLevelSummary {
   pct: number;
   referralCount: number;
   volumeUsd: number;
-  rewardAc: number;
+  rewardUsdt: number;
 }
 
 function mulberry32(seed: number) {
@@ -60,8 +60,8 @@ function buildLevel(
   const nodes: ReferralNode[] = [];
   for (let i = 0; i < count; i++) {
     const id = `${path}-${level}-${i}`;
-    // Purchases are bounded by the $100/wallet cap enforced at launch.
-    const purchaseUsd = Math.round((10 + rng() * (TOKEN.maxBuyUsd - 10)) * 100) / 100;
+    // Purchases are bounded by the per-wallet buy range enforced at launch.
+    const purchaseUsd = Math.round((TOKEN.minBuyUsd + rng() * (TOKEN.maxBuyUsd - TOKEN.minBuyUsd)) * 100) / 100;
     const nextBranchCap = Math.max(0, branchCap - 1);
     nodes.push({
       id,
@@ -103,8 +103,9 @@ export function summarizeTreeByLevel(tree: ReferralNode[]): ReferralLevelSummary
       pct: r.pct,
       referralCount: bucket.count,
       volumeUsd: Math.round(bucket.volume * 100) / 100,
-      // Illustrative AC reward at a placeholder $0.0000025/AC reference price.
-      rewardAc: Math.round(((bucket.volume * r.pct) / 100 / 0.0000025) * 100) / 100,
+      // Commissions pay in USDT, straight off the purchase total -- no AC
+      // price conversion involved.
+      rewardUsdt: Math.round(((bucket.volume * r.pct) / 100) * 100) / 100,
     };
   });
 }

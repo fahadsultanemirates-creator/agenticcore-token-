@@ -8,5 +8,5 @@ export function getMockPurchasedUsd(address: string): number {
     hash = (Math.imul(31, hash) + address.charCodeAt(i)) | 0;
   }
   const normalized = (hash >>> 0) / 4294967296;
-  return Math.round(normalized * 55 * 100) / 100; // $0 – $55 already spent
+  return Math.round(normalized * 550 * 100) / 100; // $0 – $550 already spent
 }
