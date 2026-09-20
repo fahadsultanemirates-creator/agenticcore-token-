@@ -12,6 +12,12 @@ const walletConnectProjectId =
 
 export const wagmiConfig = getDefaultConfig({
   appName: "AgenticCore (AC)",
+  appDescription: "AgenticCore (AC) — BEP-20 token on BNB Smart Chain.",
+  // WalletConnect session metadata with no icon is a known trigger for
+  // some wallets to silently drop the pairing request instead of
+  // completing it -- always send at least one. Guarded for the build's
+  // Node-side prerender pass, where `window` doesn't exist.
+  appIcon: typeof window !== "undefined" ? `${window.location.origin}/logo.png` : undefined,
   projectId: walletConnectProjectId,
   chains: [bsc, bscTestnet],
   ssr: true,
