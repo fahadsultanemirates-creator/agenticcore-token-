@@ -37,6 +37,7 @@ async function deploySystem(usdtDecimals = 18) {
   const marketingVesting = await deployVestingWallet(marketingBeneficiary.address, now, 2 * 365 * 24 * 3600);
 
   const token = await ethers.deployContract("AgenticCoreToken", [
+    deployer.address,
     liquidityWallet.address,
     deployer.address, // presaleReceiver -- deployer holds it until transferred to Sale
     ecosystemWallet.address,
@@ -51,6 +52,11 @@ async function deploySystem(usdtDecimals = 18) {
     treasury.address,
     marketingSpendWallet.address,
   ]);
+
+  // The Sale contract holds the entire Presale allocation -- exempt it from
+  // the wallet cap before funding it, same as any address whose large
+  // balance is functional rather than personal accumulation.
+  await token.connect(deployer).setWalletCapExempt(await sale.getAddress(), true);
 
   // Fund the sale contract with the Presale allocation (35% of supply).
   const presaleAmount = (TOTAL_SUPPLY * 35n) / 100n;
@@ -100,9 +106,11 @@ describe("AgenticCoreToken", function () {
   });
 
   it("rejects a zero address for any destination", async function () {
-    const { liquidityWallet, ecosystemWallet, teamBeneficiary, marketingBeneficiary } = await deploySystem();
+    const { deployer, liquidityWallet, ecosystemWallet, teamBeneficiary, marketingBeneficiary } =
+      await deploySystem();
     await expect(
       ethers.deployContract("AgenticCoreToken", [
+        deployer.address,
         ethers.ZeroAddress,
         liquidityWallet.address,
         ecosystemWallet.address,
@@ -110,6 +118,30 @@ describe("AgenticCoreToken", function () {
         marketingBeneficiary.address,
       ]),
     ).to.be.revertedWith("liquidityWallet is zero");
+  });
+
+  it("enforces the anti-whale wallet cap until the owner permanently disables it", async function () {
+    const { token, deployer, liquidityWallet, buyers } = await deploySystem();
+    const [wallet] = buyers;
+    const maxWallet = (TOTAL_SUPPLY * 1n) / 100n;
+
+    // liquidityWallet is exempt as a *sender* is irrelevant -- the cap only
+    // checks the recipient -- but it's exempt as a genesis destination too,
+    // so it's a convenient, well-funded source to send FROM while testing
+    // the cap on a fresh, non-exempt recipient wallet.
+    await expect(
+      token.connect(liquidityWallet).transfer(wallet.address, maxWallet + 1n),
+    ).to.be.revertedWith("exceeds max wallet amount");
+
+    await token.connect(liquidityWallet).transfer(wallet.address, maxWallet);
+    expect(await token.balanceOf(wallet.address)).to.equal(maxWallet);
+
+    await token.connect(deployer).disableAntiWhale();
+    await expect(token.connect(deployer).disableAntiWhale()).to.be.revertedWith("already disabled");
+
+    // No longer capped once disabled.
+    await token.connect(liquidityWallet).transfer(wallet.address, 1n);
+    expect(await token.balanceOf(wallet.address)).to.equal(maxWallet + 1n);
   });
 });
 
