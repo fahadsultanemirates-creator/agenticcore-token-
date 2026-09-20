@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   // middleware, or server-only rendering) — export plain HTML so it can be
   // served from any static host without a server runtime.
   output: "export",
+  // Static export has no server to run Next's image optimizer through, so
+  // next/image must fall back to serving the source file as-is.
+  images: {
+    unoptimized: true,
+  },
   turbopack: {
     // @coinbase/cdp-sdk is pulled in transitively via wagmi's Coinbase/Base
     // Account connector purely to support Base Pay's x402 subscription

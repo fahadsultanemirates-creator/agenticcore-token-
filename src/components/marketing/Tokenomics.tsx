@@ -5,7 +5,16 @@ import { TOKEN, TOKENOMICS, formatSupply } from "@/lib/tokenConfig";
 
 export default function Tokenomics() {
   return (
-    <section id="tokenomics" className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
+    <section id="tokenomics" className="relative mx-auto max-w-7xl overflow-hidden px-5 py-24 sm:px-8">
+      <div
+        className="pointer-events-none absolute -left-24 top-10 h-[420px] w-[420px] rounded-full bg-ac-violet/20 blur-[120px]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -right-24 bottom-0 h-[380px] w-[380px] rounded-full bg-ac-cyan/15 blur-[120px]"
+        aria-hidden
+      />
+      <div className="relative">
       <SectionHeading
         eyebrow="Tokenomics"
         title="A fixed, transparent supply."
@@ -45,7 +54,7 @@ export default function Tokenomics() {
             <span className="text-3xl font-black text-foreground">
               {formatSupply(TOKEN.totalSupply)}
             </span>
-            <span className="text-xs text-ac-muted">Total {TOKEN.ticker} Supply</span>
+            <span className="text-xs text-foreground/60">Total {TOKEN.ticker} Supply</span>
           </div>
         </div>
 
@@ -62,10 +71,11 @@ export default function Tokenomics() {
                 />
                 <span className="text-sm font-medium text-foreground">{item.label}</span>
               </div>
-              <span className="text-sm font-bold text-ac-muted">{item.pct}%</span>
+              <span className="text-sm font-bold text-ac-lime">{item.pct}%</span>
             </li>
           ))}
         </ul>
+      </div>
       </div>
     </section>
   );
@@ -90,7 +100,7 @@ export function SectionHeading({
       <h2 className="mt-3 text-3xl font-black tracking-tight text-foreground sm:text-4xl">
         {title}
       </h2>
-      {subtitle && <p className="mt-4 text-base text-ac-muted">{subtitle}</p>}
+      {subtitle && <p className="mt-4 text-base text-foreground/75">{subtitle}</p>}
     </div>
   );
 }

@@ -36,7 +36,19 @@
 }
 
 body {
-  background: var(--ac-bg);
+  /* Ambient glow that carries the hero's shine down the whole page —
+     fixed to the viewport so it reads as one continuous atmosphere
+     instead of the page going flat black the moment you scroll past
+     Hero's own local glow blob. */
+  background-color: var(--ac-bg);
+  background-image:
+    radial-gradient(680px circle at 12% 6%, rgba(124, 58, 237, 0.22), transparent 60%),
+    radial-gradient(620px circle at 88% 22%, rgba(34, 211, 238, 0.14), transparent 60%),
+    radial-gradient(560px circle at 15% 55%, rgba(124, 58, 237, 0.16), transparent 60%),
+    radial-gradient(700px circle at 85% 68%, rgba(204, 255, 0, 0.08), transparent 55%),
+    radial-gradient(800px circle at 40% 95%, rgba(34, 211, 238, 0.12), transparent 60%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--foreground);
   font-family: var(--font-sans);
 }

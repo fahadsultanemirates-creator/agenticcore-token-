@@ -36,7 +36,12 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="mx-auto max-w-4xl px-5 py-24 sm:px-8">
+    <section id="faq" className="relative mx-auto max-w-4xl overflow-hidden px-5 py-24 sm:px-8">
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 h-[380px] w-[600px] -translate-x-1/2 rounded-full bg-ac-cyan/10 blur-[130px]"
+        aria-hidden
+      />
+      <div className="relative">
       <SectionHeading eyebrow="FAQ" title="Common questions" />
 
       <div className="mt-12 divide-y divide-ac-border card-surface rounded-2xl">
@@ -58,11 +63,12 @@ export default function FAQ() {
                 />
               </button>
               {isOpen && (
-                <p className="pb-5 text-sm leading-relaxed text-ac-muted">{item.a}</p>
+                <p className="pb-5 text-sm leading-relaxed text-foreground/75">{item.a}</p>
               )}
             </div>
           );
         })}
+      </div>
       </div>
     </section>
   );

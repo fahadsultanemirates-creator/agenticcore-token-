@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { TOKEN } from "@/lib/tokenConfig";
 
 const COLUMNS = [
@@ -35,12 +36,10 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
           <div className="col-span-2">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-ac-violet to-ac-violet-dark text-sm font-black text-white">
-                AC
-              </span>
+              <Image src="/logo.png" alt="AgenticCore" width={32} height={32} className="h-8 w-8" />
               <span className="text-base font-semibold text-foreground">AgenticCore</span>
             </div>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-ac-muted">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground/70">
               A high-community BEP-20 token on BNB Smart Chain. Fair launch,
               7-level referral rewards, and a $100 max-buy cap designed to
               protect early-phase price stability.
