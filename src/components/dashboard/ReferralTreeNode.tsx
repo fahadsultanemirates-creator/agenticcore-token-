@@ -36,13 +36,23 @@ export default function ReferralTreeNode({
           <ChevronRight className={`h-4 w-4 transition-transform ${open ? "rotate-90" : ""}`} />
         </button>
 
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ac-violet/15">
-          <User className="h-3.5 w-3.5 text-ac-violet-light" />
+        <div
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
+            node.level === 1 ? "bg-ac-lime/15 ring-1 ring-ac-lime/40" : "bg-ac-violet/15"
+          }`}
+        >
+          <User className={`h-3.5 w-3.5 ${node.level === 1 ? "text-ac-lime" : "text-ac-violet-light"}`} />
         </div>
 
         <span className="font-mono text-sm text-foreground">{shortAddress(node.address)}</span>
 
-        <span className="rounded-full border border-ac-border px-2 py-0.5 text-[11px] font-medium text-ac-muted">
+        <span
+          className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${
+            node.level === 1
+              ? "border border-ac-lime/40 bg-ac-lime/10 text-ac-lime"
+              : "border border-ac-border text-ac-muted"
+          }`}
+        >
           L{node.level} · {formatPct(rate)}
         </span>
 

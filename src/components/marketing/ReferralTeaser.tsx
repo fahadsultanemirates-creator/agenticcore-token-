@@ -53,6 +53,13 @@ export default function ReferralTeaser() {
             VIP Pool contribution. Full tree visibility is available in your
             dashboard once connected.
           </p>
+          <Link
+            href="/referral-program"
+            className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-ac-lime hover:underline"
+          >
+            See the full breakdown &amp; VIP Pool details
+            <ArrowRight className="h-3 w-3" />
+          </Link>
         </div>
 
         <div className="lg:col-span-2">
