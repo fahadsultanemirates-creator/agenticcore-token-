@@ -37,7 +37,7 @@ export default function HowToBuy() {
             </span>
             <step.icon className="h-8 w-8 text-ac-lime" strokeWidth={1.75} />
             <h3 className="mt-5 text-lg font-bold text-foreground">{step.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ac-muted">{step.body}</p>
+            <p className="mt-2 text-sm leading-relaxed text-foreground/70">{step.body}</p>
           </div>
         ))}
       </div>
@@ -46,7 +46,7 @@ export default function HowToBuy() {
 
       <div className="mt-10 flex justify-center">
         <div className="card-surface flex flex-col items-center gap-3 rounded-2xl px-8 py-6 text-center">
-          <p className="text-sm text-ac-muted">
+          <p className="text-sm text-foreground/70">
             The {TOKEN.ticker} contract is not deployed yet — the buy button
             below will activate automatically once it goes live.
           </p>
@@ -84,15 +84,15 @@ function CapExplainer() {
           </div>
         </div>
 
-        <div className="space-y-4 text-sm leading-relaxed text-ac-muted sm:text-base">
+        <div className="space-y-4 text-sm leading-relaxed text-foreground/75 sm:text-base">
           <p>
-            AgenticCore is a <strong className="text-foreground">high-community token</strong> —
+            AgenticCore is a <strong className="text-ac-lime">high-community token</strong> —
             its value is meant to be distributed across thousands of early
             holders, not concentrated in a handful of large buys during the
             first volatile hours of trading.
           </p>
           <p>
-            A ${TOKEN.maxBuyUsd} maximum purchase per wallet is enforced directly
+            A <strong className="text-ac-lime">${TOKEN.maxBuyUsd}</strong> maximum purchase per wallet is enforced directly
             in the buy contract logic. It exists to prevent any single wallet
             from destabilizing the price while liquidity is still thin and the
             market hasn&apos;t found its footing — the exact window where
@@ -101,7 +101,7 @@ function CapExplainer() {
           <div className="grid gap-3 pt-2 sm:grid-cols-2">
             <div className="flex items-start gap-2.5 rounded-xl border border-ac-border/80 bg-ac-bg/60 p-4">
               <TrendingUp className="mt-0.5 h-4 w-4 shrink-0 text-ac-cyan" />
-              <p className="text-xs text-ac-muted sm:text-sm">
+              <p className="text-xs text-foreground/75 sm:text-sm">
                 <strong className="text-foreground">Protects price stability</strong> during
                 the uncertain early-launch phase, before liquidity depth is
                 established.
@@ -109,14 +109,14 @@ function CapExplainer() {
             </div>
             <div className="flex items-start gap-2.5 rounded-xl border border-ac-border/80 bg-ac-bg/60 p-4">
               <Users className="mt-0.5 h-4 w-4 shrink-0 text-ac-cyan" />
-              <p className="text-xs text-ac-muted sm:text-sm">
+              <p className="text-xs text-foreground/75 sm:text-sm">
                 <strong className="text-foreground">Widens distribution</strong> so AC
                 launches in the hands of a real community, not a few
                 concentrated wallets.
               </p>
             </div>
           </div>
-          <p className="text-xs text-ac-muted/80">
+          <p className="text-xs text-foreground/50">
             The cap applies per wallet at launch and is enforced on-chain in
             the buy contract — it is not a manual or discretionary limit.
           </p>

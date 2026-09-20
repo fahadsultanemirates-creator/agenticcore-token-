@@ -9,7 +9,12 @@ export default function ReferralTeaser() {
   const rates = getReferralLevelRates();
 
   return (
-    <section id="referral" className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
+    <section id="referral" className="relative mx-auto max-w-7xl overflow-hidden px-5 py-24 sm:px-8">
+      <div
+        className="pointer-events-none absolute -right-20 top-0 h-[400px] w-[400px] rounded-full bg-ac-violet/20 blur-[120px]"
+        aria-hidden
+      />
+      <div className="relative">
       <SectionHeading
         eyebrow="Referral Program"
         title="Get rewarded 7 levels deep."
@@ -27,7 +32,7 @@ export default function ReferralTeaser() {
                     r.level === 1 ? "sm:col-span-1" : ""
                   }`}
                 >
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-ac-muted">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-foreground/55">
                     {r.level === 1 ? "Direct" : `Level ${r.level}`}
                   </span>
                   <span
@@ -41,7 +46,7 @@ export default function ReferralTeaser() {
               ))}
             </div>
           </div>
-          <p className="mt-4 text-xs text-ac-muted">
+          <p className="mt-4 text-xs text-foreground/60">
             Rates shown are a percentage of each downline purchase, paid in AC
             to your wallet. Full tree visibility is available in your
             dashboard once connected.
@@ -56,7 +61,7 @@ export default function ReferralTeaser() {
             <h3 className="text-xl font-bold text-foreground">
               See your full referral tree
             </h3>
-            <p className="text-sm text-ac-muted">
+            <p className="text-sm text-foreground/75">
               Connect your wallet to get a unique referral link, track every
               referral across all 7 levels, and see your rewards accrue in
               real time.
@@ -70,6 +75,7 @@ export default function ReferralTeaser() {
             </Link>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
