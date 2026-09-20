@@ -1,0 +1,11 @@
+# Static export via Next.js (see next.config.ts's output: "export") — Netlify
+# just needs to run the normal build and serve the resulting out/ directory,
+# no server runtime or Next.js Netlify plugin required.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  # Next.js 16 + Turbopack needs a modern Node; Netlify's default build
+  # image is older than this project requires.
+  NODE_VERSION = "22"
