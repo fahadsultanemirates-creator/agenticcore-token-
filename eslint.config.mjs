@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Deno Edge Functions -- a separate runtime/toolchain from the Next.js
+    // app (Deno's own `deno lint` covers these, not this project's ESLint).
+    "supabase/functions/**",
   ]),
 ]);
 

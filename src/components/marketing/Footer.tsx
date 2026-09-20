@@ -19,6 +19,7 @@ const COLUMNS = [
       { label: "Referral Program", href: "/referral-program" },
       { label: "VIP Pool", href: "/referral-program" },
       { label: "Dashboard", href: "/dashboard" },
+      { label: "Telegram", href: TOKEN.telegramBotUrl },
       { label: "FAQ", href: "#faq" },
     ],
   },

@@ -26,6 +26,9 @@ export const TOKEN = {
   presaleContractAddress: "0x00000000000000000000000000000000000000" as `0x${string}`,
   bscScanBase: "https://bscscan.com",
   pancakeSwapUrl: "https://pancakeswap.finance",
+  // Placeholder until the bot's public @username is set -- swap in
+  // "https://t.me/<username>" once the Telegram bot is created.
+  telegramBotUrl: "https://t.me/AgenticCoreBot",
 };
 
 // Community & Referral Rewards (formerly a standalone 35% allocation) was
