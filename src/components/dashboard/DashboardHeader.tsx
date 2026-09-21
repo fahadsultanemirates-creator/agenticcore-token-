@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import ConnectWalletButton from "@/components/ui/ConnectWalletButton";
 
@@ -9,10 +10,8 @@ export default function DashboardHeader() {
     <header className="sticky top-0 z-50 border-b border-ac-border/70 bg-ac-bg/80 backdrop-blur-lg">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-ac-violet to-ac-violet-dark text-sm font-black text-white">
-            AC
-          </span>
-          <span className="hidden text-base font-semibold tracking-tight text-foreground sm:inline">
+          <Image src="/logo.png" alt="AgenticCore" width={32} height={32} className="h-8 w-8" priority />
+          <span className="text-base font-semibold tracking-tight text-foreground">
             AgenticCore
           </span>
         </Link>
