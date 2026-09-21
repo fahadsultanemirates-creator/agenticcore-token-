@@ -1,4 +1,11 @@
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import {
+  injectedWallet,
+  metaMaskWallet,
+  trustWallet,
+  coinbaseWallet,
+  walletConnectWallet,
+} from "@rainbow-me/rainbowkit/wallets";
 import { bsc, bscTestnet } from "wagmi/chains";
 
 // WalletConnect Cloud project ID — set as NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
@@ -23,4 +30,22 @@ export const wagmiConfig = getDefaultConfig({
   projectId: walletConnectProjectId,
   chains: [bsc, bscTestnet],
   ssr: true,
+  // Explicit wallet list so MetaMask, Trust Wallet, and Coinbase Wallet each
+  // get their own first-class tile in the connect modal, using the browser
+  // extension's direct injected connection when one is installed (the path
+  // that's actually been working) rather than every wallet besides MetaMask
+  // getting funneled into a single generic "WalletConnect" tile -- that
+  // tile's QR/relay flow is the one that's been unreliable. WalletConnect
+  // itself is kept as a separate fallback option for wallets not listed
+  // individually, or for pairing with a phone that has no extension.
+  wallets: [
+    {
+      groupName: "Popular",
+      wallets: [metaMaskWallet, trustWallet, coinbaseWallet, injectedWallet],
+    },
+    {
+      groupName: "Other",
+      wallets: [walletConnectWallet],
+    },
+  ],
 });

@@ -32,6 +32,12 @@ export const TOKEN = {
   telegramBotUrl: "https://t.me/AgenticcoreACbot",
 };
 
+// The single wallet allowed into /admin. Client-side gate only -- every
+// actual state-changing action there is separately enforced on-chain by
+// the contracts' own onlyOwner (this address is the real Token/Sale owner
+// from deployment), so a bypassed client check still can't do anything.
+export const ADMIN_ADDRESS = "0x170BEc84cD2Be039C30BefE09a57f6a132cf5c60" as `0x${string}`;
+
 // Fixed at deployment, minted once into these five destinations -- no mint
 // function exists afterward. Liquidity and Presale are held directly and
 // spendable now; Team and Marketing sit in on-chain VestingWallet contracts

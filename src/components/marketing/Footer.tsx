@@ -10,7 +10,7 @@ const COLUMNS = [
       { label: "Tokenomics", href: "#tokenomics" },
       { label: "How to Buy", href: "#how-to-buy" },
       { label: "Launch & Presale", href: "#presale" },
-      { label: "Contract (coming soon)", href: "#how-to-buy" },
+      { label: "Contract on BscScan", href: `${TOKEN.bscScanBase}/address/${TOKEN.contractAddress}` },
     ],
   },
   {
@@ -26,7 +26,7 @@ const COLUMNS = [
   {
     title: "Resources",
     links: [
-      { label: "BscScan", href: TOKEN.bscScanBase },
+      { label: "BscScan", href: `${TOKEN.bscScanBase}/address/${TOKEN.contractAddress}` },
       { label: "PancakeSwap", href: TOKEN.pancakeSwapUrl },
     ],
   },
