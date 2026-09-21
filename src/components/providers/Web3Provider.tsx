@@ -7,10 +7,6 @@ import { WagmiProvider } from "wagmi";
 import { wagmiConfig } from "@/lib/wagmi";
 import { useState } from "react";
 
-// Custom event name used to surface a wallet-connect failure outside of
-// DevTools -- see ConnectErrorBanner.tsx, which renders whatever this fires.
-export const WALLET_MUTATION_ERROR_EVENT = "wallet-mutation-error";
-
 export default function Web3Provider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
     () =>
@@ -22,11 +18,8 @@ export default function Web3Provider({ children }: { children: React.ReactNode }
             // own error state instead of throwing it -- react-query's
             // MutationCache is the one place that sees every mutation
             // failure in the app regardless of who triggered it, so this is
-            // how a silent connect failure actually becomes visible.
+            // logged for debugging even though nothing renders it directly.
             console.error("[wallet mutation error]", error);
-            if (typeof window !== "undefined") {
-              window.dispatchEvent(new CustomEvent(WALLET_MUTATION_ERROR_EVENT, { detail: error }));
-            }
           },
         }),
       })

@@ -3,7 +3,6 @@ import "./globals.css";
 import Web3Provider from "@/components/providers/Web3Provider";
 import ReferralCapture from "@/components/providers/ReferralCapture";
 import ChatWidget from "@/components/chat/ChatWidget";
-import ConnectErrorBanner from "@/components/ui/ConnectErrorBanner";
 import { SITE_URL, TOKEN } from "@/lib/tokenConfig";
 import { REFERRAL_LEVELS } from "@/lib/referral";
 
@@ -25,7 +24,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Web3Provider>{children}</Web3Provider>
         <ReferralCapture />
         <ChatWidget />
-        <ConnectErrorBanner />
       </body>
     </html>
   );
