@@ -34,6 +34,9 @@
     "node_modules",
     // Deno Edge Functions -- a separate runtime/toolchain (Deno, not
     // Node/tsc) with its own remote esm.sh imports and global `Deno` API.
-    "supabase/functions/**"
+    "supabase/functions/**",
+    // Hardhat project -- its own tsconfig/toolchain (ESM, Hardhat 3's
+    // network APIs), not part of the Next.js app.
+    "contracts/**"
   ]
 }

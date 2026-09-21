@@ -48,10 +48,11 @@ export default function ReferralTeaser() {
           </div>
           <p className="mt-4 text-xs text-foreground/60">
             Rates shown are a percentage of each downline purchase, paid in
-            USDT to your wallet — never in AC. A direct (no-referral) buy
-            pays 100% to the AgenticCore treasury instead: no commission, no
-            VIP Pool contribution. Full tree visibility is available in your
-            dashboard once connected.
+            USDT to your wallet — never in AC. Buying through a referral
+            link is the only way to earn (and be earned for) — a direct,
+            no-referral buy skips commissions and the VIP Pool entirely.
+            Full tree visibility is available in your dashboard once
+            connected.
           </p>
           <Link
             href="/referral-program"

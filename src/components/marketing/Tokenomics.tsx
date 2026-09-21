@@ -23,33 +23,36 @@ export default function Tokenomics() {
 
       <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:items-center">
         <div className="relative mx-auto h-72 w-72 sm:h-80 sm:w-80">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={TOKENOMICS as unknown as Record<string, unknown>[]}
-                dataKey="pct"
-                nameKey="label"
-                innerRadius="66%"
-                outerRadius="100%"
-                paddingAngle={2}
-                stroke="none"
-              >
-                {TOKENOMICS.map((entry) => (
-                  <Cell key={entry.label} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  background: "#16151d",
-                  border: "1px solid #26232f",
-                  borderRadius: 12,
-                  color: "#f4f2ff",
-                  fontSize: 13,
-                }}
-                formatter={(value, name) => [`${value}%`, name]}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+          <div className="animate-spin-slow absolute inset-0">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={TOKENOMICS as unknown as Record<string, unknown>[]}
+                  dataKey="pct"
+                  nameKey="label"
+                  innerRadius="66%"
+                  outerRadius="100%"
+                  paddingAngle={2}
+                  stroke="none"
+                  isAnimationActive={false}
+                >
+                  {TOKENOMICS.map((entry) => (
+                    <Cell key={entry.label} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    background: "#16151d",
+                    border: "1px solid #26232f",
+                    borderRadius: 12,
+                    color: "#f4f2ff",
+                    fontSize: 13,
+                  }}
+                  formatter={(value, name) => [`${value}%`, name]}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
           <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-3xl font-black text-foreground">
               {formatSupply(TOKEN.totalSupply)}

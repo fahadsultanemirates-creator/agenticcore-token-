@@ -21,25 +21,28 @@ export const TOKEN = {
   // Illustrative genesis price only -- not a peg or a promise, just what
   // "2T supply, presale allocation X%" implies at launch.
   startingPriceUsd: 0.0000001,
-  contractAddress: "0x00000000000000000000000000000000000000" as `0x${string}`,
-  isContractLive: false,
-  presaleContractAddress: "0x00000000000000000000000000000000000000" as `0x${string}`,
+  contractAddress: "0xe9568888a0bc317519957047cf736e134B097768" as `0x${string}`,
+  isContractLive: true,
+  presaleContractAddress: "0xc9538dE177FD684704473041B81E2eC6CEc95679" as `0x${string}`,
+  teamVestingAddress: "0xc319CE1fC59eCcCc5138FeDdDF025B520a6333EE" as `0x${string}`,
+  marketingVestingAddress: "0x8B5AdB08D1550C8ef4621d335A9a495828035840" as `0x${string}`,
+  usdtAddress: "0x55d398326f99059fF775485246999027B3197955" as `0x${string}`,
   bscScanBase: "https://bscscan.com",
   pancakeSwapUrl: "https://pancakeswap.finance",
   telegramBotUrl: "https://t.me/AgenticcoreACbot",
 };
 
-// Community & Referral Rewards (formerly a standalone 35% allocation) was
-// folded away -- referral commissions and the VIP pool are now funded out
-// of live transaction flow (see referral.ts / VIP_POOL in this file), not a
-// pre-minted bucket. The freed-up 35% moved into Team (+10), Marketing
-// (+27), with Ecosystem trimmed by 2 -- still exactly 100%.
+// Fixed at deployment, minted once into these five destinations -- no mint
+// function exists afterward. Liquidity and Presale are held directly and
+// spendable now; Team and Marketing sit in on-chain VestingWallet contracts
+// (see TOKEN.teamVestingAddress / marketingVestingAddress) releasing
+// gradually over time rather than being available up front.
 export const TOKENOMICS = [
-  { label: "Liquidity Pool", pct: 25, color: "var(--ac-lime)" },
-  { label: "Presale / Public Launch", pct: 20, color: "var(--ac-cyan)" },
+  { label: "Liquidity Pool", pct: 35, color: "var(--ac-lime)" },
+  { label: "Presale / Public Launch", pct: 35, color: "var(--ac-cyan)" },
   { label: "Ecosystem & Development", pct: 10, color: "#A78BFA" },
-  { label: "Team (vested)", pct: 15, color: "#4C1D95" },
-  { label: "Marketing", pct: 30, color: "#2DD4BF" },
+  { label: "Team (vested)", pct: 10, color: "#4C1D95" },
+  { label: "Marketing (vested)", pct: 10, color: "#2DD4BF" },
 ] as const;
 
 // VIP Pool: 10% of every referred purchase's USDT value is swept into a

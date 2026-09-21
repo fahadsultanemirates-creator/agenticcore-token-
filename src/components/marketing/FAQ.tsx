@@ -21,7 +21,7 @@ const FAQS = [
   },
   {
     q: "How does the referral reward structure work?",
-    a: `Every purchase made through a referral link pays out in USDT (never AC) across up to ${REFERRAL_LEVELS} levels of the referring tree — direct referrals earn 20%, decreasing through the levels below, for up to ${formatPct(getTotalReferralPct())} of the purchase total. A referred buy also mints the buyer ${REFERRED_BUY_BONUS_PCT}% more AC than a direct, no-referral buy. Buying with no referral link sends 100% of the purchase to the AgenticCore treasury instead — no commissions paid out.`,
+    a: `Every purchase made through a referral link pays out in USDT (never AC) across up to ${REFERRAL_LEVELS} levels of the referring tree — direct referrals earn 20%, decreasing through the levels below, for up to ${formatPct(getTotalReferralPct())} of the purchase total. A referred buy also mints the buyer ${REFERRED_BUY_BONUS_PCT}% more AC than a direct, no-referral buy. Buying with no referral link skips all of that — no commissions, no bonus AC, no VIP Pool contribution — so grabbing a referral link before you buy is always worth it.`,
   },
   {
     q: "What is the VIP Pool?",

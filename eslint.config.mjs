@@ -15,6 +15,9 @@ const eslintConfig = defineConfig([
     // Deno Edge Functions -- a separate runtime/toolchain from the Next.js
     // app (Deno's own `deno lint` covers these, not this project's ESLint).
     "supabase/functions/**",
+    // Hardhat project -- its own toolchain and generated typechain output,
+    // not part of the Next.js app.
+    "contracts/**",
   ]),
 ]);
 

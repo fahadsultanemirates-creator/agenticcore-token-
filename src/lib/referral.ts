@@ -24,3 +24,30 @@ export function getTotalReferralPct(): number {
 export function formatPct(pct: number): string {
   return `${pct % 1 === 0 ? pct : pct.toFixed(2)}%`;
 }
+
+export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000" as const;
+const REFERRER_STORAGE_KEY = "ac_referrer";
+
+function isLikelyAddress(value: string): value is `0x${string}` {
+  return /^0x[0-9a-fA-F]{40}$/.test(value);
+}
+
+// Captures ?ref=0x... from the URL into localStorage, first-touch only --
+// mirrors the Sale contract's own referrerOf permanence (once a referrer is
+// on record for a wallet, it's set forever), so a later visit with a
+// different ?ref= link can't override an already-stored one client-side
+// either.
+export function captureReferrerFromUrl(): void {
+  if (typeof window === "undefined") return;
+  if (localStorage.getItem(REFERRER_STORAGE_KEY)) return;
+  const ref = new URLSearchParams(window.location.search).get("ref");
+  if (ref && isLikelyAddress(ref)) {
+    localStorage.setItem(REFERRER_STORAGE_KEY, ref);
+  }
+}
+
+export function getStoredReferrer(): `0x${string}` {
+  if (typeof window === "undefined") return ZERO_ADDRESS;
+  const stored = localStorage.getItem(REFERRER_STORAGE_KEY);
+  return stored && isLikelyAddress(stored) ? stored : ZERO_ADDRESS;
+}

@@ -49,27 +49,40 @@ function randomAddress(rng: () => number): string {
   return out;
 }
 
+// A minimum child count for the first few levels, so the demo tree always
+// shows visible, multi-level depth regardless of which wallet address seeds
+// it -- rather than risking a sparse or empty tree on an unlucky seed. A
+// shared node budget keeps the total illustrative rather than sprawling: a
+// "few levels so I can see how it looks," not a stress test.
+function minChildrenForLevel(level: number): number {
+  if (level <= 2) return 2;
+  if (level <= 5) return 1;
+  return 0;
+}
+
 function buildLevel(
   rng: () => number,
   level: number,
   path: string,
-  branchCap: number
+  budget: { remaining: number }
 ): ReferralNode[] {
-  if (level > REFERRAL_LEVELS) return [];
-  const count = Math.floor(rng() * (branchCap + 1));
+  if (level > REFERRAL_LEVELS || budget.remaining <= 0) return [];
+  const min = minChildrenForLevel(level);
+  const count = Math.min(budget.remaining, min + Math.floor(rng() * 2));
   const nodes: ReferralNode[] = [];
   for (let i = 0; i < count; i++) {
+    if (budget.remaining <= 0) break;
+    budget.remaining -= 1;
     const id = `${path}-${level}-${i}`;
     // Purchases are bounded by the per-wallet buy range enforced at launch.
     const purchaseUsd = Math.round((TOKEN.minBuyUsd + rng() * (TOKEN.maxBuyUsd - TOKEN.minBuyUsd)) * 100) / 100;
-    const nextBranchCap = Math.max(0, branchCap - 1);
     nodes.push({
       id,
       address: randomAddress(rng),
       level,
       joinedDaysAgo: Math.floor(rng() * 90),
       purchaseUsd,
-      children: buildLevel(rng, level + 1, id, nextBranchCap),
+      children: buildLevel(rng, level + 1, id, budget),
     });
   }
   return nodes;
@@ -78,7 +91,9 @@ function buildLevel(
 export function generateMockReferralTree(walletAddress: string): ReferralNode[] {
   const seed = hashAddress(walletAddress.toLowerCase());
   const rng = mulberry32(seed);
-  return buildLevel(rng, 1, "root", 4);
+  // ~30 nodes total, spread across up to REFERRAL_LEVELS deep -- enough to
+  // see real branching and depth without rendering a huge tree.
+  return buildLevel(rng, 1, "root", { remaining: 30 });
 }
 
 export function summarizeTreeByLevel(tree: ReferralNode[]): ReferralLevelSummary[] {

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Wallet, ArrowLeftRight, ShoppingCart, ShieldCheck, TrendingUp, Users } from "lucide-react";
 import { TOKEN, REFERRED_BUY_BONUS_PCT } from "@/lib/tokenConfig";
 import { SectionHeading } from "@/components/marketing/Tokenomics";
@@ -10,13 +11,13 @@ const STEPS = [
   },
   {
     icon: ArrowLeftRight,
-    title: "Bridge to BNB Smart Chain",
-    body: "Fund your wallet with BNB. Most exchanges support BSC withdrawals directly.",
+    title: "Get USDT + a little BNB",
+    body: "Fund your wallet with USDT (BEP-20) to buy AC, plus a small amount of BNB to cover gas fees. Most exchanges support BSC withdrawals directly.",
   },
   {
     icon: ShoppingCart,
     title: `Buy $${TOKEN.minBuyUsd}–$${TOKEN.maxBuyUsd} in AC`,
-    body: `Swap BNB for ${TOKEN.ticker}. The buy flow automatically enforces the $${TOKEN.minBuyUsd} minimum and $${TOKEN.maxBuyUsd} per-wallet cap — no manual math needed. Buying through a referral link mints ${REFERRED_BUY_BONUS_PCT}% more ${TOKEN.ticker} than a direct, no-referral buy.`,
+    body: `Pay in USDT — never BNB — to buy ${TOKEN.ticker}. The buy flow automatically enforces the $${TOKEN.minBuyUsd} minimum and $${TOKEN.maxBuyUsd} per-wallet cap — no manual math needed. Buying through a referral link mints ${REFERRED_BUY_BONUS_PCT}% more ${TOKEN.ticker} than a direct, no-referral buy.`,
   },
 ];
 
@@ -47,16 +48,16 @@ export default function HowToBuy() {
       <div className="mt-10 flex justify-center">
         <div className="card-surface flex flex-col items-center gap-3 rounded-2xl px-8 py-6 text-center">
           <p className="text-sm text-foreground/70">
-            The {TOKEN.ticker} contract is not deployed yet — the buy button
-            below will activate automatically once it goes live. Buys will
-            run ${TOKEN.minBuyUsd}&ndash;${TOKEN.maxBuyUsd} per wallet.
+            {TOKEN.ticker} is live on {TOKEN.chain}. Connect your wallet on
+            the dashboard to buy — runs ${TOKEN.minBuyUsd}&ndash;$
+            {TOKEN.maxBuyUsd} per wallet, paid in USDT.
           </p>
-          <button
-            disabled
-            className="inline-flex cursor-not-allowed items-center gap-2 rounded-full bg-ac-border px-7 py-3 text-sm font-bold text-ac-muted"
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-2 rounded-full bg-ac-lime px-7 py-3 text-sm font-bold text-ac-bg transition hover:brightness-110"
           >
-            Buy {TOKEN.ticker} — coming soon
-          </button>
+            Buy {TOKEN.ticker} now
+          </Link>
         </div>
       </div>
     </section>
