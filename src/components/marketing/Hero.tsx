@@ -47,7 +47,7 @@ export default function Hero() {
 
           <div className="mt-6 inline-flex items-center gap-2 text-xs text-ac-muted">
             <ShieldCheck className="h-4 w-4 text-ac-cyan" />
-            Contract not yet deployed — presale details below.
+            Live on {TOKEN.chain} — presale details below.
           </div>
         </div>
 

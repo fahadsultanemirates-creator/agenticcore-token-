@@ -11,6 +11,7 @@ const LINKS = [
   { href: "#how-to-buy", label: "How to Buy" },
   { href: "#referral", label: "Referrals" },
   { href: "#presale", label: "Launch" },
+  { href: "/roadmap", label: "Roadmap" },
   { href: "#faq", label: "FAQ" },
 ];
 

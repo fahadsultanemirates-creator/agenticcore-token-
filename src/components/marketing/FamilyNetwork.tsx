@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Bot, Building2, Users2, ArrowUpRight } from "lucide-react";
 import { TOKEN } from "@/lib/tokenConfig";
 import { SectionHeading } from "@/components/marketing/Tokenomics";
@@ -47,6 +48,15 @@ export default function FamilyNetwork() {
           <strong className="text-foreground">15% discount</strong> versus paying
           normally. Not live yet — announced here once it ships.
         </p>
+      </div>
+
+      <div className="mt-6 flex justify-center">
+        <Link
+          href="/roadmap"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-ac-lime hover:underline"
+        >
+          See what&apos;s next for AgenticCore <ArrowUpRight className="h-3.5 w-3.5" />
+        </Link>
       </div>
     </section>
   );
