@@ -68,11 +68,17 @@ export function getCardTierStatus(params: {
   ownTotalInvestedUsd: number;
   vipQualified: boolean;
   directSalesUsd: number;
+  // Marketing/demo override for the one admin wallet -- shows every card
+  // unlocked regardless of real progress, so the design can be screenshotted
+  // without actually hitting each threshold. Does NOT touch the real dollar
+  // figures shown on the cards (ownTotalInvestedUsd/directSalesUsd stay
+  // real), and never applies to anyone but the hardcoded admin address.
+  previewUnlockAll?: boolean;
 }): CardTierStatus {
   return {
-    standardUnlocked: params.ownTotalInvestedUsd >= TOKEN.minBuyUsd,
-    vipUnlocked: params.vipQualified,
-    apexUnlocked: params.directSalesUsd >= APEX_POOL.qualifyDirectSalesUsd,
+    standardUnlocked: params.previewUnlockAll || params.ownTotalInvestedUsd >= TOKEN.minBuyUsd,
+    vipUnlocked: params.previewUnlockAll || params.vipQualified,
+    apexUnlocked: params.previewUnlockAll || params.directSalesUsd >= APEX_POOL.qualifyDirectSalesUsd,
     ownTotalInvestedUsd: params.ownTotalInvestedUsd,
     directSalesUsd: params.directSalesUsd,
   };

@@ -22,8 +22,9 @@ import {
 } from "@/lib/mockReferralData";
 import { getNextPayoutAt, type VipPoolStatus } from "@/lib/mockVipPool";
 import { getCardTierStatus } from "@/lib/cardTiers";
-import { TOKEN, VIP_POOL } from "@/lib/tokenConfig";
+import { TOKEN, VIP_POOL, APEX_POOL, ADMIN_ADDRESS } from "@/lib/tokenConfig";
 import { SALE_ABI } from "@/lib/contracts";
+import { Sparkles } from "lucide-react";
 
 const USDT_SCALE = BigInt("1000000000000000000");
 
@@ -78,17 +79,35 @@ export default function DashboardPage() {
 
   const isVipQualified = qualifiedSinceTs > 0;
 
+  // Marketing/demo preview: the one admin wallet sees every card and both
+  // pool cards as fully qualified, regardless of real progress, so the
+  // designs can be screenshotted without actually hitting each threshold.
+  // Scoped tightly: it only ever matches the hardcoded admin address (never
+  // shown to a real visitor), it doesn't touch the real dollar figures
+  // ("Total invested" stays the real on-chain number), and it never
+  // touches qualifiedSinceTs/currentWeekId -- those still drive the real
+  // claimVipShare() flow below, so a preview view can never produce a
+  // claim button for USDT that isn't really claimable.
+  const isAdminPreview = !!address && address.toLowerCase() === ADMIN_ADDRESS.toLowerCase();
+
+  const displayQualifyingUsd = isAdminPreview
+    ? VIP_POOL.qualifyUsd
+    : Math.max(ownTotalInvestedUsd, directSalesUsd);
+  const displayIsVipQualified = isAdminPreview || isVipQualified;
+  const displayDirectSalesUsd = isAdminPreview ? APEX_POOL.qualifyDirectSalesUsd : directSalesUsd;
+
   const vipStatus: VipPoolStatus = useMemo(
     () => ({
-      qualifyingUsd: Math.max(ownTotalInvestedUsd, directSalesUsd),
+      qualifyingUsd: displayQualifyingUsd,
       qualifyTargetUsd: VIP_POOL.qualifyUsd,
-      isQualified: isVipQualified,
+      isQualified: displayIsVipQualified,
       poolSizeUsdt,
       qualifiedMemberCount,
-      estimatedShareUsdt: isVipQualified && qualifiedMemberCount > 0 ? poolSizeUsdt / qualifiedMemberCount : 0,
+      estimatedShareUsdt:
+        displayIsVipQualified && qualifiedMemberCount > 0 ? poolSizeUsdt / qualifiedMemberCount : 0,
       nextPayoutAt: nextPayoutTs > 0 ? new Date(nextPayoutTs * 1000) : getNextPayoutAt(),
     }),
-    [ownTotalInvestedUsd, directSalesUsd, isVipQualified, poolSizeUsdt, qualifiedMemberCount, nextPayoutTs]
+    [displayQualifyingUsd, displayIsVipQualified, poolSizeUsdt, qualifiedMemberCount, nextPayoutTs]
   );
 
   const cardStatus = useMemo(
@@ -97,8 +116,9 @@ export default function DashboardPage() {
         ownTotalInvestedUsd,
         vipQualified: isVipQualified,
         directSalesUsd,
+        previewUnlockAll: isAdminPreview,
       }),
-    [ownTotalInvestedUsd, isVipQualified, directSalesUsd]
+    [ownTotalInvestedUsd, isVipQualified, directSalesUsd, isAdminPreview]
   );
 
   if (!isConnected || !address) {
@@ -125,6 +145,13 @@ export default function DashboardPage() {
 
         <ReferralLinkCard address={address} />
         <DemoModeBanner />
+        {isAdminPreview && (
+          <div className="flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-xs text-amber-300 sm:text-sm">
+            <Sparkles className="h-4 w-4 shrink-0" />
+            Preview mode — every card and pool below is shown fully unlocked for the admin wallet only, for
+            screenshots/marketing. Nobody else sees this.
+          </div>
+        )}
         <StatsOverview totalReferrals={total} levelSummary={levelSummary} />
 
         {address && <MembershipCards address={address} status={cardStatus} />}
@@ -140,7 +167,7 @@ export default function DashboardPage() {
               qualifiedSinceTs={qualifiedSinceTs}
               currentWeekId={currentWeekId}
             />
-            <ApexPoolCard directSalesUsd={directSalesUsd} vipStatus={vipStatus} />
+            <ApexPoolCard directSalesUsd={displayDirectSalesUsd} vipStatus={vipStatus} />
           </div>
         </div>
 
