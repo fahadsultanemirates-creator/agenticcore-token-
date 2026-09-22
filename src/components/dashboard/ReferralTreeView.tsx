@@ -1,41 +1,39 @@
-"use client";
-
-import { useState } from "react";
-import { GitBranch } from "lucide-react";
+import { Users } from "lucide-react";
 import type { ReferralNode } from "@/lib/mockReferralData";
 import ReferralTreeNode from "@/components/dashboard/ReferralTreeNode";
-import { REFERRAL_LEVELS } from "@/lib/referral";
 
 export default function ReferralTreeView({ tree }: { tree: ReferralNode[] }) {
-  const [expandAll, setExpandAll] = useState(false);
-
   return (
     <div className="card-surface rounded-2xl p-6">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <GitBranch className="h-4 w-4 text-ac-lime" />
-          <h2 className="text-lg font-bold text-foreground">Referral tree</h2>
-        </div>
-        <button
-          onClick={() => setExpandAll((v) => !v)}
-          className="rounded-full border border-ac-border px-3.5 py-1.5 text-xs font-semibold text-ac-muted transition hover:border-ac-violet/50 hover:text-foreground"
-        >
-          {expandAll ? "Collapse all" : "Expand all"}
-        </button>
+      <div className="flex items-center gap-2">
+        <Users className="h-4 w-4 text-ac-lime" />
+        <h2 className="text-lg font-bold text-foreground">Referral tree</h2>
       </div>
       <p className="mt-1 text-sm text-ac-muted">
-        Every wallet in your downline, organized by level — down to level{" "}
-        {REFERRAL_LEVELS}.
+        The shape of your downline — hover a node for its level, join date, and purchase size. No wallet
+        addresses shown here; the full numbers are in the table below.
       </p>
 
-      <div className="mt-5">
+      <div className="mt-6">
         {tree.length === 0 ? (
           <EmptyState />
         ) : (
-          <div key={expandAll ? "open" : "closed"}>
-            {tree.map((node) => (
-              <ReferralTreeNode key={node.id} node={node} defaultOpen={expandAll} />
-            ))}
+          <div className="org-tree overflow-x-auto pb-2">
+            <ul className="min-w-max">
+              <li>
+                <div
+                  title="You"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ac-lime text-ac-bg ring-4 ring-ac-lime/20"
+                >
+                  <Users className="h-5 w-5" />
+                </div>
+                <ul>
+                  {tree.map((node) => (
+                    <ReferralTreeNode key={node.id} node={node} />
+                  ))}
+                </ul>
+              </li>
+            </ul>
           </div>
         )}
       </div>

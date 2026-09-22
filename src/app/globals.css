@@ -96,3 +96,68 @@ body {
 .animate-spin-slow {
   animation: spin-slow 40s linear infinite;
 }
+
+/* Referral tree "org chart" connectors — pure-CSS branch lines drawn with
+   li/ul pseudo-elements (no address text, no JS layout math). Every <li>
+   reserves a 20px band above its node for a horizontal sibling bar; the
+   parent <ul> of each branch drops a centered vertical stub into that same
+   band, and first/last/only-child trim the bar so lone or edge nodes don't
+   grow stray lines. */
+.org-tree ul {
+  display: flex;
+  justify-content: center;
+  padding-top: 0;
+}
+.org-tree li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  padding: 20px 10px 0 10px;
+}
+.org-tree li::before,
+.org-tree li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 50%;
+  width: 50%;
+  height: 20px;
+  border-top: 1px solid var(--ac-border);
+}
+.org-tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 1px solid var(--ac-border);
+}
+.org-tree li:only-child {
+  padding-top: 0;
+}
+.org-tree li:only-child::before,
+.org-tree li:only-child::after {
+  display: none;
+}
+.org-tree li:first-child::before,
+.org-tree li:last-child::after {
+  border-color: transparent;
+}
+.org-tree li:last-child::before {
+  border-right: 1px solid var(--ac-border);
+  border-radius: 0 6px 0 0;
+}
+.org-tree li:first-child::after {
+  border-radius: 6px 0 0 0;
+}
+.org-tree ul ul {
+  position: relative;
+}
+.org-tree ul ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 20px;
+  border-left: 1px solid var(--ac-border);
+}
