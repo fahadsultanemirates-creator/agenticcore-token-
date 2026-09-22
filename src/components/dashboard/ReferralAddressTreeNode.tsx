@@ -37,11 +37,11 @@ export default function ReferralAddressTreeNode({
         </button>
 
         <div
-          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
-            node.level === 1 ? "bg-ac-lime/15 ring-1 ring-ac-lime/40" : "bg-ac-violet/15"
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ac-lime/20 ring-1 ${
+            node.level === 1 ? "ring-ac-lime/70" : "ring-ac-lime/35"
           }`}
         >
-          <User className={`h-3.5 w-3.5 ${node.level === 1 ? "text-ac-lime" : "text-ac-violet-light"}`} />
+          <User className="h-3.5 w-3.5 text-ac-lime" />
         </div>
 
         <span className="font-mono text-sm text-foreground">{shortAddress(node.address)}</span>
