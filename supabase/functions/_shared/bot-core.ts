@@ -9,8 +9,16 @@
 // chat id (telegram), never a Supabase Auth user id.
 
 import Anthropic from "https://esm.sh/@anthropic-ai/sdk@0.127.0";
+// zodOutputFormat() is built against zod's v4 API internally (it imports
+// "zod/v4" and reads schema.def, a v4-only property -- v3 schemas only have
+// _def). The explicit `z` import below must therefore also be zod v4 --
+// building ReplySchema with a v3 `z.object()` left `.def` undefined and
+// zodOutputFormat() threw "Cannot read properties of undefined (reading
+// 'def')" on every single call, silently breaking all three assistants
+// behind the generic error-message fallback (every request still returned
+// HTTP 200, so it never showed up as a server error).
 import { zodOutputFormat } from "https://esm.sh/@anthropic-ai/sdk@0.127.0/helpers/zod";
-import { z } from "https://esm.sh/zod@3.23.8";
+import { z } from "https://esm.sh/zod@4.6.5";
 import { BUSINESS_KNOWLEDGE_PROMPT } from "./business-knowledge.ts";
 
 // deno-lint-ignore no-explicit-any
