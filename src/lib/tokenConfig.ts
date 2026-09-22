@@ -63,9 +63,25 @@ export const VIP_POOL = {
   payoutHourUtc: 17, // 5pm GMT
 };
 
+// Apex Pool: the tier above VIP. Qualifies on OWN DIRECT (level-1) referral
+// sales reaching this target -- unlike VIP, personal buy volume doesn't
+// count here, it has to be sales you generated for the team. Once earned,
+// permanent, same as VIP.
+export const APEX_POOL = {
+  qualifyDirectSalesUsd: 5000,
+  crossFamilyDiscountPct: 30,
+  referralBonusPct: 20,
+  vipPayoutMultiplier: 2,
+};
+
 // A referred buy mints 10% more AC (same USD spend) than a direct,
 // no-referral buy -- the incentive for using a referral link at all.
 export const REFERRED_BUY_BONUS_PCT = 10;
+
+// VIP-tier cross-family discount on AgenticCore sister businesses (site to
+// site, redeemed off-chain -- same "planned, not live yet" status as the
+// rest of the family-discount roadmap; see FamilyNetwork/roadmap copy).
+export const VIP_CROSS_FAMILY_DISCOUNT_PCT = 15;
 
 // Plain template interpolation of a sub-cent number like 0.0000001 renders
 // as "1e-7" (JS switches to exponential notation below 1e-6) -- always go

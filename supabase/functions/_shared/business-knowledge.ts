@@ -83,6 +83,32 @@ VIP POOL -- WEEKLY, IN USDT
 - The VIP Pool only exists because referred purchases are happening --
   it is funded live, not from a pre-minted allocation.
 
+APEX POOL -- THE TIER ABOVE VIP
+- Qualifies on your OWN DIRECT (level-1) referral sales reaching $5,000 --
+  unlike VIP, personal buy volume doesn't count here, it has to be sales
+  you generated for your direct team. Permanent once earned, same as VIP.
+- Three benefits once qualified: 30% off every AgenticCore family site
+  (redeemed off-chain, no AC needed -- same "planned, not live yet" status
+  as the rest of the family discount), your referral link mints your
+  referrals +20% extra AC instead of the standard +10%, and you get 2x
+  your VIP Pool payout every week (same qualification, double the USDT).
+
+AC MEMBERSHIP CARDS (dashboard)
+Three tiers, shown as debit-card-style visuals on the dashboard: Standard
+AC Card (unlocks with any buy, $5+), VIP AC Card (unlocks at VIP Pool
+qualification -- $1000 in direct sales or personal buys -- also carries a
+15% off every AgenticCore family site benefit, off-chain, same roadmap
+status), and Apex AC Card (unlocks at $5,000 in direct sales, the three
+benefits above). Cards start locked for everyone; the first purchase
+unlocks Standard. Activating a card means picking a display name once,
+which then shows on every card that wallet unlocks, alongside their real
+total invested amount (read live from the contract). IMPORTANT: same
+"illustrative sample" caveat as the referral tree -- the bonus
+percentages and cross-family discounts described are the planned reward
+structure, not something enforced automatically by the contract per tier
+today; be upfront about that if asked how the discount/bonus is actually
+applied.
+
 DASHBOARD (wallet-connect only, no sign-up)
 Connecting a wallet immediately shows: your referral link, a live Buy AC
 widget (real USDT purchase, on-chain), your wallet-cap-used progress

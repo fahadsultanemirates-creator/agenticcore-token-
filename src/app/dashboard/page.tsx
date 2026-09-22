@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ConnectGate from "@/components/dashboard/ConnectGate";
 import ReferralLinkCard from "@/components/dashboard/ReferralLinkCard";
@@ -9,6 +9,8 @@ import DemoModeBanner from "@/components/dashboard/DemoModeBanner";
 import StatsOverview from "@/components/dashboard/StatsOverview";
 import ReferralLevelChart from "@/components/dashboard/ReferralLevelChart";
 import VIPPoolCard from "@/components/dashboard/VIPPoolCard";
+import ApexPoolCard from "@/components/dashboard/ApexPoolCard";
+import MembershipCards from "@/components/dashboard/MembershipCards";
 import ReferralTreeView from "@/components/dashboard/ReferralTreeView";
 import RewardStructureTable from "@/components/dashboard/RewardStructureTable";
 import BuyWidget from "@/components/dashboard/BuyWidget";
@@ -19,6 +21,9 @@ import {
   totalReferrals,
 } from "@/lib/mockReferralData";
 import { getMockVipPoolStatus } from "@/lib/mockVipPool";
+import { getCardTierStatus } from "@/lib/cardTiers";
+import { TOKEN } from "@/lib/tokenConfig";
+import { SALE_ABI } from "@/lib/contracts";
 
 export default function DashboardPage() {
   const { address, isConnected } = useAccount();
@@ -32,6 +37,26 @@ export default function DashboardPage() {
   const vipStatus = useMemo(
     () => (address ? getMockVipPoolStatus(address) : null),
     [address]
+  );
+  const directSalesUsd = levelSummary.find((l) => l.level === 1)?.volumeUsd ?? 0;
+
+  const { data: purchasedRaw } = useReadContract({
+    address: TOKEN.presaleContractAddress,
+    abi: SALE_ABI,
+    functionName: "totalPurchasedUsd",
+    args: address ? [address] : undefined,
+    query: { enabled: !!address },
+  });
+  const ownTotalInvestedUsd = purchasedRaw !== undefined ? Number(purchasedRaw) : 0;
+
+  const cardStatus = useMemo(
+    () =>
+      getCardTierStatus({
+        ownTotalInvestedUsd,
+        vipQualified: vipStatus?.isQualified ?? false,
+        directSalesUsd,
+      }),
+    [ownTotalInvestedUsd, vipStatus, directSalesUsd]
   );
 
   if (!isConnected || !address) {
@@ -60,11 +85,16 @@ export default function DashboardPage() {
         <DemoModeBanner />
         <StatsOverview totalReferrals={total} levelSummary={levelSummary} />
 
+        {address && <MembershipCards address={address} status={cardStatus} />}
+
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <ReferralLevelChart levelSummary={levelSummary} />
           </div>
-          <div>{vipStatus && <VIPPoolCard status={vipStatus} />}</div>
+          <div className="space-y-6">
+            {vipStatus && <VIPPoolCard status={vipStatus} />}
+            {vipStatus && <ApexPoolCard directSalesUsd={directSalesUsd} vipStatus={vipStatus} />}
+          </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
