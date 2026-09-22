@@ -102,7 +102,12 @@ body {
    reserves a 20px band above its node for a horizontal sibling bar; the
    parent <ul> of each branch drops a centered vertical stub into that same
    band, and first/last/only-child trim the bar so lone or edge nodes don't
-   grow stray lines. */
+   grow stray lines. Line color is a visible lime tint (not --ac-border,
+   which is near-black-on-near-black and unreadable here) to match the
+   yellow node theme. */
+.org-tree {
+  --tree-line: rgba(204, 255, 0, 0.4);
+}
 .org-tree ul {
   display: flex;
   justify-content: center;
@@ -114,7 +119,7 @@ body {
   flex-direction: column;
   align-items: center;
   list-style: none;
-  padding: 20px 10px 0 10px;
+  padding: 24px 12px 0 12px;
 }
 .org-tree li::before,
 .org-tree li::after {
@@ -123,13 +128,13 @@ body {
   top: 0;
   right: 50%;
   width: 50%;
-  height: 20px;
-  border-top: 1px solid var(--ac-border);
+  height: 24px;
+  border-top: 1.5px solid var(--tree-line);
 }
 .org-tree li::after {
   right: auto;
   left: 50%;
-  border-left: 1px solid var(--ac-border);
+  border-left: 1.5px solid var(--tree-line);
 }
 .org-tree li:only-child {
   padding-top: 0;
@@ -143,7 +148,7 @@ body {
   border-color: transparent;
 }
 .org-tree li:last-child::before {
-  border-right: 1px solid var(--ac-border);
+  border-right: 1.5px solid var(--tree-line);
   border-radius: 0 6px 0 0;
 }
 .org-tree li:first-child::after {
@@ -158,6 +163,6 @@ body {
   top: 0;
   left: 50%;
   width: 0;
-  height: 20px;
-  border-left: 1px solid var(--ac-border);
+  height: 24px;
+  border-left: 1.5px solid var(--tree-line);
 }

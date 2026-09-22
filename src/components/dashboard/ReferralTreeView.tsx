@@ -10,8 +10,8 @@ export default function ReferralTreeView({ tree }: { tree: ReferralNode[] }) {
         <h2 className="text-lg font-bold text-foreground">Referral tree</h2>
       </div>
       <p className="mt-1 text-sm text-ac-muted">
-        The shape of your downline — hover a node for its level, join date, and purchase size. No wallet
-        addresses shown here; the full numbers are in the table below.
+        The shape of your downline. Click a node to expand its referrals, hover for level, join date, and
+        purchase size — no wallet addresses shown here; the full numbers are in the table below.
       </p>
 
       <div className="mt-6">
@@ -29,7 +29,7 @@ export default function ReferralTreeView({ tree }: { tree: ReferralNode[] }) {
                 </div>
                 <ul>
                   {tree.map((node) => (
-                    <ReferralTreeNode key={node.id} node={node} />
+                    <ReferralTreeNode key={node.id} node={node} defaultOpen />
                   ))}
                 </ul>
               </li>
