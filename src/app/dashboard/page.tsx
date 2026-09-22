@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { useAccount, useReadContract } from "wagmi";
+import { useAccount, useReadContract, useReadContracts } from "wagmi";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ConnectGate from "@/components/dashboard/ConnectGate";
 import ReferralLinkCard from "@/components/dashboard/ReferralLinkCard";
@@ -20,25 +20,26 @@ import {
   summarizeTreeByLevel,
   totalReferrals,
 } from "@/lib/mockReferralData";
-import { getMockVipPoolStatus } from "@/lib/mockVipPool";
+import { getNextPayoutAt, type VipPoolStatus } from "@/lib/mockVipPool";
 import { getCardTierStatus } from "@/lib/cardTiers";
-import { TOKEN } from "@/lib/tokenConfig";
+import { TOKEN, VIP_POOL } from "@/lib/tokenConfig";
 import { SALE_ABI } from "@/lib/contracts";
+
+const USDT_SCALE = BigInt("1000000000000000000");
 
 export default function DashboardPage() {
   const { address, isConnected } = useAccount();
 
+  // Referral tree/level breakdown is still the illustrative mock layout
+  // (see DemoModeBanner) -- there's no live indexer yet. VIP/Apex
+  // qualification below is real on-chain data, read directly off the Sale
+  // contract.
   const tree = useMemo(
     () => (address ? generateMockReferralTree(address) : []),
     [address]
   );
   const levelSummary = useMemo(() => summarizeTreeByLevel(tree), [tree]);
   const total = useMemo(() => totalReferrals(tree), [tree]);
-  const vipStatus = useMemo(
-    () => (address ? getMockVipPoolStatus(address) : null),
-    [address]
-  );
-  const directSalesUsd = levelSummary.find((l) => l.level === 1)?.volumeUsd ?? 0;
 
   const { data: purchasedRaw } = useReadContract({
     address: TOKEN.presaleContractAddress,
@@ -49,14 +50,55 @@ export default function DashboardPage() {
   });
   const ownTotalInvestedUsd = purchasedRaw !== undefined ? Number(purchasedRaw) : 0;
 
+  const { data: vipReads } = useReadContracts({
+    contracts: address
+      ? [
+          { address: TOKEN.presaleContractAddress, abi: SALE_ABI, functionName: "qualifiedSince", args: [address] },
+          {
+            address: TOKEN.presaleContractAddress,
+            abi: SALE_ABI,
+            functionName: "directReferralSalesUsd",
+            args: [address],
+          },
+          { address: TOKEN.presaleContractAddress, abi: SALE_ABI, functionName: "vipPoolBalance" },
+          { address: TOKEN.presaleContractAddress, abi: SALE_ABI, functionName: "totalQualifiedCount" },
+          { address: TOKEN.presaleContractAddress, abi: SALE_ABI, functionName: "nextPayoutTimestamp" },
+          { address: TOKEN.presaleContractAddress, abi: SALE_ABI, functionName: "currentWeekId" },
+        ]
+      : undefined,
+    query: { enabled: !!address },
+  });
+
+  const qualifiedSinceTs = vipReads?.[0]?.result !== undefined ? Number(vipReads[0].result) : 0;
+  const directSalesUsd = vipReads?.[1]?.result !== undefined ? Number(vipReads[1].result) : 0;
+  const poolSizeUsdt = vipReads?.[2]?.result !== undefined ? Number(vipReads[2].result) / Number(USDT_SCALE) : 0;
+  const qualifiedMemberCount = vipReads?.[3]?.result !== undefined ? Number(vipReads[3].result) : 0;
+  const nextPayoutTs = vipReads?.[4]?.result !== undefined ? Number(vipReads[4].result) : 0;
+  const currentWeekId = vipReads?.[5]?.result !== undefined ? Number(vipReads[5].result) : 0;
+
+  const isVipQualified = qualifiedSinceTs > 0;
+
+  const vipStatus: VipPoolStatus = useMemo(
+    () => ({
+      qualifyingUsd: Math.max(ownTotalInvestedUsd, directSalesUsd),
+      qualifyTargetUsd: VIP_POOL.qualifyUsd,
+      isQualified: isVipQualified,
+      poolSizeUsdt,
+      qualifiedMemberCount,
+      estimatedShareUsdt: isVipQualified && qualifiedMemberCount > 0 ? poolSizeUsdt / qualifiedMemberCount : 0,
+      nextPayoutAt: nextPayoutTs > 0 ? new Date(nextPayoutTs * 1000) : getNextPayoutAt(),
+    }),
+    [ownTotalInvestedUsd, directSalesUsd, isVipQualified, poolSizeUsdt, qualifiedMemberCount, nextPayoutTs]
+  );
+
   const cardStatus = useMemo(
     () =>
       getCardTierStatus({
         ownTotalInvestedUsd,
-        vipQualified: vipStatus?.isQualified ?? false,
+        vipQualified: isVipQualified,
         directSalesUsd,
       }),
-    [ownTotalInvestedUsd, vipStatus, directSalesUsd]
+    [ownTotalInvestedUsd, isVipQualified, directSalesUsd]
   );
 
   if (!isConnected || !address) {
@@ -92,8 +134,13 @@ export default function DashboardPage() {
             <ReferralLevelChart levelSummary={levelSummary} />
           </div>
           <div className="space-y-6">
-            {vipStatus && <VIPPoolCard status={vipStatus} />}
-            {vipStatus && <ApexPoolCard directSalesUsd={directSalesUsd} vipStatus={vipStatus} />}
+            <VIPPoolCard
+              status={vipStatus}
+              address={address}
+              qualifiedSinceTs={qualifiedSinceTs}
+              currentWeekId={currentWeekId}
+            />
+            <ApexPoolCard directSalesUsd={directSalesUsd} vipStatus={vipStatus} />
           </div>
         </div>
 

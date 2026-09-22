@@ -3,6 +3,7 @@
 import { Crown, CheckCircle2, Clock } from "lucide-react";
 import type { VipPoolStatus } from "@/lib/mockVipPool";
 import { VIP_POOL } from "@/lib/tokenConfig";
+import VipClaimPanel from "@/components/dashboard/VipClaimPanel";
 
 function formatCountdown(target: Date): string {
   const diffMs = target.getTime() - Date.now();
@@ -14,7 +15,17 @@ function formatCountdown(target: Date): string {
   return `${hours}h ${minutes}m`;
 }
 
-export default function VIPPoolCard({ status }: { status: VipPoolStatus }) {
+export default function VIPPoolCard({
+  status,
+  address,
+  qualifiedSinceTs,
+  currentWeekId,
+}: {
+  status: VipPoolStatus;
+  address: `0x${string}`;
+  qualifiedSinceTs: number;
+  currentWeekId: number;
+}) {
   const pct = Math.min(100, (status.qualifyingUsd / status.qualifyTargetUsd) * 100);
 
   return (
@@ -83,6 +94,8 @@ export default function VIPPoolCard({ status }: { status: VipPoolStatus }) {
           <Clock className="h-3.5 w-3.5 text-ac-cyan" />
           Next payout in {formatCountdown(status.nextPayoutAt)} (Sundays, 5pm GMT)
         </div>
+
+        <VipClaimPanel address={address} qualifiedSinceTs={qualifiedSinceTs} currentWeekId={currentWeekId} />
       </div>
     </div>
   );
