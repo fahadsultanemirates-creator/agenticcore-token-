@@ -12,6 +12,7 @@ import VIPPoolCard from "@/components/dashboard/VIPPoolCard";
 import ApexPoolCard from "@/components/dashboard/ApexPoolCard";
 import MembershipCards from "@/components/dashboard/MembershipCards";
 import ReferralTreeView from "@/components/dashboard/ReferralTreeView";
+import ReferralAddressTreeView from "@/components/dashboard/ReferralAddressTreeView";
 import RewardStructureTable from "@/components/dashboard/RewardStructureTable";
 import BuyWidget from "@/components/dashboard/BuyWidget";
 import ForgeChat from "@/components/dashboard/ForgeChat";
@@ -179,6 +180,8 @@ export default function DashboardPage() {
             <BuyWidget />
           </div>
         </div>
+
+        <ReferralAddressTreeView tree={tree} />
 
         <RewardStructureTable levelSummary={levelSummary} />
 
