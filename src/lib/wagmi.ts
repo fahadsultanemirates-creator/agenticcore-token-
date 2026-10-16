@@ -19,6 +19,23 @@ import { bsc, bscTestnet } from "wagmi/chains";
 const walletConnectProjectId =
   process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "00000000000000000000000000000000";
 
+// This placeholder has bitten this exact flow before (see the comment
+// above -- two prior WalletConnect projects both had an empty domain
+// allowlist in production, silently rejecting every pairing request with
+// no error surfaced to the user). Trust Wallet is hit hardest because,
+// unlike MetaMask/Coinbase, most users reach it with no browser extension,
+// so it depends entirely on this WC pairing succeeding. Logged loudly here
+// so a bad/missing project ID shows up in the browser console immediately
+// instead of as a silent "nothing happens" click.
+if (typeof window !== "undefined" && walletConnectProjectId === "00000000000000000000000000000000") {
+  console.error(
+    "[wagmi] NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID is not set -- WalletConnect-based " +
+      "connections (Trust Wallet without an extension, mobile deep links, the WalletConnect " +
+      "QR tile) will fail. Set it in Netlify's env vars to a real WalletConnect Cloud project " +
+      "ID, and confirm this site's domain is on that project's Domain Allowlist."
+  );
+}
+
 export const wagmiConfig = getDefaultConfig({
   appName: "AgenticCore (AC)",
   appDescription: "AgenticCore (AC) — BEP-20 token on BNB Smart Chain.",
