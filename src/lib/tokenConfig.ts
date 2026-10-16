@@ -31,18 +31,12 @@ export const TOKEN = {
   telegramBotUrl: "https://t.me/AgenticcoreACbot",
   // Human support contact, shown in the footer/FAQ/contact sections --
   // separate from telegramBotUrl above, which is the automated assistant.
+  // AgenticCore Biz, USA number.
   supportEmail: "hello@agenticcore.agency",
-  // TODO(Fahad): replace with the real USA support Telegram username, e.g.
-  // "@ac_support_usa" (with the leading @, no t.me/ prefix -- it's turned
-  // into a link below).
-  supportTelegramUsername: "@AC_SUPPORT_USERNAME_TODO",
+  supportTelegramUsername: "@AgenticCorebiz",
 };
 
-// Null until the TODO above is filled in -- callers use this to hide the
-// "Telegram Support" link rather than ship a dead t.me/..._TODO URL.
-export const SUPPORT_TELEGRAM_URL = TOKEN.supportTelegramUsername.endsWith("_TODO")
-  ? null
-  : `https://t.me/${TOKEN.supportTelegramUsername.replace(/^@/, "")}`;
+export const SUPPORT_TELEGRAM_URL = `https://t.me/${TOKEN.supportTelegramUsername.replace(/^@/, "")}`;
 
 // The single wallet allowed into /admin. Client-side gate only -- every
 // actual state-changing action there is separately enforced on-chain by

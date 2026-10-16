@@ -34,7 +34,7 @@ const COLUMNS = [
     title: "Support",
     links: [
       { label: TOKEN.supportEmail, href: `mailto:${TOKEN.supportEmail}` },
-      ...(SUPPORT_TELEGRAM_URL ? [{ label: "Telegram Support", href: SUPPORT_TELEGRAM_URL }] : []),
+      { label: "Telegram Support", href: SUPPORT_TELEGRAM_URL },
     ],
   },
 ];

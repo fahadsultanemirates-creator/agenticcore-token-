@@ -84,15 +84,11 @@ export default function FAQ() {
         Still have questions?{" "}
         <a href={`mailto:${TOKEN.supportEmail}`} className="text-ac-lime hover:underline">
           {TOKEN.supportEmail}
+        </a>{" "}
+        or{" "}
+        <a href={SUPPORT_TELEGRAM_URL} className="text-ac-lime hover:underline">
+          message us on Telegram
         </a>
-        {SUPPORT_TELEGRAM_URL && (
-          <>
-            {" "}or{" "}
-            <a href={SUPPORT_TELEGRAM_URL} className="text-ac-lime hover:underline">
-              message us on Telegram
-            </a>
-          </>
-        )}
         .
       </p>
       </div>
