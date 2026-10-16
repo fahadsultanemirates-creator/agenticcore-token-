@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAccount, useReadContract, useReadContracts } from "wagmi";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ConnectGate from "@/components/dashboard/ConnectGate";
@@ -20,7 +20,9 @@ import {
   generateMockReferralTree,
   summarizeTreeByLevel,
   totalReferrals,
+  type ReferralNode,
 } from "@/lib/mockReferralData";
+import { fetchLiveReferralTree } from "@/lib/referralLive";
 import { getNextPayoutAt, type VipPoolStatus } from "@/lib/mockVipPool";
 import { getCardTierStatus } from "@/lib/cardTiers";
 import { TOKEN, VIP_POOL, APEX_POOL, ADMIN_ADDRESS } from "@/lib/tokenConfig";
@@ -32,14 +34,38 @@ const USDT_SCALE = BigInt("1000000000000000000");
 export default function DashboardPage() {
   const { address, isConnected } = useAccount();
 
-  // Referral tree/level breakdown is still the illustrative mock layout
-  // (see DemoModeBanner) -- there's no live indexer yet. VIP/Apex
-  // qualification below is real on-chain data, read directly off the Sale
-  // contract.
-  const tree = useMemo(
+  // Referral tree: try the real indexer (index-sale-events /
+  // referral-tree Edge Functions, reading actual on-chain Purchase events)
+  // first; fall back to the illustrative mock layout -- and keep showing
+  // DemoModeBanner -- whenever it's unreachable (not deployed yet, no rows
+  // indexed for this wallet yet, or a transient error). This is the only
+  // gate on the banner: once the indexer is live and returns real data for
+  // a wallet, the banner disappears for that wallet automatically, with no
+  // separate code change needed. VIP/Apex qualification below is already
+  // real on-chain data, read directly off the Sale contract.
+  // Keyed by address rather than reset-on-change: a fetch in flight for a
+  // since-abandoned address is simply ignored below (address !== result's
+  // address), with no synchronous setState needed inside the effect body.
+  const [liveTreeResult, setLiveTreeResult] = useState<{ address: string; tree: ReferralNode[] } | null>(null);
+
+  useEffect(() => {
+    if (!address) return;
+    let cancelled = false;
+    fetchLiveReferralTree(address).then((result) => {
+      if (!cancelled && result !== null) setLiveTreeResult({ address, tree: result });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [address]);
+
+  const mockTree = useMemo(
     () => (address ? generateMockReferralTree(address) : []),
     [address]
   );
+  const liveTree = liveTreeResult && liveTreeResult.address === address ? liveTreeResult.tree : null;
+  const usingMockTree = liveTree === null;
+  const tree = liveTree ?? mockTree;
   const levelSummary = useMemo(() => summarizeTreeByLevel(tree), [tree]);
   const total = useMemo(() => totalReferrals(tree), [tree]);
 
@@ -145,7 +171,7 @@ export default function DashboardPage() {
         </div>
 
         <ReferralLinkCard address={address} />
-        <DemoModeBanner />
+        {usingMockTree && <DemoModeBanner />}
         {isAdminPreview && (
           <div className="flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-xs text-amber-300 sm:text-sm">
             <Sparkles className="h-4 w-4 shrink-0" />
