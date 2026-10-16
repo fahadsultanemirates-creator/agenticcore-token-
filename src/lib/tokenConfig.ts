@@ -4,10 +4,9 @@
 // deployment) into links a user shares publicly.
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://agenticcore.io";
 
-// Central config for the AgenticCore (AC) token.
-// CONTRACT_ADDRESS is a placeholder until the audited BEP-20 contract ships —
-// swap it in once deployed, everything downstream (buy widget, explorer links,
-// dashboard balance reads) keys off this one constant.
+// Central config for the AgenticCore (AC) token. contractAddress is the
+// real, deployed BEP-20 contract -- everything downstream (buy widget,
+// explorer links, dashboard balance reads) keys off this one constant.
 export const TOKEN = {
   name: "AgenticCore",
   ticker: "AC",
@@ -30,7 +29,20 @@ export const TOKEN = {
   bscScanBase: "https://bscscan.com",
   pancakeSwapUrl: "https://pancakeswap.finance",
   telegramBotUrl: "https://t.me/AgenticcoreACbot",
+  // Human support contact, shown in the footer/FAQ/contact sections --
+  // separate from telegramBotUrl above, which is the automated assistant.
+  supportEmail: "hello@agenticcore.agency",
+  // TODO(Fahad): replace with the real USA support Telegram username, e.g.
+  // "@ac_support_usa" (with the leading @, no t.me/ prefix -- it's turned
+  // into a link below).
+  supportTelegramUsername: "@AC_SUPPORT_USERNAME_TODO",
 };
+
+// Null until the TODO above is filled in -- callers use this to hide the
+// "Telegram Support" link rather than ship a dead t.me/..._TODO URL.
+export const SUPPORT_TELEGRAM_URL = TOKEN.supportTelegramUsername.endsWith("_TODO")
+  ? null
+  : `https://t.me/${TOKEN.supportTelegramUsername.replace(/^@/, "")}`;
 
 // The single wallet allowed into /admin. Client-side gate only -- every
 // actual state-changing action there is separately enforced on-chain by
