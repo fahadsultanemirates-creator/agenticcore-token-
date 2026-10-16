@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { TOKEN } from "@/lib/tokenConfig";
+import { TOKEN, SUPPORT_TELEGRAM_URL } from "@/lib/tokenConfig";
 import { REFERRAL_LEVELS } from "@/lib/referral";
 
 const COLUMNS = [
@@ -30,13 +30,20 @@ const COLUMNS = [
       { label: "PancakeSwap", href: TOKEN.pancakeSwapUrl },
     ],
   },
+  {
+    title: "Support",
+    links: [
+      { label: TOKEN.supportEmail, href: `mailto:${TOKEN.supportEmail}` },
+      ...(SUPPORT_TELEGRAM_URL ? [{ label: "Telegram Support", href: SUPPORT_TELEGRAM_URL }] : []),
+    ],
+  },
 ];
 
 export default function Footer() {
   return (
     <footer className="border-t border-ac-border bg-ac-bg-elevated">
       <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
           <div className="col-span-2">
             <div className="flex items-center gap-2.5">
               <Image src="/logo.png" alt="AgenticCore" width={32} height={32} className="h-8 w-8" />

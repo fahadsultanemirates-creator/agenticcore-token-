@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { TOKEN, VIP_POOL, REFERRED_BUY_BONUS_PCT } from "@/lib/tokenConfig";
+import { TOKEN, SUPPORT_TELEGRAM_URL, VIP_POOL, REFERRED_BUY_BONUS_PCT } from "@/lib/tokenConfig";
 import { REFERRAL_LEVELS, getTotalReferralPct, formatPct } from "@/lib/referral";
 import { SectionHeading } from "@/components/marketing/Tokenomics";
 
@@ -33,7 +33,7 @@ const FAQS = [
   },
   {
     q: "Has the contract been deployed yet?",
-    a: "Not yet — smart contract development and audit are underway. This site is the frontend, ready to connect to the contract address once it's live.",
+    a: `Yes — AC is live on ${TOKEN.chain} at ${TOKEN.contractAddress}, and the buy widget on this site transacts directly against it.`,
   },
 ];
 
@@ -79,6 +79,22 @@ export default function FAQ() {
           );
         })}
       </div>
+
+      <p className="mt-8 text-center text-sm text-ac-muted">
+        Still have questions?{" "}
+        <a href={`mailto:${TOKEN.supportEmail}`} className="text-ac-lime hover:underline">
+          {TOKEN.supportEmail}
+        </a>
+        {SUPPORT_TELEGRAM_URL && (
+          <>
+            {" "}or{" "}
+            <a href={SUPPORT_TELEGRAM_URL} className="text-ac-lime hover:underline">
+              message us on Telegram
+            </a>
+          </>
+        )}
+        .
+      </p>
       </div>
     </section>
   );
