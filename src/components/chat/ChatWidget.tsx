@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MessageCircle, X } from "lucide-react";
+import { ArrowLeft, Sparkles } from "lucide-react";
 import ChatPanel from "@/components/chat/ChatPanel";
 import { getOrCreateVisitorId } from "@/lib/chatVisitorId";
 
@@ -16,33 +16,44 @@ export default function ChatWidget() {
   return (
     <>
       {open && (
-        <div className="fixed bottom-24 right-5 z-50 flex h-[480px] w-[calc(100vw-2.5rem)] max-w-sm flex-col rounded-2xl border border-ac-border bg-ac-bg-elevated p-4 shadow-2xl sm:right-8">
-          <div className="mb-2 flex items-center justify-between border-b border-ac-border pb-3">
-            <div>
-              <p className="text-sm font-bold text-foreground">AgenticCore Assistant</p>
-              <p className="text-xs text-ac-muted">Ask about AC, referrals, or the VIP Pool</p>
-            </div>
+        // Full-window takeover (not a small floating box) -- matches the
+        // AgenticCore family's shared Forge pattern: a dedicated full-screen
+        // chat, not a corner widget.
+        <div className="fixed inset-0 z-50 flex flex-col bg-ac-bg">
+          <div className="flex items-center gap-3 border-b border-ac-border px-5 py-4 sm:px-8">
             <button
               onClick={() => setOpen(false)}
-              className="rounded-full p-1.5 text-ac-muted transition hover:bg-ac-bg-card hover:text-foreground"
+              className="rounded-full p-2 text-ac-muted transition hover:bg-ac-bg-card hover:text-foreground"
               aria-label="Close chat"
             >
-              <X className="h-4 w-4" />
+              <ArrowLeft className="h-5 w-5" />
             </button>
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ac-lime text-black">
+              <Sparkles className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-foreground">Forge</p>
+              <p className="text-xs text-ac-muted">Your task assistant</p>
+            </div>
           </div>
-          {visitorId && (
-            <ChatPanel endpointName="widget-chat" identityKey="visitorId" identityValue={visitorId} />
-          )}
+          <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col overflow-hidden px-5 py-4 sm:px-8">
+            {visitorId && (
+              <ChatPanel endpointName="widget-chat" identityKey="visitorId" identityValue={visitorId} />
+            )}
+          </div>
         </div>
       )}
 
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-ac-lime text-black shadow-xl transition hover:brightness-95 active:scale-95 sm:right-8"
-        aria-label={open ? "Close chat" : "Open chat"}
-      >
-        {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
-      </button>
+      {!open && (
+        <button
+          onClick={() => setOpen(true)}
+          className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-ac-lime px-6 py-3.5 text-sm font-bold text-black shadow-xl shadow-ac-lime/20 transition hover:brightness-95 active:scale-95 sm:right-8"
+          aria-label="Open Forge chat"
+        >
+          <Sparkles className="h-5 w-5" />
+          Forge
+        </button>
+      )}
     </>
   );
 }
