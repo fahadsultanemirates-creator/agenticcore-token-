@@ -31,8 +31,7 @@ export const TOKEN = {
   telegramBotUrl: "https://t.me/AgenticcoreACbot",
   // Human support contact, shown in the footer/FAQ/contact sections --
   // separate from telegramBotUrl above, which is the automated assistant.
-  // AgenticCore Biz, USA number/email.
-  supportEmail: "agenticcoreagency@gmail.com",
+  supportEmail: "hello@agenticcore.agency",
   supportTelegramUsername: "@AgenticCorebiz",
   supportWhatsappUrl: "https://wa.me/18089985226",
 };
