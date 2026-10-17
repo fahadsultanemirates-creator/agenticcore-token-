@@ -12,7 +12,7 @@ export default function Hero() {
       />
       <div className="relative mx-auto max-w-7xl px-5 pb-24 pt-20 sm:px-8 sm:pt-28">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-ac-violet/40 bg-ac-violet/10 px-4 py-1.5 text-xs font-medium text-violet-200">
+          <div className="inline-flex items-center gap-2 rounded-full border border-ac-violet/40 bg-ac-violet/10 px-4 py-1.5 text-xs font-medium text-ac-violet-light">
             <Sparkles className="h-3.5 w-3.5 text-ac-lime" />
             Fair launch on BNB Smart Chain
           </div>

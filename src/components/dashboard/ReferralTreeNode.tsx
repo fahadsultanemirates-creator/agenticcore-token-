@@ -5,7 +5,7 @@ import { User } from "lucide-react";
 import type { ReferralNode } from "@/lib/mockReferralData";
 
 // Purely visual — no wallet addresses anywhere. Each referral is a plain
-// yellow person-icon node; level, join date, and purchase size (already
+// gold person-icon node; level, join date, and purchase size (already
 // broken out in full in the reward-structure table/chart above this tree)
 // live in a hover title instead of being printed on the node. Click a node
 // to expand/collapse its own children, same interaction the old

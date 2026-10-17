@@ -5,7 +5,7 @@ import { BarChart3 } from "lucide-react";
 import type { ReferralLevelSummary } from "@/lib/mockReferralData";
 
 // Single-series magnitude chart -- referral count per level -- so this uses
-// one sequential hue (brand lime) rather than a categorical palette. Level 1
+// one sequential hue (brand gold) rather than a categorical palette. Level 1
 // (Direct) gets full-opacity emphasis; the rest step down slightly so the
 // eye still reads "direct" as the anchor without a second hue.
 export default function ReferralLevelChart({
@@ -51,7 +51,7 @@ export default function ReferralLevelChart({
               tickLine={false}
             />
             <Tooltip
-              cursor={{ fill: "rgba(124, 58, 237, 0.08)" }}
+              cursor={{ fill: "rgba(212, 175, 55, 0.08)" }}
               contentStyle={{
                 background: "#16151d",
                 border: "1px solid #26232f",
@@ -59,7 +59,7 @@ export default function ReferralLevelChart({
                 color: "#f4f2ff",
                 fontSize: 13,
               }}
-              labelStyle={{ color: "#ccff00", fontWeight: 700, marginBottom: 4 }}
+              labelStyle={{ color: "#e8b923", fontWeight: 700, marginBottom: 4 }}
               formatter={(value, name) => {
                 if (name === "referrals") return [value, "Referrals"];
                 return [value, name];
@@ -83,7 +83,7 @@ export default function ReferralLevelChart({
             />
             <Bar dataKey="referrals" radius={[0, 4, 4, 0]} maxBarSize={22}>
               {data.map((entry, i) => (
-                <Cell key={entry.name} fill={i === 0 ? "#CCFF00" : "rgba(204, 255, 0, 0.55)"} />
+                <Cell key={entry.name} fill={i === 0 ? "#e8b923" : "rgba(232, 185, 35, 0.55)"} />
               ))}
             </Bar>
           </BarChart>

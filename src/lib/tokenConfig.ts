@@ -31,12 +31,23 @@ export const TOKEN = {
   telegramBotUrl: "https://t.me/AgenticcoreACbot",
   // Human support contact, shown in the footer/FAQ/contact sections --
   // separate from telegramBotUrl above, which is the automated assistant.
-  // AgenticCore Biz, USA number.
-  supportEmail: "hello@agenticcore.agency",
+  // AgenticCore Biz, USA number/email.
+  supportEmail: "agenticcoreagency@gmail.com",
   supportTelegramUsername: "@AgenticCorebiz",
+  supportWhatsappUrl: "https://wa.me/18089985226",
 };
 
 export const SUPPORT_TELEGRAM_URL = `https://t.me/${TOKEN.supportTelegramUsername.replace(/^@/, "")}`;
+
+// actoken.org's social presence -- linked from the footer.
+export const SOCIAL_LINKS = {
+  facebook: "https://www.facebook.com/share/1DiF5jRZLs/",
+  instagram: "https://www.instagram.com/actokenorg",
+  x: "https://x.com/Actokenorg",
+  youtube: "https://www.youtube.com/@Actokenorg",
+  tiktok: "https://www.tiktok.com/@actokenorg",
+  telegramChannel: "https://t.me/actokenorg",
+};
 
 // The single wallet allowed into /admin. Client-side gate only -- every
 // actual state-changing action there is separately enforced on-chain by
@@ -49,12 +60,15 @@ export const ADMIN_ADDRESS = "0x170BEc84cD2Be039C30BefE09a57f6a132cf5c60" as `0x
 // spendable now; Team and Marketing sit in on-chain VestingWallet contracts
 // (see TOKEN.teamVestingAddress / marketingVestingAddress) releasing
 // gradually over time rather than being available up front.
+// Five gold shades (not a categorical rainbow) -- distinguishable by
+// brightness/saturation while staying in the same gold family as the rest
+// of the site.
 export const TOKENOMICS = [
   { label: "Liquidity Pool", pct: 35, color: "var(--ac-lime)" },
   { label: "Presale / Public Launch", pct: 35, color: "var(--ac-cyan)" },
-  { label: "Ecosystem & Development", pct: 10, color: "#A78BFA" },
-  { label: "Team (vested)", pct: 10, color: "#4C1D95" },
-  { label: "Marketing (vested)", pct: 10, color: "#2DD4BF" },
+  { label: "Ecosystem & Development", pct: 10, color: "#F2D16B" },
+  { label: "Team (vested)", pct: 10, color: "#8A6A1A" },
+  { label: "Marketing (vested)", pct: 10, color: "#B8860B" },
 ] as const;
 
 // VIP Pool: 10% of every referred purchase's USDT value is swept into a

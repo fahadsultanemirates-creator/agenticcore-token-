@@ -4,12 +4,19 @@
   --background: #0a0a0f;
   --foreground: #f4f2ff;
 
-  /* AgenticCore brand tokens */
-  --ac-violet: #7c3aed;
-  --ac-violet-light: #a78bfa;
-  --ac-violet-dark: #4c1d95;
-  --ac-lime: #ccff00;
-  --ac-cyan: #22d3ee;
+  /* AgenticCore brand tokens -- gold, matching the Actoken.org logo. The
+     five tokens keep their original names (so every text-ac-violet/
+     bg-ac-lime/etc. class across the app repaints automatically) but now
+     all live in the gold family: --ac-violet is the primary accent,
+     -light/-dark are its tints for gradients and emphasis, and --ac-lime/
+     --ac-cyan are secondary gold shades kept distinct only so two accents
+     used side by side (e.g. ambient glow blobs, data viz) still read as
+     separate, not because they're a different hue. */
+  --ac-violet: #d4af37;
+  --ac-violet-light: #f2d16b;
+  --ac-violet-dark: #8a6a1a;
+  --ac-lime: #e8b923;
+  --ac-cyan: #c9a227;
   --ac-bg: #0a0a0f;
   --ac-bg-elevated: #121218;
   --ac-bg-card: #16151d;
@@ -42,11 +49,11 @@ body {
      Hero's own local glow blob. */
   background-color: var(--ac-bg);
   background-image:
-    radial-gradient(680px circle at 12% 6%, rgba(124, 58, 237, 0.22), transparent 60%),
-    radial-gradient(620px circle at 88% 22%, rgba(34, 211, 238, 0.14), transparent 60%),
-    radial-gradient(560px circle at 15% 55%, rgba(124, 58, 237, 0.16), transparent 60%),
-    radial-gradient(700px circle at 85% 68%, rgba(204, 255, 0, 0.08), transparent 55%),
-    radial-gradient(800px circle at 40% 95%, rgba(34, 211, 238, 0.12), transparent 60%);
+    radial-gradient(680px circle at 12% 6%, rgba(212, 175, 55, 0.18), transparent 60%),
+    radial-gradient(620px circle at 88% 22%, rgba(201, 162, 39, 0.12), transparent 60%),
+    radial-gradient(560px circle at 15% 55%, rgba(212, 175, 55, 0.13), transparent 60%),
+    radial-gradient(700px circle at 85% 68%, rgba(232, 185, 35, 0.07), transparent 55%),
+    radial-gradient(800px circle at 40% 95%, rgba(201, 162, 39, 0.1), transparent 60%);
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: var(--foreground);
@@ -60,17 +67,17 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(to right, rgba(124, 58, 237, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(124, 58, 237, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(212, 175, 55, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 175, 55, 0.08) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
 .glow-violet {
-  box-shadow: 0 0 80px 10px rgba(124, 58, 237, 0.25);
+  box-shadow: 0 0 80px 10px rgba(212, 175, 55, 0.25);
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, #f4f2ff 0%, #c4b5fd 45%, var(--ac-lime) 100%);
+  background: linear-gradient(90deg, #f4f2ff 0%, #e8d9a8 45%, var(--ac-lime) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -102,11 +109,11 @@ body {
    reserves a 20px band above its node for a horizontal sibling bar; the
    parent <ul> of each branch drops a centered vertical stub into that same
    band, and first/last/only-child trim the bar so lone or edge nodes don't
-   grow stray lines. Line color is a visible lime tint (not --ac-border,
+   grow stray lines. Line color is a visible gold tint (not --ac-border,
    which is near-black-on-near-black and unreadable here) to match the
-   yellow node theme. */
+   gold node theme. */
 .org-tree {
-  --tree-line: rgba(204, 255, 0, 0.4);
+  --tree-line: rgba(212, 175, 55, 0.45);
 }
 .org-tree ul {
   display: flex;

@@ -60,7 +60,7 @@ export default function ConnectWalletButton({ compact = false }: { compact?: boo
                   <button
                     onClick={openAccountModal}
                     type="button"
-                    className="inline-flex items-center gap-2 rounded-full border border-ac-violet/40 bg-ac-violet/10 px-4 py-2 text-sm font-semibold text-violet-200 transition hover:bg-ac-violet/20"
+                    className="inline-flex items-center gap-2 rounded-full border border-ac-violet/40 bg-ac-violet/10 px-4 py-2 text-sm font-semibold text-ac-violet-light transition hover:bg-ac-violet/20"
                   >
                     <span className="h-2 w-2 rounded-full bg-ac-lime animate-pulse-slow" />
                     {account.displayName}
