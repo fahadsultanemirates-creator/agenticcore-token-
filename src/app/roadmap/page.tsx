@@ -1,13 +1,16 @@
-import { Bot, Building2, Users2, ArrowUpRight, Network, ShieldCheck, Store, type LucideIcon } from "lucide-react";
+import { Bot, Building2, Users2, Zap, ArrowUpRight, Network, ShieldCheck, Store, type LucideIcon } from "lucide-react";
 import Navbar from "@/components/marketing/Navbar";
 import Footer from "@/components/marketing/Footer";
 import { SectionHeading } from "@/components/marketing/Tokenomics";
 import { TOKEN } from "@/lib/tokenConfig";
 
+// Each sibling site keeps its own brand color here on purpose -- this is
+// the one place the gold re-theme doesn't apply, since these icons
+// represent those sites' own identity, not this one's.
 const FAMILY = [
-  { icon: Building2, name: "AgenticCore Agency", body: "AI-run marketing and growth agency." },
-  { icon: Users2, name: "AgenticCore Biz", body: "AI-run business services." },
-  { icon: Bot, name: "M&MCore Agency", body: "AI-run creative and media agency." },
+  { icon: Building2, domain: "agenticcore.agency", color: "#22D3EE", body: "Custom websites, apps, and AI agents." },
+  { icon: Users2, domain: "agenticcore.biz", color: "#F97316", body: "AI-run business services." },
+  { icon: Zap, domain: "agenticcore.click", color: "#FACC15", body: "Quick, affordable digital tasks." },
 ];
 
 interface Phase {
@@ -85,14 +88,15 @@ export default function RoadmapPage() {
           </p>
           <p className="mt-3 max-w-2xl text-sm text-foreground/70">
             {TOKEN.name} is one of several AI-run businesses under the AgenticCore
-            name, with 1-2 more sites already on the way.
+            name. Hold AC and unlock discounts across every site in the family —
+            from custom web development, to business services, to quick digital tasks.
           </p>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-3">
             {FAMILY.map((f) => (
-              <div key={f.name} className="card-surface rounded-2xl p-6">
-                <f.icon className="h-7 w-7 text-ac-cyan" strokeWidth={1.75} />
-                <p className="mt-5 text-base font-bold text-foreground">{f.name}</p>
+              <div key={f.domain} className="card-surface rounded-2xl p-6">
+                <f.icon className="h-7 w-7" strokeWidth={1.75} style={{ color: f.color }} />
+                <p className="mt-5 text-base font-bold text-foreground">{f.domain}</p>
                 <p className="mt-2 text-sm leading-relaxed text-foreground/70">{f.body}</p>
               </div>
             ))}
