@@ -68,7 +68,7 @@ function CapExplainer() {
   return (
     <div className="relative mt-16 overflow-hidden rounded-3xl border border-ac-violet/30 bg-gradient-to-br from-ac-violet/15 via-ac-bg-card to-ac-bg-card p-8 sm:p-10">
       <div
-        className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-ac-violet/25 blur-[100px]"
+        className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-ac-violet/12 blur-[100px]"
         aria-hidden
       />
       <div className="relative flex flex-col gap-8 lg:flex-row lg:items-start">

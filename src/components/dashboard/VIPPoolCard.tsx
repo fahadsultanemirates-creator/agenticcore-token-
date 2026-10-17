@@ -31,7 +31,7 @@ export default function VIPPoolCard({
   return (
     <div className="relative overflow-hidden rounded-2xl border border-ac-lime/25 bg-gradient-to-br from-ac-lime/10 via-ac-bg-card to-ac-bg-card p-6">
       <div
-        className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-ac-lime/15 blur-[90px]"
+        className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-ac-lime/8 blur-[90px]"
         aria-hidden
       />
       <div className="relative">

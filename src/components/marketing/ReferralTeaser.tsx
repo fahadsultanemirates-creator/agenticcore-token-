@@ -13,7 +13,7 @@ export default function ReferralTeaser() {
   return (
     <section id="referral" className="relative mx-auto max-w-7xl overflow-hidden px-5 py-24 sm:px-8">
       <div
-        className="pointer-events-none absolute -right-20 top-0 h-[400px] w-[400px] rounded-full bg-ac-violet/20 blur-[120px]"
+        className="pointer-events-none absolute -right-20 top-0 h-[400px] w-[400px] rounded-full bg-ac-violet/10 blur-[120px]"
         aria-hidden
       />
       <div className="relative">

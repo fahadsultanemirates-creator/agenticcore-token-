@@ -7,11 +7,11 @@ export default function Tokenomics() {
   return (
     <section id="tokenomics" className="relative mx-auto max-w-7xl overflow-hidden px-5 py-24 sm:px-8">
       <div
-        className="pointer-events-none absolute -left-24 top-10 h-[420px] w-[420px] rounded-full bg-ac-violet/20 blur-[120px]"
+        className="pointer-events-none absolute -left-24 top-10 h-[420px] w-[420px] rounded-full bg-ac-violet/10 blur-[120px]"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute -right-24 bottom-0 h-[380px] w-[380px] rounded-full bg-ac-cyan/15 blur-[120px]"
+        className="pointer-events-none absolute -right-24 bottom-0 h-[380px] w-[380px] rounded-full bg-ac-cyan/8 blur-[120px]"
         aria-hidden
       />
       <div className="relative">

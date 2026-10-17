@@ -111,7 +111,7 @@ export default function RoadmapPage() {
 
         <section className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 sm:px-8">
           <div
-            className="pointer-events-none absolute -left-24 top-0 h-[420px] w-[420px] rounded-full bg-ac-violet/15 blur-[120px]"
+            className="pointer-events-none absolute -left-24 top-0 h-[420px] w-[420px] rounded-full bg-ac-violet/8 blur-[120px]"
             aria-hidden
           />
           <div className="relative">

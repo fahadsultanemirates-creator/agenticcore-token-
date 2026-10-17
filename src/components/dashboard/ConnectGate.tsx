@@ -26,7 +26,7 @@ export default function ConnectGate() {
   return (
     <div className="relative flex flex-1 items-center justify-center overflow-hidden bg-grid px-5 py-24">
       <div
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ac-violet/25 blur-[130px]"
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ac-violet/12 blur-[130px]"
         aria-hidden
       />
       <div className="relative mx-auto flex max-w-lg flex-col items-center text-center">

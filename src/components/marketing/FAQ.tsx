@@ -43,7 +43,7 @@ export default function FAQ() {
   return (
     <section id="faq" className="relative mx-auto max-w-4xl overflow-hidden px-5 py-24 sm:px-8">
       <div
-        className="pointer-events-none absolute left-1/2 top-0 h-[380px] w-[600px] -translate-x-1/2 rounded-full bg-ac-cyan/10 blur-[130px]"
+        className="pointer-events-none absolute left-1/2 top-0 h-[380px] w-[600px] -translate-x-1/2 rounded-full bg-ac-cyan/6 blur-[130px]"
         aria-hidden
       />
       <div className="relative">

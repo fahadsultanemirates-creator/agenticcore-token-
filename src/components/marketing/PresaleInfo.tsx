@@ -49,7 +49,7 @@ export default function PresaleInfo() {
 
       <div className="relative mt-6 overflow-hidden rounded-2xl border border-ac-border bg-ac-bg-elevated p-6">
         <div
-          className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-ac-lime/10 blur-[80px]"
+          className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-ac-lime/6 blur-[80px]"
           aria-hidden
         />
         <div className="relative flex items-start gap-3">

@@ -21,7 +21,7 @@ export default function ReferralProgramPage() {
       <main className="flex-1">
         <section className="relative overflow-hidden bg-grid">
           <div
-            className="pointer-events-none absolute left-1/2 top-[-10%] h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-ac-violet/25 blur-[140px]"
+            className="pointer-events-none absolute left-1/2 top-[-10%] h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-ac-violet/12 blur-[140px]"
             aria-hidden
           />
           <div className="relative mx-auto max-w-4xl px-5 pb-16 pt-16 text-center sm:px-8 sm:pt-24">
@@ -129,7 +129,7 @@ export default function ReferralProgramPage() {
         <section className="mx-auto max-w-5xl px-5 py-16 sm:px-8">
           <div className="relative overflow-hidden rounded-3xl border border-ac-lime/25 bg-gradient-to-br from-ac-lime/10 via-ac-bg-card to-ac-bg-card p-8 sm:p-10">
             <div
-              className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-ac-lime/20 blur-[110px]"
+              className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-ac-lime/10 blur-[110px]"
               aria-hidden
             />
             <div className="relative flex flex-col gap-8 lg:flex-row lg:items-start">

@@ -22,7 +22,7 @@ export default function ReferralLinkCard({ address }: { address: string }) {
   return (
     <div className="relative overflow-hidden rounded-3xl border border-ac-violet/30 bg-gradient-to-br from-ac-violet/20 via-ac-bg-card to-ac-bg-card p-6 sm:p-8">
       <div
-        className="pointer-events-none absolute -right-10 -top-20 h-56 w-56 rounded-full bg-ac-violet/30 blur-[100px]"
+        className="pointer-events-none absolute -right-10 -top-20 h-56 w-56 rounded-full bg-ac-violet/14 blur-[100px]"
         aria-hidden
       />
       <div className="relative flex flex-col gap-4">
