@@ -70,9 +70,9 @@ function HeroStats() {
       {stats.map((s) => (
         <div
           key={s.label}
-          className="card-surface rounded-2xl px-4 py-5 text-center"
+          className="rounded-2xl border border-ac-violet/25 bg-ac-violet/10 px-4 py-5 text-center"
         >
-          <p className="text-xl font-bold text-foreground sm:text-2xl">{s.value}</p>
+          <p className="text-xl font-bold text-ac-violet sm:text-2xl">{s.value}</p>
           <p className="mt-1 text-xs text-ac-muted">{s.label}</p>
         </div>
       ))}
