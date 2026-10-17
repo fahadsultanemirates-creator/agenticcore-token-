@@ -29,6 +29,21 @@ export default function BuyWidget() {
     query: { enabled: !!address },
   });
 
+  // The Sale contract pays out AC from its own balance -- a one-time
+  // transfer the deployer makes separately after deployment (see
+  // AgenticCoreSale.sol's contract-level comment). If that transfer was
+  // never made or ran out, buy() reverts at the AC payout step -- after
+  // approve() has already succeeded, since they're two independent
+  // transactions. Surfacing that balance here turns a silent, confusing
+  // dead end (approved fine, then nothing) into a visible, checkable cause.
+  const { data: saleAcBalanceRaw } = useReadContract({
+    address: TOKEN.contractAddress,
+    abi: ERC20_ABI,
+    functionName: "balanceOf",
+    args: [TOKEN.presaleContractAddress],
+  });
+  const saleAcBalance = saleAcBalanceRaw !== undefined ? Number(saleAcBalanceRaw) / 1e18 : undefined;
+
   const remainingUsd = Math.max(0, TOKEN.maxBuyUsd - purchasedUsd);
   const usedPct = Math.min(100, (purchasedUsd / TOKEN.maxBuyUsd) * 100);
 
@@ -40,10 +55,13 @@ export default function BuyWidget() {
   const belowMin = amountNum > 0 && amountNum < TOKEN.minBuyUsd;
   const exceedsCap = amountNum > remainingUsd;
   const estimatedAc = amountNum > 0 ? amountNum / TOKEN.startingPriceUsd : 0;
+  // 10% margin so a referred buy's bonus AC doesn't false-positive this.
+  const saleUnderfunded =
+    saleAcBalance !== undefined && (saleAcBalance === 0 || (amountNum > 0 && saleAcBalance < estimatedAc * 1.1));
 
   const usdtAmountRaw = useMemo(() => BigInt(Math.max(0, amountNum)) * USDT_SCALE, [amountNum]);
   const needsApproval = allowanceRaw === undefined || allowanceRaw < usdtAmountRaw;
-  const canSubmit = amountNum > 0 && !belowMin && !exceedsCap && !!address;
+  const canSubmit = amountNum > 0 && !belowMin && !exceedsCap && !!address && !saleUnderfunded;
 
   const approve = useWriteContract();
   const approveReceipt = useWaitForTransactionReceipt({ hash: approve.data });
@@ -165,6 +183,17 @@ export default function BuyWidget() {
           </p>
         )}
 
+        {saleUnderfunded && (
+          <p className="mt-2 flex items-start gap-1.5 text-xs text-red-400">
+            <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            The sale contract doesn&apos;t hold enough AC to pay out this purchase
+            right now ({saleAcBalance?.toLocaleString(undefined, { maximumFractionDigits: 0 })} AC
+            available). Buying is disabled until it&apos;s topped up — approving
+            USDT first won&apos;t help, the purchase will still fail at the AC
+            payout step.
+          </p>
+        )}
+
         {amountNum > 0 && !exceedsCap && !belowMin && (
           <p className="mt-2 text-xs text-ac-muted">
             ≈ {estimatedAc.toLocaleString(undefined, { maximumFractionDigits: 0 })} AC at
@@ -179,12 +208,16 @@ export default function BuyWidget() {
         </p>
       </div>
 
+      <p className="mt-5 text-center text-[11px] font-semibold uppercase tracking-wide text-ac-muted">
+        {needsApproval ? "Step 1 of 2 — Approve, then you'll get a second prompt to confirm the purchase" : "Step 2 of 2 — Confirm the purchase"}
+      </p>
+
       {needsApproval ? (
         <button
           type="button"
           disabled={!canSubmit || approving}
           onClick={handleApprove}
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-ac-violet px-6 py-3.5 text-sm font-bold text-white transition enabled:hover:brightness-110 disabled:cursor-not-allowed disabled:bg-ac-border disabled:text-ac-muted"
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-ac-violet px-6 py-3.5 text-sm font-bold text-white transition enabled:hover:brightness-110 disabled:cursor-not-allowed disabled:bg-ac-border disabled:text-ac-muted"
         >
           {approving ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
           {approving ? "Approving USDT…" : "Approve USDT"}
@@ -194,7 +227,7 @@ export default function BuyWidget() {
           type="button"
           disabled={!canSubmit || buying}
           onClick={handleBuy}
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-ac-lime px-6 py-3.5 text-sm font-bold text-ac-bg transition enabled:hover:brightness-110 disabled:cursor-not-allowed disabled:bg-ac-border disabled:text-ac-muted"
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-ac-lime px-6 py-3.5 text-sm font-bold text-ac-bg transition enabled:hover:brightness-110 disabled:cursor-not-allowed disabled:bg-ac-border disabled:text-ac-muted"
         >
           {buying ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
           {buying ? "Confirming purchase…" : `Buy $${amountNum || 0} in AC`}
