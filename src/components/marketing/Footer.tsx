@@ -1,7 +1,32 @@
 import Link from "next/link";
 import Image from "next/image";
-import { TOKEN, SUPPORT_TELEGRAM_URL } from "@/lib/tokenConfig";
+import { Mail } from "lucide-react";
+import { TOKEN, SUPPORT_TELEGRAM_URL, SOCIAL_LINKS } from "@/lib/tokenConfig";
 import { REFERRAL_LEVELS } from "@/lib/referral";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  XIcon,
+  YoutubeIcon,
+  TiktokIcon,
+  TelegramIcon,
+  WhatsappIcon,
+} from "@/components/ui/SocialIcons";
+
+const SOCIAL_ICON_LINKS = [
+  { label: "Facebook", href: SOCIAL_LINKS.facebook, Icon: FacebookIcon },
+  { label: "Instagram", href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
+  { label: "X", href: SOCIAL_LINKS.x, Icon: XIcon },
+  { label: "YouTube", href: SOCIAL_LINKS.youtube, Icon: YoutubeIcon },
+  { label: "TikTok", href: SOCIAL_LINKS.tiktok, Icon: TiktokIcon },
+  { label: "Telegram channel", href: SOCIAL_LINKS.telegramChannel, Icon: TelegramIcon },
+];
+
+const SUPPORT_ICON_LINKS = [
+  { label: "Email", href: `mailto:${TOKEN.supportEmail}`, Icon: Mail },
+  { label: "Telegram", href: SUPPORT_TELEGRAM_URL, Icon: TelegramIcon },
+  { label: "WhatsApp", href: TOKEN.supportWhatsappUrl, Icon: WhatsappIcon },
+];
 
 const COLUMNS = [
   {
@@ -65,7 +90,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-sm text-ac-muted transition hover:text-ac-lime"
+                      className="break-all text-sm text-ac-muted transition hover:text-ac-lime"
                     >
                       {l.label}
                     </Link>
@@ -76,7 +101,44 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-ac-border pt-8 text-xs text-ac-muted sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col items-center gap-6 border-t border-ac-border pt-10 sm:flex-row sm:justify-between">
+          <div className="flex flex-col items-center gap-3 sm:items-start">
+            <span className="text-xs font-semibold uppercase tracking-widest text-ac-muted">Need help?</span>
+            <div className="flex gap-3">
+              {SUPPORT_ICON_LINKS.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-ac-lime text-black transition hover:brightness-95"
+                >
+                  <Icon className="h-4.5 w-4.5" />
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-3 sm:items-end">
+            <span className="text-xs font-semibold uppercase tracking-widest text-ac-muted">Follow us</span>
+            <div className="flex gap-3">
+              {SOCIAL_ICON_LINKS.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-ac-border text-ac-muted transition hover:border-ac-lime/60 hover:text-ac-lime"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 flex flex-col gap-4 border-t border-ac-border pt-8 text-xs text-ac-muted sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} AgenticCore. AC is a utility token;
             nothing here is financial advice.
