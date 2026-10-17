@@ -22,9 +22,9 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-ac-border/70 bg-ac-bg/80 backdrop-blur-lg">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
         <Link href="/" className="flex items-center gap-2.5">
-          <Image src="/logo.png" alt="AgenticCore" width={32} height={32} className="h-8 w-8" priority />
+          <Image src="/logo.png" alt="Actoken.org" width={32} height={32} className="h-8 w-8" priority />
           <span className="text-base font-semibold tracking-tight text-foreground">
-            AgenticCore
+            Actoken<span className="text-ac-violet">.org</span>
           </span>
         </Link>
 

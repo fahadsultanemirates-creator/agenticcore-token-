@@ -71,8 +71,10 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
           <div className="col-span-2">
             <div className="flex items-center gap-2.5">
-              <Image src="/logo.png" alt="AgenticCore" width={32} height={32} className="h-8 w-8" />
-              <span className="text-base font-semibold text-foreground">AgenticCore</span>
+              <Image src="/logo.png" alt="Actoken.org" width={32} height={32} className="h-8 w-8" />
+              <span className="text-base font-semibold text-foreground">
+                Actoken<span className="text-ac-violet">.org</span>
+              </span>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground/70">
               A high-community BEP-20 token on BNB Smart Chain. Fair launch,
