@@ -23,6 +23,13 @@ export const TOKEN = {
   contractAddress: "0xe9568888a0bc317519957047cf736e134B097768" as `0x${string}`,
   isContractLive: true,
   presaleContractAddress: "0xc9538dE177FD684704473041B81E2eC6CEc95679" as `0x${string}`,
+  // The other two genesis mint destinations besides the Sale contract --
+  // see AgenticCoreToken.sol's constructor comment for the full five-way
+  // split (liquidity 35%, presale 35%, ecosystem 10%, team 10%, marketing
+  // 10%). Tracked here so the admin panel can show their live balances,
+  // not just confirm they exist.
+  liquidityWalletAddress: "0x033C20c1268C75c206afFC44bc4d1356255e1937" as `0x${string}`,
+  ecosystemWalletAddress: "0x2b8B5672ac9BA82097A50b1C6eEf0e94622351f0" as `0x${string}`,
   teamVestingAddress: "0xc319CE1fC59eCcCc5138FeDdDF025B520a6333EE" as `0x${string}`,
   marketingVestingAddress: "0x8B5AdB08D1550C8ef4621d335A9a495828035840" as `0x${string}`,
   usdtAddress: "0x55d398326f99059fF775485246999027B3197955" as `0x${string}`,
