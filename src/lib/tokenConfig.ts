@@ -72,9 +72,9 @@ export const ADMIN_ADDRESS = "0x170BEc84cD2Be039C30BefE09a57f6a132cf5c60" as `0x
 export const TOKENOMICS = [
   { label: "Liquidity Pool", pct: 35, color: "var(--ac-lime)" },
   { label: "Presale / Public Launch", pct: 35, color: "var(--ac-cyan)" },
-  { label: "Ecosystem & Development", pct: 10, color: "#F2D16B" },
-  { label: "Team (vested)", pct: 10, color: "#8A6A1A" },
-  { label: "Marketing (vested)", pct: 10, color: "#B8860B" },
+  { label: "Ecosystem & Development", pct: 10, color: "#DEB373" },
+  { label: "Team (vested)", pct: 10, color: "#775522" },
+  { label: "Marketing (vested)", pct: 10, color: "#A57327" },
 ] as const;
 
 // VIP Pool: 10% of every referred purchase's USDT value is swept into a

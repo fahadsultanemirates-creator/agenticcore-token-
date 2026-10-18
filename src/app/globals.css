@@ -12,11 +12,11 @@
      --ac-cyan are secondary gold shades kept distinct only so two accents
      used side by side (e.g. ambient glow blobs, data viz) still read as
      separate, not because they're a different hue. */
-  --ac-violet: #d4af37;
-  --ac-violet-light: #f2d16b;
-  --ac-violet-dark: #8a6a1a;
-  --ac-lime: #e8b923;
-  --ac-cyan: #c9a227;
+  --ac-violet: #c98e36;
+  --ac-violet-light: #deb373;
+  --ac-violet-dark: #775522;
+  --ac-lime: #cea264;
+  --ac-cyan: #9f7238;
   --ac-bg: #0a0a0f;
   --ac-bg-elevated: #121218;
   --ac-bg-card: #16151d;
@@ -61,17 +61,17 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(to right, rgba(212, 175, 55, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+    linear-gradient(to right, rgba(201, 142, 54, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(201, 142, 54, 0.08) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
 .glow-violet {
-  box-shadow: 0 0 80px 10px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 0 80px 10px rgba(201, 142, 54, 0.25);
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, #f4f2ff 0%, #e8d9a8 45%, var(--ac-lime) 100%);
+  background: linear-gradient(90deg, #f4f2ff 0%, #e4d1b4 45%, var(--ac-lime) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -107,7 +107,7 @@ body {
    which is near-black-on-near-black and unreadable here) to match the
    gold node theme. */
 .org-tree {
-  --tree-line: rgba(212, 175, 55, 0.45);
+  --tree-line: rgba(201, 142, 54, 0.45);
 }
 .org-tree ul {
   display: flex;

@@ -51,7 +51,7 @@ export default function ReferralLevelChart({
               tickLine={false}
             />
             <Tooltip
-              cursor={{ fill: "rgba(212, 175, 55, 0.08)" }}
+              cursor={{ fill: "rgba(201, 142, 54, 0.08)" }}
               contentStyle={{
                 background: "#16151d",
                 border: "1px solid #26232f",
@@ -59,7 +59,7 @@ export default function ReferralLevelChart({
                 color: "#f4f2ff",
                 fontSize: 13,
               }}
-              labelStyle={{ color: "#e8b923", fontWeight: 700, marginBottom: 4 }}
+              labelStyle={{ color: "#cea264", fontWeight: 700, marginBottom: 4 }}
               formatter={(value, name) => {
                 if (name === "referrals") return [value, "Referrals"];
                 return [value, name];
@@ -83,7 +83,7 @@ export default function ReferralLevelChart({
             />
             <Bar dataKey="referrals" radius={[0, 4, 4, 0]} maxBarSize={22}>
               {data.map((entry, i) => (
-                <Cell key={entry.name} fill={i === 0 ? "#e8b923" : "rgba(232, 185, 35, 0.55)"} />
+                <Cell key={entry.name} fill={i === 0 ? "#cea264" : "rgba(206, 162, 100, 0.55)"} />
               ))}
             </Bar>
           </BarChart>
