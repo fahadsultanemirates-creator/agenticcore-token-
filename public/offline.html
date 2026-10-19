@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <title>Offline — AgenticCore (AC)</title>
+    <!--
+      Served by the service worker when a page navigation fails with no
+      cached copy available. Everything is inlined on purpose: this file has
+      to render when the network is gone, so it cannot depend on the app's
+      stylesheet or JS bundle loading.
+    -->
+    <style>
+      :root {
+        color-scheme: dark;
+        --ac-bg: #0a0a0f;
+        --ac-bg-card: #16151d;
+        --ac-border: #26232f;
+        --ac-muted: #9c96ad;
+        --ac-gold: #c98e36;
+        --fg: #f4f2ff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: var(--ac-bg);
+        color: var(--fg);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, sans-serif;
+        text-align: center;
+      }
+      .card {
+        width: 100%;
+        max-width: 420px;
+        padding: 40px 28px;
+        border: 1px solid var(--ac-border);
+        border-radius: 20px;
+        background: var(--ac-bg-card);
+      }
+      img {
+        width: 72px;
+        height: 72px;
+        border-radius: 16px;
+        margin-bottom: 24px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 22px;
+        font-weight: 700;
+      }
+      p {
+        margin: 0 0 24px;
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--ac-muted);
+      }
+      button {
+        width: 100%;
+        padding: 13px 20px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--ac-gold);
+        color: #0a0a0f;
+        font-size: 15px;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+      }
+      button:hover {
+        filter: brightness(1.08);
+      }
+      .note {
+        margin: 20px 0 0;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <img src="/icon-192.png" alt="" />
+      <h1>You're offline</h1>
+      <p>
+        AgenticCore needs a connection to read live balances and prices from
+        BNB Smart Chain. Reconnect and try again.
+      </p>
+      <button type="button" onclick="location.reload()">Retry</button>
+      <p class="note">
+        Your wallet and funds are unaffected — nothing is stored in this app.
+      </p>
+    </main>
+    <script>
+      // Reload the moment connectivity returns, so the user doesn't have to
+      // notice and tap Retry themselves.
+      addEventListener("online", function () {
+        location.reload();
+      });
+    </script>
+  </body>
+</html>

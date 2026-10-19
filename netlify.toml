@@ -9,3 +9,19 @@
   # Next.js 16 + Turbopack needs a modern Node; Netlify's default build
   # image is older than this project requires.
   NODE_VERSION = "22"
+
+# The service worker must never be served from a long-lived cache. Browsers
+# re-check /sw.js on navigation to find new deploys, and a cached copy would
+# pin everyone to whichever build they first installed. The manifest gets the
+# same treatment -- it is tiny, and a stale one means stale install metadata.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/manifest+json; charset=utf-8"
