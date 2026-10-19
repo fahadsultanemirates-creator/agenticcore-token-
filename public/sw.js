@@ -15,20 +15,20 @@
  * handler deletes every cache that doesn't match the current name.
  */
 
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const RUNTIME_CACHE = `ac-runtime-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline.html";
 
 // Cached at install so the offline fallback is guaranteed present the first
 // time the network drops, rather than only after a lucky earlier visit.
 //
-// "/" is in here for a less obvious reason: a service worker does not
-// control the navigation that registered it, so the very page a visitor
-// landed on is the one page that never passes through the fetch handler and
-// never gets cached. Since "/" is also the manifest's start_url -- what the
-// installed app opens -- leaving it out means a freshly installed app shows
-// the offline page the first time it is opened without a connection.
-const PRECACHE_URLS = [OFFLINE_URL, "/", "/icon-192.png", "/icon-512.png"];
+// The two entry points are in here for a less obvious reason: a service
+// worker does not control the navigation that registered it, so the very
+// page a visitor landed on is the one page that never passes through the
+// fetch handler and never gets cached. "/app" is the manifest's start_url,
+// so without it a freshly installed app shows the offline page the first
+// time it is opened without a connection; "/" is where web visitors land.
+const PRECACHE_URLS = [OFFLINE_URL, "/app", "/", "/icon-192.png", "/icon-512.png"];
 
 // How long a navigation waits for the network before falling back to cache.
 // The live presale numbers are worth waiting for, but not past the point

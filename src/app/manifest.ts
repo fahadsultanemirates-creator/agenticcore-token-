@@ -16,16 +16,23 @@ export const dynamic = "force-static";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    // Stable identity for the installed app. Without an explicit id the
-    // browser derives one from start_url, so any later change to start_url
-    // would register as a *different* app and strand everyone who already
-    // installed this one.
+    // Stable identity for the installed app, and the reason start_url below
+    // could be moved off "/" without breaking anyone: the browser derives an
+    // id from start_url when none is given, so changing start_url on an
+    // id-less manifest registers as a *different* app and strands everyone
+    // who already installed the old one. This stays "/" permanently.
     id: "/",
     name: `${TOKEN.name} (${TOKEN.ticker})`,
     // Launcher labels truncate past ~12 characters on Android.
     short_name: TOKEN.name,
     description: `${TOKEN.name} (${TOKEN.ticker}) -- ${TOKEN.standard} token on ${TOKEN.chain}. Buy, track your referral tree, and claim rewards.`,
-    start_url: "/",
+    // The installed app opens the compact app home, not the marketing
+    // landing page. Someone who installed the app is already sold; "/" is
+    // for strangers arriving from a search or a referral link, and it stays
+    // the site's front door on the web.
+    start_url: "/app",
+    // Scope stays at the root so the dashboard, referral program and
+    // roadmap all open inside the app rather than kicking out to a browser.
     scope: "/",
     display: "standalone",
     background_color: "#0a0a0f",
