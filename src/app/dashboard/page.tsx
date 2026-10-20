@@ -5,6 +5,7 @@ import { useAccount, useReadContract, useReadContracts } from "wagmi";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import ConnectGate from "@/components/dashboard/ConnectGate";
 import ReferralLinkCard from "@/components/dashboard/ReferralLinkCard";
+import ClaimCard from "@/components/dashboard/ClaimCard";
 import DemoModeBanner from "@/components/dashboard/DemoModeBanner";
 import StatsOverview from "@/components/dashboard/StatsOverview";
 import ReferralLevelChart from "@/components/dashboard/ReferralLevelChart";
@@ -171,6 +172,7 @@ export default function DashboardPage() {
         </div>
 
         <ReferralLinkCard address={address} />
+        <ClaimCard address={address} />
         {usingMockTree && <DemoModeBanner />}
         {isAdminPreview && (
           <div className="flex items-center gap-2 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-xs text-amber-300 sm:text-sm">

@@ -120,6 +120,34 @@ export const TOKEN_ABI = [
   },
 ] as const;
 
+export const CLAIM_ABI = [
+  {
+    type: "function",
+    name: "claim",
+    stateMutability: "nonpayable",
+    inputs: [],
+    outputs: [],
+  },
+  {
+    type: "function",
+    name: "hasClaimed",
+    stateMutability: "view",
+    inputs: [{ name: "", type: "address" }],
+    outputs: [{ name: "", type: "bool" }],
+  },
+  {
+    type: "function",
+    name: "nextClaimAmount",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [
+      { name: "amount", type: "uint256" },
+      { name: "open", type: "bool" },
+    ],
+  },
+  { type: "function", name: "claimsCount", stateMutability: "view", inputs: [], outputs: [{ name: "", type: "uint256" }] },
+] as const;
+
 export const ERC20_ABI = [
   {
     type: "function",
