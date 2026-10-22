@@ -1,4 +1,4 @@
-import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Gift, ShieldCheck, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { TOKEN, formatSupply } from "@/lib/tokenConfig";
 import { REFERRAL_LEVELS } from "@/lib/referral";
@@ -28,6 +28,15 @@ export default function Hero() {
             {TOKEN.minBuyUsd}&ndash;${TOKEN.maxBuyUsd} per-wallet buy range
             engineered to protect the launch from volatility.
           </p>
+
+          <Link
+            href="/dashboard"
+            className="mt-7 inline-flex items-center gap-2 rounded-full border border-ac-lime/40 bg-ac-lime/10 px-5 py-2 text-xs font-semibold text-ac-lime transition hover:bg-ac-lime/15 sm:text-sm"
+          >
+            <Gift className="h-4 w-4" />
+            Free AC for the first 900 wallets — earlier wallets get more
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
 
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row">
             <a
