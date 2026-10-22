@@ -23,12 +23,13 @@ export const TOKEN = {
   contractAddress: "0xe9568888a0bc317519957047cf736e134B097768" as `0x${string}`,
   isContractLive: true,
   presaleContractAddress: "0xc9538dE177FD684704473041B81E2eC6CEc95679" as `0x${string}`,
-  // Free-AC join campaign (AgenticCoreClaim.sol) -- left at the zero
-  // address until it's actually deployed and funded; the dashboard's
-  // ClaimCard checks for exactly this value and renders nothing while
-  // it's unset, so there's no broken button on the live site in the
-  // meantime.
-  claimContractAddress: "0x00000000000000000000000000000000000000" as `0x${string}`,
+  // Free-AC join campaign (AgenticCoreClaim.sol) -- deployed and verified
+  // on-chain (owner/acToken/claimsCount all checked against expected
+  // values before wiring this in). Not yet funded with the 10.5B AC pool,
+  // so claim() will revert until that transfer lands -- ClaimCard still
+  // renders the button since the campaign itself is "open", it's just
+  // that the on-chain safeTransfer fails until the balance is there.
+  claimContractAddress: "0x63d7Ad77F86a5F291F3bfC66f9A9B9c16439537C" as `0x${string}`,
   // The other two genesis mint destinations besides the Sale contract --
   // see AgenticCoreToken.sol's constructor comment for the full five-way
   // split (liquidity 35%, presale 35%, ecosystem 10%, team 10%, marketing
