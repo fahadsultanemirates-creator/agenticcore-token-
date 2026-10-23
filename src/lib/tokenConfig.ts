@@ -46,16 +46,19 @@ export const TOKEN = {
   // Human support contact, shown in the footer/FAQ/contact sections --
   // separate from telegramBotUrl above, which is the automated assistant.
   supportEmail: "hello@agenticcore.group",
+  // Two support channels only, by design -- email and Telegram, both
+  // surfaced together everywhere support is offered (footer, FAQ).
   supportTelegramUsername: "@AgenticCorebiz",
-  supportWhatsappUrl: "https://wa.me/18089985226",
 };
 
 export const SUPPORT_TELEGRAM_URL = `https://t.me/${TOKEN.supportTelegramUsername.replace(/^@/, "")}`;
 
-// actoken.org's social presence -- linked from the footer.
+// actoken.org's social presence -- linked from the footer. Direct profile
+// URLs, not share links -- more reliable to open from a website than a
+// share-redirect link (Facebook's share/ links can bounce through a login
+// wall for logged-out visitors).
 export const SOCIAL_LINKS = {
-  facebook: "https://www.facebook.com/share/1DiF5jRZLs/",
-  instagram: "https://www.instagram.com/actokenorg",
+  facebook: "https://www.facebook.com/profile.php?id=61595329208422",
   x: "https://x.com/Actokenorg",
   youtube: "https://www.youtube.com/@Actokenorg",
   tiktok: "https://www.tiktok.com/@actokenorg",

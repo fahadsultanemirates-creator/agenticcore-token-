@@ -5,27 +5,24 @@ import { TOKEN, SUPPORT_TELEGRAM_URL, SOCIAL_LINKS } from "@/lib/tokenConfig";
 import { REFERRAL_LEVELS } from "@/lib/referral";
 import {
   FacebookIcon,
-  InstagramIcon,
   XIcon,
   YoutubeIcon,
   TiktokIcon,
   TelegramIcon,
-  WhatsappIcon,
 } from "@/components/ui/SocialIcons";
 
 const SOCIAL_ICON_LINKS = [
   { label: "Facebook", href: SOCIAL_LINKS.facebook, Icon: FacebookIcon },
-  { label: "Instagram", href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
   { label: "X", href: SOCIAL_LINKS.x, Icon: XIcon },
   { label: "YouTube", href: SOCIAL_LINKS.youtube, Icon: YoutubeIcon },
   { label: "TikTok", href: SOCIAL_LINKS.tiktok, Icon: TiktokIcon },
   { label: "Telegram channel", href: SOCIAL_LINKS.telegramChannel, Icon: TelegramIcon },
 ];
 
+// Two support channels, by design -- email and Telegram.
 const SUPPORT_ICON_LINKS = [
   { label: "Email", href: `mailto:${TOKEN.supportEmail}`, Icon: Mail },
   { label: "Telegram", href: SUPPORT_TELEGRAM_URL, Icon: TelegramIcon },
-  { label: "WhatsApp", href: TOKEN.supportWhatsappUrl, Icon: WhatsappIcon },
 ];
 
 const COLUMNS = [
