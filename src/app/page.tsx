@@ -1,5 +1,6 @@
 import Navbar from "@/components/marketing/Navbar";
 import Hero from "@/components/marketing/Hero";
+import ClaimGiftSection from "@/components/marketing/ClaimGiftSection";
 import WhyAC from "@/components/marketing/WhyAC";
 import FamilyNetwork from "@/components/marketing/FamilyNetwork";
 import Tokenomics from "@/components/marketing/Tokenomics";
@@ -15,6 +16,7 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
+        <ClaimGiftSection />
         <WhyAC />
         <FamilyNetwork />
         <Tokenomics />

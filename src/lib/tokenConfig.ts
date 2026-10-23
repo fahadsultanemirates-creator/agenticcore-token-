@@ -45,7 +45,7 @@ export const TOKEN = {
   telegramBotUrl: "https://t.me/AgenticcoreACbot",
   // Human support contact, shown in the footer/FAQ/contact sections --
   // separate from telegramBotUrl above, which is the automated assistant.
-  supportEmail: "hello@agenticcore.agency",
+  supportEmail: "hello@agenticcore.group",
   supportTelegramUsername: "@AgenticCorebiz",
   supportWhatsappUrl: "https://wa.me/18089985226",
 };
@@ -106,6 +106,18 @@ export const APEX_POOL = {
   referralBonusPct: 20,
   vipPayoutMultiplier: 2,
 };
+
+// Welcome AC Community Gift (AgenticCoreClaim.sol) -- the tiers here are
+// display-only mirrors of the contract's own hardcoded constants
+// (TIER1_CAP/AMOUNT etc.), kept in sync by hand since Solidity constants
+// can't be imported into TS. 900 wallets total, taper across 3 tiers of
+// 300: 10,500,000,000 AC ($1,050 at the reference price) is the exact
+// pool this contract needs funded with up front.
+export const CLAIM_TIERS = [
+  { tier: 1, wallets: 300, acEach: 20_000_000, usdEach: 2 },
+  { tier: 2, wallets: 300, acEach: 10_000_000, usdEach: 1 },
+  { tier: 3, wallets: 300, acEach: 5_000_000, usdEach: 0.5 },
+] as const;
 
 // A referred buy mints 10% more AC (same USD spend) than a direct,
 // no-referral buy -- the incentive for using a referral link at all.

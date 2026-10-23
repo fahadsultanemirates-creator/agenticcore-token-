@@ -5,6 +5,7 @@ import { useReadContracts, useWaitForTransactionReceipt, useWriteContract } from
 import { Gift, Loader2, CheckCircle2, AlertCircle, PartyPopper } from "lucide-react";
 import { CLAIM_ABI } from "@/lib/contracts";
 import { TOKEN, formatSupply } from "@/lib/tokenConfig";
+import ClaimTiersTable from "@/components/ui/ClaimTiersTable";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
@@ -52,7 +53,7 @@ export default function ClaimCard({ address }: { address: `0x${string}` }) {
     <div className="card-surface rounded-2xl p-6">
       <div className="flex items-center gap-2">
         <Gift className="h-5 w-5 text-ac-violet-light" />
-        <h2 className="text-lg font-bold text-foreground">Welcome bonus</h2>
+        <h2 className="text-lg font-bold text-foreground">Welcome AC Community Gift</h2>
       </div>
 
       {alreadyClaimed || justClaimed ? (
@@ -64,7 +65,7 @@ export default function ClaimCard({ address }: { address: `0x${string}` }) {
         <>
           <p className="mt-2 text-sm text-ac-muted">
             One-time free AC for joining, no purchase needed — just connect and claim. Earlier claimers get
-            more; the pool tapers as it fills.
+            more; the gift tapers as the pool fills.
           </p>
           <button
             type="button"
@@ -84,6 +85,10 @@ export default function ClaimCard({ address }: { address: `0x${string}` }) {
           {claim.error.message}
         </p>
       )}
+
+      <div className="mt-5 border-t border-ac-border/70 pt-4">
+        <ClaimTiersTable compact />
+      </div>
     </div>
   );
 }

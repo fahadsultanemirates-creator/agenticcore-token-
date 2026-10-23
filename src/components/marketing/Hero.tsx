@@ -34,7 +34,7 @@ export default function Hero() {
             className="mt-7 inline-flex items-center gap-2 rounded-full border border-ac-lime/40 bg-ac-lime/10 px-5 py-2 text-xs font-semibold text-ac-lime transition hover:bg-ac-lime/15 sm:text-sm"
           >
             <Gift className="h-4 w-4" />
-            Free AC for the first 900 wallets — earlier wallets get more
+            Welcome AC Community Gift — free for the first 900 wallets
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
 
