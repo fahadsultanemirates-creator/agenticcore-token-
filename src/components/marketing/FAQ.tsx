@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { TOKEN, SUPPORT_TELEGRAM_URL, VIP_POOL, REFERRED_BUY_BONUS_PCT } from "@/lib/tokenConfig";
+import { TOKEN, SUPPORT_TELEGRAM_URL, SUPPORT_WHATSAPP_URL, VIP_POOL, REFERRED_BUY_BONUS_PCT } from "@/lib/tokenConfig";
 import { REFERRAL_LEVELS, getTotalReferralPct, formatPct } from "@/lib/referral";
 import { SectionHeading } from "@/components/marketing/Tokenomics";
 
@@ -89,7 +89,7 @@ export default function FAQ() {
         <a href={SUPPORT_TELEGRAM_URL} className="text-ac-lime hover:underline">
           message us on Telegram
         </a>
-        .
+        {" or "}<a href={SUPPORT_WHATSAPP_URL} className="text-ac-lime hover:underline">WhatsApp</a>.
       </p>
       </div>
     </section>

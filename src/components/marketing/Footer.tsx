@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail } from "lucide-react";
-import { TOKEN, SUPPORT_TELEGRAM_URL, SOCIAL_LINKS } from "@/lib/tokenConfig";
+import { Mail, MessageCircle } from "lucide-react";
+import { TOKEN, SUPPORT_TELEGRAM_URL, SUPPORT_WHATSAPP_URL, SOCIAL_LINKS } from "@/lib/tokenConfig";
 import { REFERRAL_LEVELS } from "@/lib/referral";
 import {
+  InstagramIcon,
   FacebookIcon,
   XIcon,
   YoutubeIcon,
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/SocialIcons";
 
 const SOCIAL_ICON_LINKS = [
+  { label: "Instagram", href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
   { label: "Facebook", href: SOCIAL_LINKS.facebook, Icon: FacebookIcon },
   { label: "X", href: SOCIAL_LINKS.x, Icon: XIcon },
   { label: "YouTube", href: SOCIAL_LINKS.youtube, Icon: YoutubeIcon },
@@ -19,8 +21,9 @@ const SOCIAL_ICON_LINKS = [
   { label: "Telegram channel", href: SOCIAL_LINKS.telegramChannel, Icon: TelegramIcon },
 ];
 
-// Two support channels, by design -- email and Telegram.
+// Shared Group contact channels; announcement links remain separate.
 const SUPPORT_ICON_LINKS = [
+  { label: "WhatsApp client contact", href: SUPPORT_WHATSAPP_URL, Icon: MessageCircle },
   { label: "Email", href: `mailto:${TOKEN.supportEmail}`, Icon: Mail },
   { label: "Telegram", href: SUPPORT_TELEGRAM_URL, Icon: TelegramIcon },
 ];
@@ -56,7 +59,8 @@ const COLUMNS = [
     title: "Support",
     links: [
       { label: TOKEN.supportEmail, href: `mailto:${TOKEN.supportEmail}` },
-      { label: "Telegram Support", href: SUPPORT_TELEGRAM_URL },
+      { label: "Telegram client contact", href: SUPPORT_TELEGRAM_URL },
+      { label: "WhatsApp client contact", href: SUPPORT_WHATSAPP_URL },
     ],
   },
 ];
