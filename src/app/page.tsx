@@ -2,6 +2,7 @@ import Navbar from "@/components/marketing/Navbar";
 import Hero from "@/components/marketing/Hero";
 import ClaimGiftSection from "@/components/marketing/ClaimGiftSection";
 import WhyAC from "@/components/marketing/WhyAC";
+import Team from "@/components/marketing/Team";
 import FamilyNetwork from "@/components/marketing/FamilyNetwork";
 import Tokenomics from "@/components/marketing/Tokenomics";
 import HowToBuy from "@/components/marketing/HowToBuy";
@@ -19,6 +20,7 @@ export default function Home() {
         <ClaimGiftSection />
         <WhyAC />
         <FamilyNetwork />
+        <Team />
         <Tokenomics />
         <HowToBuy />
         <ReferralTeaser />

@@ -143,3 +143,6 @@ export function formatSupply(n: number): string {
   if (n >= 1_000_000_000) return `${(n / 1_000_000_000).toLocaleString()}B`;
   return n.toLocaleString();
 }
+
+// Planned discount for paying a service invoice in AC, separate from membership benefits.
+export const SERVICE_TOKEN_PAYMENT_DISCOUNT_PCT = 10;
