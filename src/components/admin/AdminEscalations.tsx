@@ -86,7 +86,7 @@ export default function AdminEscalations({ walletAddress }: { walletAddress: str
         </button>
       </div>
       <p className="mt-1 text-sm text-ac-muted">
-        Conversations the site chat, Forge, or Telegram bot flagged for human
+        Conversations the site chat, Maya, or Telegram bot flagged for human
         review (lost funds, security concerns, out-of-scope questions).
       </p>
 

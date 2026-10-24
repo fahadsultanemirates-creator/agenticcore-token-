@@ -1,4 +1,4 @@
-// AgenticCore Token — Supabase project config for the chat widget / Forge
+// AgenticCore Token — Supabase project config for the chat widget / Maya
 // panel. This is the publishable key, safe for browser use -- security is
 // enforced by RLS on the database (bot_conversations/bot_messages are
 // locked down entirely; only the Edge Functions' service role touches

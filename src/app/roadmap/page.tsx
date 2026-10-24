@@ -2,14 +2,15 @@ import { Bot, Building2, Users2, Zap, ArrowUpRight, Network, ShieldCheck, Store,
 import Navbar from "@/components/marketing/Navbar";
 import Footer from "@/components/marketing/Footer";
 import { SectionHeading } from "@/components/marketing/Tokenomics";
-import { TOKEN } from "@/lib/tokenConfig";
+import { TOKEN, SERVICE_TOKEN_PAYMENT_DISCOUNT_PCT } from "@/lib/tokenConfig";
 
 // Each sibling site keeps its own brand color here on purpose -- this is
 // the one place the gold re-theme doesn't apply, since these icons
 // represent those sites' own identity, not this one's.
 const FAMILY = [
-  { icon: Building2, domain: "agenticcore.agency", color: "#22D3EE", body: "Custom websites, apps, and AI agents." },
-  { icon: Users2, domain: "agenticcore.biz", color: "#F97316", body: "AI-run business services." },
+  { icon: Building2, domain: "agenticcore.group", color: "#F97316", body: "Managed digital offices, departments and custom office frameworks." },
+  { icon: Building2, domain: "agenticcore.agency", color: "#22D3EE", body: "Websites, applications, brand identity and design." },
+  { icon: Users2, domain: "agenticcore.biz", color: "#F97316", body: "Business plans, research, documents and setup." },
   { icon: Zap, domain: "agenticcore.click", color: "#FACC15", body: "Quick, affordable digital tasks." },
 ];
 
@@ -92,13 +93,13 @@ export default function RoadmapPage() {
             from custom web development, to business services, to quick digital tasks.
           </p>
 
-          <div className="mt-10 grid gap-5 sm:grid-cols-3">
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {FAMILY.map((f) => (
-              <div key={f.domain} className="card-surface rounded-2xl p-6">
+              <a key={f.domain} href={`https://${f.domain}`} className="card-surface block rounded-2xl p-6 transition hover:ring-1 hover:ring-ac-lime">
                 <f.icon className="h-7 w-7" strokeWidth={1.75} style={{ color: f.color }} />
                 <p className="mt-5 text-base font-bold text-foreground">{f.domain}</p>
                 <p className="mt-2 text-sm leading-relaxed text-foreground/70">{f.body}</p>
-              </div>
+              </a>
             ))}
           </div>
 
@@ -107,8 +108,8 @@ export default function RoadmapPage() {
             <p className="text-sm leading-relaxed text-foreground/80">
               <strong className="text-ac-lime">On the roadmap:</strong> paying with{" "}
               {TOKEN.ticker} across the AgenticCore family will unlock a{" "}
-              <strong className="text-foreground">15% discount</strong> versus
-              paying normally. Not live yet — announced here once it ships.
+              <strong className="text-foreground">{SERVICE_TOKEN_PAYMENT_DISCOUNT_PCT}% discount</strong> versus
+              paying normally for eligible service invoices. Token checkout is not live yet. Network, conversion quote and eligibility terms will be shown before payment. Holding AC alone does not apply this payment discount; combination with other offers has not been defined.
             </p>
           </div>
         </section>

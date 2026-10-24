@@ -17,7 +17,7 @@ export default function ChatWidget() {
     <>
       {open && (
         // Full-window takeover (not a small floating box) -- matches the
-        // AgenticCore family's shared Forge pattern: a dedicated full-screen
+        // AgenticCore family's shared Maya pattern: a dedicated full-screen
         // chat, not a corner widget.
         <div className="fixed inset-0 z-50 flex flex-col bg-ac-bg">
           <div className="flex items-center gap-3 border-b border-ac-border px-5 py-4 sm:px-8">
@@ -29,10 +29,10 @@ export default function ChatWidget() {
               <ArrowLeft className="h-5 w-5" />
             </button>
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ac-lime text-black">
-              <Sparkles className="h-4 w-4" />
+              <span aria-hidden="true" className="h-9 w-9 rounded-full bg-cover bg-center" style={{backgroundImage:"url(/team/maya.webp)"}} />
             </div>
             <div>
-              <p className="text-sm font-bold text-foreground">Forge</p>
+              <p className="text-sm font-bold text-foreground">Maya</p>
               <p className="text-xs text-ac-muted">Your task assistant</p>
             </div>
           </div>
@@ -48,10 +48,10 @@ export default function ChatWidget() {
         <button
           onClick={() => setOpen(true)}
           className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-ac-lime px-6 py-3.5 text-sm font-bold text-black shadow-xl shadow-ac-lime/20 transition hover:brightness-95 active:scale-95 sm:right-8"
-          aria-label="Open Forge chat"
+          aria-label="Open Maya chat"
         >
           <Sparkles className="h-5 w-5" />
-          Forge
+          Maya
         </button>
       )}
     </>

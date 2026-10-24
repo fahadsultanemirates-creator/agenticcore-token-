@@ -16,7 +16,7 @@ import ReferralTreeView from "@/components/dashboard/ReferralTreeView";
 import ReferralAddressTreeView from "@/components/dashboard/ReferralAddressTreeView";
 import RewardStructureTable from "@/components/dashboard/RewardStructureTable";
 import BuyWidget from "@/components/dashboard/BuyWidget";
-import ForgeChat from "@/components/dashboard/ForgeChat";
+import MayaChat from "@/components/dashboard/MayaChat";
 import {
   generateMockReferralTree,
   summarizeTreeByLevel,
@@ -213,7 +213,7 @@ export default function DashboardPage() {
 
         <RewardStructureTable levelSummary={levelSummary} />
 
-        <ForgeChat address={address} />
+        <MayaChat address={address} />
       </main>
     </>
   );

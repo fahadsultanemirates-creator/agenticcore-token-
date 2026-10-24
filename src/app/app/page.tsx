@@ -67,7 +67,7 @@ export default function AppHomePage() {
     // Content flows top-down and the page ends where the content ends. An
     // earlier version stretched to min-h-dvh and pushed the link tiles to
     // the bottom with mt-auto, which on a tall phone left a large dead gap
-    // mid-screen. pb-28 keeps the last tile clear of the floating Forge
+    // mid-screen. pb-28 keeps the last tile clear of the floating Maya
     // button, which is fixed at bottom-5.
     <main className="mx-auto flex w-full max-w-md flex-col px-5 pb-28 pt-8">
       <header className="flex items-center justify-between">
