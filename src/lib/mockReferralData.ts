@@ -88,12 +88,13 @@ function buildLevel(
   return nodes;
 }
 
-export function generateMockReferralTree(walletAddress: string): ReferralNode[] {
+// nodeBudget defaults to a small, realistic-looking tree (~30 nodes). The
+// admin preview passes a much larger budget so marketing screenshots show
+// a tree that actually looks like an established, active referral network.
+export function generateMockReferralTree(walletAddress: string, nodeBudget = 30): ReferralNode[] {
   const seed = hashAddress(walletAddress.toLowerCase());
   const rng = mulberry32(seed);
-  // ~30 nodes total, spread across up to REFERRAL_LEVELS deep -- enough to
-  // see real branching and depth without rendering a huge tree.
-  return buildLevel(rng, 1, "root", { remaining: 30 });
+  return buildLevel(rng, 1, "root", { remaining: nodeBudget });
 }
 
 export function summarizeTreeByLevel(tree: ReferralNode[]): ReferralLevelSummary[] {

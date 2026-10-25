@@ -5,9 +5,9 @@ import { SectionHeading } from "@/components/marketing/Tokenomics";
 const MILESTONES = [
   {
     icon: Lock,
-    title: "Contract audit & deployment",
-    status: "In progress",
-    body: `The AC BEP-20 contract, including the on-chain $${TOKEN.minBuyUsd}–$${TOKEN.maxBuyUsd} buy range and referral/VIP Pool payout logic, is in development and will be audited before launch.`,
+    title: "Contract deployed & live",
+    status: "Live",
+    body: `The AC BEP-20 contract is deployed on ${TOKEN.chain}, enforcing the on-chain $${TOKEN.minBuyUsd}–$${TOKEN.maxBuyUsd} buy range and referral/VIP Pool payout logic in production.`,
   },
   {
     icon: Rocket,
@@ -55,9 +55,19 @@ export default function PresaleInfo() {
         <div className="relative flex items-start gap-3">
           <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-ac-lime" />
           <p className="text-sm text-foreground/75">
-            <strong className="text-ac-lime">Contract address will be published here and on official channels only.</strong>{" "}
-            Until {TOKEN.ticker} is live, any token claiming to be AgenticCore
-            elsewhere is not affiliated with this project.
+            <strong className="text-ac-lime">
+              Verified contract:{" "}
+              <a
+                href={`${TOKEN.bscScanBase}/address/${TOKEN.contractAddress}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-ac-lime/50 underline-offset-2 hover:decoration-ac-lime"
+              >
+                {TOKEN.contractAddress}
+              </a>
+            </strong>{" "}
+            Always confirm against this address or official channels — any token
+            claiming to be AgenticCore elsewhere is not affiliated with this project.
           </p>
         </div>
       </div>

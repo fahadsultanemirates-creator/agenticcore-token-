@@ -60,13 +60,21 @@ export default function DashboardPage() {
     };
   }, [address]);
 
+  // Marketing/demo preview: see the isAdminPreview comment below for the
+  // full rationale. Computed here (ahead of its other uses) so the tree
+  // itself can branch on it -- the admin wallet gets a much larger
+  // illustrative tree (~100 nodes) for screenshotting what an established,
+  // active network looks like, and ignores the real indexer entirely so a
+  // wallet with genuinely few/no real referrals doesn't override it.
+  const isAdminPreview = !!address && address.toLowerCase() === ADMIN_ADDRESS.toLowerCase();
+
   const mockTree = useMemo(
-    () => (address ? generateMockReferralTree(address) : []),
-    [address]
+    () => (address ? generateMockReferralTree(address, isAdminPreview ? 100 : 30) : []),
+    [address, isAdminPreview]
   );
   const liveTree = liveTreeResult && liveTreeResult.address === address ? liveTreeResult.tree : null;
-  const usingMockTree = liveTree === null;
-  const tree = liveTree ?? mockTree;
+  const usingMockTree = isAdminPreview || liveTree === null;
+  const tree = isAdminPreview ? mockTree : (liveTree ?? mockTree);
   const levelSummary = useMemo(() => summarizeTreeByLevel(tree), [tree]);
   const total = useMemo(() => totalReferrals(tree), [tree]);
 
@@ -107,16 +115,15 @@ export default function DashboardPage() {
 
   const isVipQualified = qualifiedSinceTs > 0;
 
-  // Marketing/demo preview: the one admin wallet sees every card and both
-  // pool cards as fully qualified, regardless of real progress, so the
-  // designs can be screenshotted without actually hitting each threshold.
-  // Scoped tightly: it only ever matches the hardcoded admin address (never
-  // shown to a real visitor), it doesn't touch the real dollar figures
-  // ("Total invested" stays the real on-chain number), and it never
-  // touches qualifiedSinceTs/currentWeekId -- those still drive the real
-  // claimVipShare() flow below, so a preview view can never produce a
+  // isAdminPreview itself is computed above, ahead of the referral tree.
+  // The rest of the preview: the admin wallet also sees every membership
+  // card and both pool cards as fully qualified, regardless of real
+  // progress, so the designs can be screenshotted without actually hitting
+  // each threshold. Scoped tightly: it never touches the real dollar
+  // figures ("Total invested" stays the real on-chain number), and it
+  // never touches qualifiedSinceTs/currentWeekId -- those still drive the
+  // real claimVipShare() flow below, so a preview view can never produce a
   // claim button for USDT that isn't really claimable.
-  const isAdminPreview = !!address && address.toLowerCase() === ADMIN_ADDRESS.toLowerCase();
 
   const displayQualifyingUsd = isAdminPreview
     ? VIP_POOL.qualifyUsd

@@ -49,10 +49,10 @@ export default function FamilyNetwork() {
       <div className="mx-auto mt-8 flex max-w-3xl items-start gap-3 rounded-xl border border-ac-lime/30 bg-ac-lime/5 p-5">
         <ArrowUpRight className="mt-0.5 h-5 w-5 shrink-0 text-ac-lime" />
         <p className="text-sm leading-relaxed text-foreground/80">
-          <strong className="text-ac-lime">On the roadmap:</strong> paying with{" "}
-          {TOKEN.ticker} across the AgenticCore family will unlock a{" "}
+          <strong className="text-ac-lime">Already live:</strong> paying with{" "}
+          {TOKEN.ticker} across the AgenticCore family unlocks a{" "}
           <strong className="text-foreground">15% discount</strong> versus paying
-          normally. Not live yet — announced here once it ships.
+          normally.
         </p>
       </div>
 

@@ -108,9 +108,8 @@ export default function MembershipCards({
         <h2 className="text-lg font-bold text-foreground">AC membership cards</h2>
       </div>
       <p className="mt-1 text-sm text-ac-muted">
-        Three tiers, unlocked by what you and your team do on-chain. Benefits below describe the planned
-        reward structure — bonus percentages and cross-family discounts are redeemed off-chain for now,
-        the same roadmap status as the rest of the AgenticCore family discount.
+        Three tiers, unlocked by what you and your team do on-chain. Benefits below describe the
+        reward structure — bonus percentages and cross-family discounts are redeemed off-chain for now.
       </p>
 
       {cardName === undefined ? (

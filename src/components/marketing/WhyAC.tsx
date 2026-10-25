@@ -16,7 +16,7 @@ const POINTS = [
   {
     icon: Building2,
     title: "A growing family of AI-run businesses",
-    body: `${TOKEN.name} is part of a wider AgenticCore family of AI-run companies. On the roadmap: paying with ${TOKEN.ticker} across the family unlocks a discount versus paying normally.`,
+    body: `${TOKEN.name} is part of a wider AgenticCore family of AI-run companies. ${TOKEN.ticker} is already accepted as payment across the family, and holding it unlocks a discount versus paying normally.`,
   },
 ];
 
