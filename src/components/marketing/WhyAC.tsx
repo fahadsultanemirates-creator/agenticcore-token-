@@ -1,5 +1,5 @@
 import { Cpu, Zap, Building2 } from "lucide-react";
-import { TOKEN } from "@/lib/tokenConfig";
+import { TOKEN, SERVICE_TOKEN_PAYMENT_DISCOUNT_PCT } from "@/lib/tokenConfig";
 import { SectionHeading } from "@/components/marketing/Tokenomics";
 
 const POINTS = [
@@ -16,7 +16,7 @@ const POINTS = [
   {
     icon: Building2,
     title: "A growing family of AI-run businesses",
-    body: `${TOKEN.name} is part of a wider AgenticCore family of AI-run companies. ${TOKEN.ticker} is already accepted as payment across the family, and holding it unlocks a discount versus paying normally.`,
+    body: `${TOKEN.name} is part of a wider AgenticCore family of AI-run companies. Paying with ${TOKEN.ticker} for eligible family service invoices is already live and unlocks a ${SERVICE_TOKEN_PAYMENT_DISCOUNT_PCT}% discount versus paying normally.`,
   },
 ];
 

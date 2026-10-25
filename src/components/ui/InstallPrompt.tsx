@@ -32,7 +32,7 @@ function hasDismissed(): boolean {
  * explains the manual route on iOS. Renders nothing when the app is already
  * installed, already dismissed, or when the browser can't install it.
  *
- * Sits above the Forge chat button rather than beside it -- both are fixed
+ * Sits above the Maya chat button rather than beside it -- both are fixed
  * to the bottom-right, and on a phone there isn't room for two.
  */
 export default function InstallPrompt() {
