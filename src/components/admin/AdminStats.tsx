@@ -1,14 +1,18 @@
 "use client";
 
 import { useReadContracts } from "wagmi";
-import { TOKEN } from "@/lib/tokenConfig";
-import { SALE_ABI, TOKEN_ABI, ERC20_ABI } from "@/lib/contracts";
+import { TOKEN, CLAIM_TIERS } from "@/lib/tokenConfig";
+import { SALE_ABI, TOKEN_ABI, ERC20_ABI, CLAIM_ABI } from "@/lib/contracts";
 import { formatSupply } from "@/lib/tokenConfig";
 
 const saleContract = { address: TOKEN.presaleContractAddress, abi: SALE_ABI } as const;
 const tokenContract = { address: TOKEN.contractAddress, abi: TOKEN_ABI } as const;
 const acAsErc20 = { address: TOKEN.contractAddress, abi: ERC20_ABI } as const;
 const usdtAsErc20 = { address: TOKEN.usdtAddress, abi: ERC20_ABI } as const;
+const claimContract = { address: TOKEN.claimContractAddress, abi: CLAIM_ABI } as const;
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+const CLAIM_CONFIGURED = TOKEN.claimContractAddress.toLowerCase() !== ZERO_ADDRESS;
+const TOTAL_CLAIM_WALLETS = CLAIM_TIERS.reduce((sum, t) => sum + t.wallets, 0);
 
 // The Presale/Public Launch tranche is a fixed 35% of the (also fixed,
 // mint-once) total supply -- minted once into the Sale contract at
@@ -35,6 +39,8 @@ export default function AdminStats() {
       { ...acAsErc20, functionName: "balanceOf", args: [TOKEN.ecosystemWalletAddress] },
       { ...acAsErc20, functionName: "balanceOf", args: [TOKEN.teamVestingAddress] },
       { ...acAsErc20, functionName: "balanceOf", args: [TOKEN.marketingVestingAddress] },
+      { ...claimContract, functionName: "claimsCount" },
+      { ...acAsErc20, functionName: "balanceOf", args: [TOKEN.claimContractAddress] },
     ],
   });
 
@@ -54,6 +60,8 @@ export default function AdminStats() {
     ecosystemAcBalanceRaw,
     teamVestingAcBalanceRaw,
     marketingVestingAcBalanceRaw,
+    claimsCountRaw,
+    claimContractAcBalanceRaw,
   ] = data?.map((d) => d.result) ?? [];
 
   // Treasury/marketing-wallet addresses are only known once the first read
@@ -80,6 +88,14 @@ export default function AdminStats() {
   const fmtAc = (raw: unknown) => (raw !== undefined ? formatSupply(Number(raw) / 1e18) : "—");
   const fmtUsdt = (raw: unknown) =>
     raw !== undefined ? `$${(Number(raw) / 1e18).toLocaleString(undefined, { maximumFractionDigits: 2 })}` : "—";
+
+  const claimsCount = claimsCountRaw !== undefined ? Number(claimsCountRaw) : undefined;
+  let claimsRemainingForTierCalc = claimsCount ?? 0;
+  const claimTierBreakdown = CLAIM_TIERS.map((t) => {
+    const claimed = Math.max(0, Math.min(t.wallets, claimsRemainingForTierCalc));
+    claimsRemainingForTierCalc -= claimed;
+    return { ...t, claimed };
+  });
 
   return (
     <div className="card-surface rounded-2xl p-6">
@@ -144,6 +160,35 @@ export default function AdminStats() {
             next tranche.
           </p>
         </div>
+
+        {CLAIM_CONFIGURED && (
+          <div className="mt-4 rounded-xl border border-ac-violet/25 bg-ac-violet/10 p-4">
+            <div className="flex items-baseline justify-between">
+              <p className="text-xs font-semibold uppercase tracking-wide text-ac-muted">
+                Welcome AC Community Gift
+              </p>
+              <p className="text-xs text-ac-muted">
+                {claimsCount !== undefined ? `${claimsCount}/${TOTAL_CLAIM_WALLETS} claimed` : "—"}
+              </p>
+            </div>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-ac-bg-elevated">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-ac-violet to-ac-lime transition-all"
+                style={{ width: `${claimsCount !== undefined ? (claimsCount / TOTAL_CLAIM_WALLETS) * 100 : 0}%` }}
+              />
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {claimTierBreakdown.map((t) => (
+                <MiniStat
+                  key={t.tier}
+                  label={`Tier ${t.tier} (${formatSupply(t.acEach)} AC)`}
+                  value={`${t.claimed}/${t.wallets}`}
+                />
+              ))}
+              <MiniStat label="AC left in contract" value={fmtAc(claimContractAcBalanceRaw)} />
+            </div>
+          </div>
+        )}
 
         <dl className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Stat label="Token owner" value={String(tokenOwner ?? "—")} mono />
