@@ -6,6 +6,7 @@ import ConnectWalletButton from "@/components/ui/ConnectWalletButton";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import AdminStats from "@/components/admin/AdminStats";
 import AdminRecentPurchases from "@/components/admin/AdminRecentPurchases";
+import AdminRecentClaims from "@/components/admin/AdminRecentClaims";
 import AdminActions from "@/components/admin/AdminActions";
 import AdminEscalations from "@/components/admin/AdminEscalations";
 import { ADMIN_ADDRESS } from "@/lib/tokenConfig";
@@ -46,6 +47,7 @@ export default function AdminPage() {
           <>
             <AdminStats />
             <AdminRecentPurchases />
+            <AdminRecentClaims />
             <AdminActions />
             <AdminEscalations walletAddress={address} />
           </>

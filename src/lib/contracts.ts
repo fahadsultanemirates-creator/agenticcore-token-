@@ -146,6 +146,15 @@ export const CLAIM_ABI = [
     ],
   },
   { type: "function", name: "claimsCount", stateMutability: "view", inputs: [], outputs: [{ name: "", type: "uint256" }] },
+  {
+    type: "event",
+    name: "Claimed",
+    inputs: [
+      { name: "account", type: "address", indexed: true },
+      { name: "amount", type: "uint256", indexed: false },
+      { name: "claimNumber", type: "uint256", indexed: false },
+    ],
+  },
 ] as const;
 
 export const ERC20_ABI = [
