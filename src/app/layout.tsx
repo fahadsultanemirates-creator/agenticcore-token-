@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Web3Provider from "@/components/providers/Web3Provider";
 import ReferralCapture from "@/components/providers/ReferralCapture";
+import VisitTracker from "@/components/providers/VisitTracker";
 import ServiceWorkerRegistrar from "@/components/providers/ServiceWorkerRegistrar";
 import InstallPrompt from "@/components/ui/InstallPrompt";
 import ChatWidget from "@/components/chat/ChatWidget";
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-ac-bg text-foreground">
         <Web3Provider>{children}</Web3Provider>
         <ReferralCapture />
+        <VisitTracker />
         <ServiceWorkerRegistrar />
         <InstallPrompt />
         <ChatWidget />

@@ -5,6 +5,7 @@ import { ShieldAlert, Wallet } from "lucide-react";
 import ConnectWalletButton from "@/components/ui/ConnectWalletButton";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import AdminStats from "@/components/admin/AdminStats";
+import AdminVisits from "@/components/admin/AdminVisits";
 import AdminRecentPurchases from "@/components/admin/AdminRecentPurchases";
 import AdminRecentClaims from "@/components/admin/AdminRecentClaims";
 import AdminActions from "@/components/admin/AdminActions";
@@ -46,6 +47,7 @@ export default function AdminPage() {
         {isAdmin && address && (
           <>
             <AdminStats />
+            <AdminVisits />
             <AdminRecentPurchases />
             <AdminRecentClaims />
             <AdminActions />
