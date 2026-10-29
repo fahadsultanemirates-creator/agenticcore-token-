@@ -48,7 +48,7 @@ export const TOKEN = {
   supportEmail: "hello@agenticcore.group",
   // Three support channels, surfaced together everywhere support is
   // offered (footer, FAQ): email, Telegram, and WhatsApp.
-  supportTelegramUsername: "@AgenticCorebiz",
+  supportTelegramUsername: "@AgenticCoreGroup",
   supportWhatsappUrl: "https://wa.me/18089985226",
 };
 
