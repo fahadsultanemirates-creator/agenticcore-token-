@@ -9,6 +9,7 @@ import {
   YoutubeIcon,
   TiktokIcon,
   TelegramIcon,
+  WhatsappIcon,
 } from "@/components/ui/SocialIcons";
 
 const SOCIAL_ICON_LINKS = [
@@ -19,10 +20,11 @@ const SOCIAL_ICON_LINKS = [
   { label: "Telegram channel", href: SOCIAL_LINKS.telegramChannel, Icon: TelegramIcon },
 ];
 
-// Two support channels, by design -- email and Telegram.
+// Three support channels -- email, Telegram, and WhatsApp.
 const SUPPORT_ICON_LINKS = [
   { label: "Email", href: `mailto:${TOKEN.supportEmail}`, Icon: Mail },
   { label: "Telegram", href: SUPPORT_TELEGRAM_URL, Icon: TelegramIcon },
+  { label: "WhatsApp", href: TOKEN.supportWhatsappUrl, Icon: WhatsappIcon },
 ];
 
 const COLUMNS = [
