@@ -12,13 +12,13 @@ const FAMILY = [
     icon: Building2,
     domain: "agenticcore.agency",
     color: "#22D3EE",
-    body: "Websites, applications, brand identity and design.",
+    body: "Individual projects: business plans, research, documents, websites, applications, brand identity and design.",
   },
   {
     icon: Users2,
     domain: "agenticcore.biz",
     color: "#F97316",
-    body: "Business plans, research, documents and setup.",
+    body: "AgenticCore Bot: your AI team in one app. In private testing, coming soon. Subscription details will be managed on Biz.",
   },
   {
     icon: Zap,
@@ -34,7 +34,7 @@ export default function FamilyNetwork() {
       <SectionHeading
         eyebrow="The AgenticCore family"
         title="Not a single-product token."
-        subtitle={`${TOKEN.name} is one of several AI-run businesses in the AgenticCore family. Pay with AC for managed offices, website projects, business setup and quick digital tasks — live now across all four family sites.`}
+        subtitle={`${TOKEN.name} is one of several AI-run businesses in the AgenticCore family. Pay with AC for managed offices, website projects, business setup and quick digital tasks — live now across the Group, Agency and Click service websites.`}
       />
 
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
