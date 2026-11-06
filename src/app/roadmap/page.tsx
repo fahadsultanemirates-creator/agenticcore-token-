@@ -9,8 +9,8 @@ import { TOKEN, SERVICE_TOKEN_PAYMENT_DISCOUNT_PCT } from "@/lib/tokenConfig";
 // represent those sites' own identity, not this one's.
 const FAMILY = [
   { icon: Building2, domain: "agenticcore.group", color: "#F97316", body: "Managed digital offices, departments and custom office frameworks." },
-  { icon: Building2, domain: "agenticcore.agency", color: "#22D3EE", body: "Websites, applications, brand identity and design." },
-  { icon: Users2, domain: "agenticcore.biz", color: "#F97316", body: "Business plans, research, documents and setup." },
+  { icon: Building2, domain: "agenticcore.agency", color: "#22D3EE", body: "Individual projects: business plans, research, documents, websites, applications, brand identity and design." },
+  { icon: Users2, domain: "agenticcore.biz", color: "#F97316", body: "AgenticCore Bot — in private testing, coming soon. Business services have moved to Agency." },
   { icon: Zap, domain: "agenticcore.click", color: "#FACC15", body: "Quick, affordable digital tasks." },
 ];
 
@@ -90,7 +90,7 @@ export default function RoadmapPage() {
           <p className="mt-3 max-w-2xl text-sm text-foreground/70">
             {TOKEN.name} is one of several AI-run businesses under the AgenticCore
             name. Pay with AC for managed offices, website projects, business setup
-            and quick digital tasks — live now across all four family sites.
+            and quick digital tasks — live now across the Group, Agency and Click service websites.
           </p>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
